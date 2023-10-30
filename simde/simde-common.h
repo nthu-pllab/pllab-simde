@@ -1130,7 +1130,7 @@ HEDLEY_DIAGNOSTIC_POP
 #endif
 
 /* Initial support for RISCV V extensions based on ZVE64D. */
-#if defined(SIMDE_ARCH_RISCV_ZVE64D) && SIMDE_NATURAL_VECTOR_SIZE >= 64 || 1
+#if defined(SIMDE_ARCH_RISCV_ZVE64D) && SIMDE_NATURAL_VECTOR_SIZE >= 64
   #define RVV_FIXED_TYPE_DEF(name, lmul) \
     typedef vint8##name##_t  fixed_vint8##name##_t __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen * lmul))); \
     typedef vint16##name##_t fixed_vint16##name##_t __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen * lmul))); \

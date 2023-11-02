@@ -1,4 +1,4 @@
-name: RISCV CI
+name: RISC-V CI
 
 on:
   push:

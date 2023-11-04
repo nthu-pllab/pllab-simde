@@ -784,7 +784,7 @@ test_simde_vst4_s8 (SIMDE_MUNIT_TEST_ARGS) {
                               simde_vld1_s8(test_vec[i].r3), } };
     int8_t a_[32];
     simde_vst4_s8(a_, r_);
-    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, sizeof(a_)));
+    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, 32));
 
     r_ = simde_vld4_s8(a_);
     simde_test_arm_neon_assert_equal_i8x8(r_.val[0], simde_vld1_s8(test_vec[i].r0));

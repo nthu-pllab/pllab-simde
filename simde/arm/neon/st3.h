@@ -48,10 +48,10 @@ simde_vst3_f16(simde_float16_t ptr[HEDLEY_ARRAY_PARAM(12)], simde_float16x4x3_t 
                                       simde_float16x4_to_private(val.val[1]),
                                       simde_float16x4_to_private(val.val[2]) };
     simde_float16_t buf[12];
-    for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 3 ; i++) {
+    for (size_t i = 0; i < 12 ; i++) {
       buf[i] = a[i % 3].values[i / 3];
     }
-    simde_memcpy(ptr, buf, sizeof(buf));
+    simde_memcpy(ptr, buf, 24);
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -72,15 +72,15 @@ simde_vst3_f32(simde_float32_t ptr[HEDLEY_ARRAY_PARAM(6)], simde_float32x2x3_t v
       __typeof__(a[0].values) r1 = SIMDE_SHUFFLE_VECTOR_(32, 8, a[0].values, a[1].values, 0, 2);
       __typeof__(a[0].values) r2 = SIMDE_SHUFFLE_VECTOR_(32, 8, a[2].values, a[0].values, 0, 3);
       __typeof__(a[0].values) r3 = SIMDE_SHUFFLE_VECTOR_(32, 8, a[1].values, a[2].values, 1, 3);
-      simde_memcpy(ptr, &r1, sizeof(r1));
-      simde_memcpy(&ptr[2], &r2, sizeof(r2));
-      simde_memcpy(&ptr[4], &r3, sizeof(r3));
+      simde_memcpy(ptr, &r1, 8);
+      simde_memcpy(&ptr[2], &r2, 8);
+      simde_memcpy(&ptr[4], &r3, 8);
     #else
       simde_float32_t buf[6];
-      for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 3 ; i++) {
+      for (size_t i = 0; i < 6 ; i++) {
         buf[i] = a[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, sizeof(buf));
+      simde_memcpy(ptr, buf, 24);
     #endif
   #endif
 }
@@ -98,9 +98,9 @@ simde_vst3_f64(simde_float64_t ptr[HEDLEY_ARRAY_PARAM(3)], simde_float64x1x3_t v
     simde_float64x1_private a_[3] = { simde_float64x1_to_private(val.val[0]),
                                       simde_float64x1_to_private(val.val[1]),
                                       simde_float64x1_to_private(val.val[2]) };
-    simde_memcpy(ptr, &a_[0].values, sizeof(a_[0].values));
-    simde_memcpy(&ptr[1], &a_[1].values, sizeof(a_[1].values));
-    simde_memcpy(&ptr[2], &a_[2].values, sizeof(a_[2].values));
+    simde_memcpy(ptr, &a_[0].values, 8);
+    simde_memcpy(&ptr[1], &a_[1].values, 8);
+    simde_memcpy(&ptr[2], &a_[2].values, 8);
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A64V8_ENABLE_NATIVE_ALIASES)
@@ -122,25 +122,25 @@ simde_vst3_s8(int8_t ptr[HEDLEY_ARRAY_PARAM(24)], simde_int8x8x3_t val) {
                                                           0, 8, 3, 1, 9, 4, 2, 10);
       __typeof__(a_[0].values) m0 = SIMDE_SHUFFLE_VECTOR_(8, 8, r0, a_[2].values,
                                                           0, 1, 8, 3, 4, 9, 6, 7);
-      simde_memcpy(ptr, &m0, sizeof(m0));
+      simde_memcpy(ptr, &m0, 8);
 
       __typeof__(a_[0].values) r1 = SIMDE_SHUFFLE_VECTOR_(8, 8, a_[2].values, a_[1].values,
                                                           2, 5, 11, 3, 6, 12, 4, 7);
       __typeof__(a_[0].values) m1 = SIMDE_SHUFFLE_VECTOR_(8, 8, r1, a_[0].values,
                                                           0, 11, 2, 3, 12, 5, 6, 13);
-      simde_memcpy(&ptr[8], &m1, sizeof(m1));
+      simde_memcpy(&ptr[8], &m1, 8);
 
       __typeof__(a_[0].values) r2 = SIMDE_SHUFFLE_VECTOR_(8, 8, a_[0].values, a_[2].values,
                                                           13, 6, 0, 14, 7, 0, 15, 0);
       __typeof__(a_[0].values) m2 = SIMDE_SHUFFLE_VECTOR_(8, 8, r2, a_[1].values,
                                                           13, 0, 1, 14, 3, 4, 15, 6);
-      simde_memcpy(&ptr[16], &m2, sizeof(m2));
+      simde_memcpy(&ptr[16], &m2, 8);
     #else
       int8_t buf[24];
-      for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 3 ; i++) {
+      for (size_t i = 0; i < 24 ; i++) {
         buf[i] = a_[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, sizeof(buf));
+      simde_memcpy(ptr, buf, 24);
     #endif
   #endif
 }
@@ -163,25 +163,25 @@ simde_vst3_s16(int16_t ptr[HEDLEY_ARRAY_PARAM(12)], simde_int16x4x3_t val) {
                                                           0, 4, 1, 0);
       __typeof__(a_[0].values) m0 = SIMDE_SHUFFLE_VECTOR_(16, 8, r0, a_[2].values,
                                                           0, 1, 4, 2);
-      simde_memcpy(ptr, &m0, sizeof(m0));
+      simde_memcpy(ptr, &m0, 8);
 
       __typeof__(a_[0].values) r1 = SIMDE_SHUFFLE_VECTOR_(16, 8, a_[1].values, a_[2].values,
                                                           1, 5, 2, 0);
       __typeof__(a_[0].values) m1 = SIMDE_SHUFFLE_VECTOR_(16, 8, r1, a_[0].values,
                                                           0, 1, 6, 2);
-      simde_memcpy(&ptr[4], &m1, sizeof(m1));
+      simde_memcpy(&ptr[4], &m1, 8);
 
       __typeof__(a_[0].values) r2 = SIMDE_SHUFFLE_VECTOR_(16, 8, a_[2].values, a_[0].values,
                                                           2, 7, 3, 0);
       __typeof__(a_[0].values) m2 = SIMDE_SHUFFLE_VECTOR_(16, 8, r2, a_[1].values,
                                                           0, 1, 7, 2);
-      simde_memcpy(&ptr[8], &m2, sizeof(m2));
+      simde_memcpy(&ptr[8], &m2, 8);
     #else
       int16_t buf[12];
-      for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 3 ; i++) {
+      for (size_t i = 0; i < 12 ; i++) {
         buf[i] = a_[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, sizeof(buf));
+      simde_memcpy(ptr, buf, 24);
     #endif
   #endif
 }
@@ -203,15 +203,15 @@ simde_vst3_s32(int32_t ptr[HEDLEY_ARRAY_PARAM(6)], simde_int32x2x3_t val) {
       __typeof__(a[0].values) r1 = SIMDE_SHUFFLE_VECTOR_(32, 8, a[0].values, a[1].values, 0, 2);
       __typeof__(a[0].values) r2 = SIMDE_SHUFFLE_VECTOR_(32, 8, a[2].values, a[0].values, 0, 3);
       __typeof__(a[0].values) r3 = SIMDE_SHUFFLE_VECTOR_(32, 8, a[1].values, a[2].values, 1, 3);
-      simde_memcpy(ptr, &r1, sizeof(r1));
-      simde_memcpy(&ptr[2], &r2, sizeof(r2));
-      simde_memcpy(&ptr[4], &r3, sizeof(r3));
+      simde_memcpy(ptr, &r1, 8);
+      simde_memcpy(&ptr[2], &r2, 8);
+      simde_memcpy(&ptr[4], &r3, 8);
     #else
       int32_t buf[6];
-      for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 3 ; i++) {
+      for (size_t i = 0; i < 6 ; i++) {
         buf[i] = a[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, sizeof(buf));
+      simde_memcpy(ptr, buf, 24);
     #endif
   #endif
 }
@@ -229,9 +229,9 @@ simde_vst3_s64(int64_t ptr[HEDLEY_ARRAY_PARAM(3)], simde_int64x1x3_t val) {
     simde_int64x1_private a_[3] = { simde_int64x1_to_private(val.val[0]),
                                     simde_int64x1_to_private(val.val[1]),
                                     simde_int64x1_to_private(val.val[2]) };
-    simde_memcpy(ptr, &a_[0].values, sizeof(a_[0].values));
-    simde_memcpy(&ptr[1], &a_[1].values, sizeof(a_[1].values));
-    simde_memcpy(&ptr[2], &a_[2].values, sizeof(a_[2].values));
+    simde_memcpy(ptr, &a_[0].values, 8);
+    simde_memcpy(&ptr[1], &a_[1].values, 8);
+    simde_memcpy(&ptr[2], &a_[2].values, 8);
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A64V8_ENABLE_NATIVE_ALIASES)
@@ -253,25 +253,25 @@ simde_vst3_u8(uint8_t ptr[HEDLEY_ARRAY_PARAM(24)], simde_uint8x8x3_t val) {
                                                           0, 8, 3, 1, 9, 4, 2, 10);
       __typeof__(a_[0].values) m0 = SIMDE_SHUFFLE_VECTOR_(8, 8, r0, a_[2].values,
                                                           0, 1, 8, 3, 4, 9, 6, 7);
-      simde_memcpy(ptr, &m0, sizeof(m0));
+      simde_memcpy(ptr, &m0, 8);
 
       __typeof__(a_[0].values) r1 = SIMDE_SHUFFLE_VECTOR_(8, 8, a_[2].values, a_[1].values,
                                                           2, 5, 11, 3, 6, 12, 4, 7);
       __typeof__(a_[0].values) m1 = SIMDE_SHUFFLE_VECTOR_(8, 8, r1, a_[0].values,
                                                           0, 11, 2, 3, 12, 5, 6, 13);
-      simde_memcpy(&ptr[8], &m1, sizeof(m1));
+      simde_memcpy(&ptr[8], &m1, 8);
 
       __typeof__(a_[0].values) r2 = SIMDE_SHUFFLE_VECTOR_(8, 8, a_[0].values, a_[2].values,
                                                           13, 6, 0, 14, 7, 0, 15, 0);
       __typeof__(a_[0].values) m2 = SIMDE_SHUFFLE_VECTOR_(8, 8, r2, a_[1].values,
                                                           13, 0, 1, 14, 3, 4, 15, 6);
-      simde_memcpy(&ptr[16], &m2, sizeof(m2));
+      simde_memcpy(&ptr[16], &m2, 8);
     #else
       uint8_t buf[24];
-      for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 3 ; i++) {
+      for (size_t i = 0; i < 24 ; i++) {
         buf[i] = a_[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, sizeof(buf));
+      simde_memcpy(ptr, buf, 24);
     #endif
   #endif
 }
@@ -294,25 +294,25 @@ simde_vst3_u16(uint16_t ptr[HEDLEY_ARRAY_PARAM(12)], simde_uint16x4x3_t val) {
                                                           0, 4, 1, 0);
       __typeof__(a_[0].values) m0 = SIMDE_SHUFFLE_VECTOR_(16, 8, r0, a_[2].values,
                                                           0, 1, 4, 2);
-      simde_memcpy(ptr, &m0, sizeof(m0));
+      simde_memcpy(ptr, &m0, 8);
 
       __typeof__(a_[0].values) r1 = SIMDE_SHUFFLE_VECTOR_(16, 8, a_[1].values, a_[2].values,
                                                           1, 5, 2, 0);
       __typeof__(a_[0].values) m1 = SIMDE_SHUFFLE_VECTOR_(16, 8, r1, a_[0].values,
                                                           0, 1, 6, 2);
-      simde_memcpy(&ptr[4], &m1, sizeof(m1));
+      simde_memcpy(&ptr[4], &m1, 8);
 
       __typeof__(a_[0].values) r2 = SIMDE_SHUFFLE_VECTOR_(16, 8, a_[2].values, a_[0].values,
                                                           2, 7, 3, 0);
       __typeof__(a_[0].values) m2 = SIMDE_SHUFFLE_VECTOR_(16, 8, r2, a_[1].values,
                                                           0, 1, 7, 2);
-      simde_memcpy(&ptr[8], &m2, sizeof(m2));
+      simde_memcpy(&ptr[8], &m2, 8);
     #else
       uint16_t buf[12];
-      for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 3 ; i++) {
+      for (size_t i = 0; i < 12 ; i++) {
         buf[i] = a_[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, sizeof(buf));
+      simde_memcpy(ptr, buf, 24);
     #endif
   #endif
 }
@@ -334,15 +334,15 @@ simde_vst3_u32(uint32_t ptr[HEDLEY_ARRAY_PARAM(6)], simde_uint32x2x3_t val) {
       __typeof__(a[0].values) r1 = SIMDE_SHUFFLE_VECTOR_(32, 8, a[0].values, a[1].values, 0, 2);
       __typeof__(a[0].values) r2 = SIMDE_SHUFFLE_VECTOR_(32, 8, a[2].values, a[0].values, 0, 3);
       __typeof__(a[0].values) r3 = SIMDE_SHUFFLE_VECTOR_(32, 8, a[1].values, a[2].values, 1, 3);
-      simde_memcpy(ptr, &r1, sizeof(r1));
-      simde_memcpy(&ptr[2], &r2, sizeof(r2));
-      simde_memcpy(&ptr[4], &r3, sizeof(r3));
+      simde_memcpy(ptr, &r1, 8);
+      simde_memcpy(&ptr[2], &r2, 8);
+      simde_memcpy(&ptr[4], &r3, 8);
     #else
       uint32_t buf[6];
-      for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 3 ; i++) {
+      for (size_t i = 0; i < 6 ; i++) {
         buf[i] = a[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, sizeof(buf));
+      simde_memcpy(ptr, buf, 24);
     #endif
   #endif
 }
@@ -360,9 +360,9 @@ simde_vst3_u64(uint64_t ptr[HEDLEY_ARRAY_PARAM(3)], simde_uint64x1x3_t val) {
     simde_uint64x1_private a_[3] = { simde_uint64x1_to_private(val.val[0]),
                                      simde_uint64x1_to_private(val.val[1]),
                                      simde_uint64x1_to_private(val.val[2]) };
-    simde_memcpy(ptr, &a_[0].values, sizeof(a_[0].values));
-    simde_memcpy(&ptr[1], &a_[1].values, sizeof(a_[1].values));
-    simde_memcpy(&ptr[2], &a_[2].values, sizeof(a_[2].values));
+    simde_memcpy(ptr, &a_[0].values, 8);
+    simde_memcpy(&ptr[1], &a_[1].values, 8);
+    simde_memcpy(&ptr[2], &a_[2].values, 8);
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A64V8_ENABLE_NATIVE_ALIASES)
@@ -380,10 +380,10 @@ simde_vst3q_f16(simde_float16_t ptr[HEDLEY_ARRAY_PARAM(24)], simde_float16x8x3_t
                                       simde_float16x8_to_private(val.val[1]),
                                       simde_float16x8_to_private(val.val[2]) };
     simde_float16_t buf[24];
-    for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 3 ; i++) {
+    for (size_t i = 0; i < 24 ; i++) {
       buf[i] = a_[i % 3].values[i / 3];
     }
-    simde_memcpy(ptr, buf, sizeof(buf));
+    simde_memcpy(ptr, buf, 48);
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -405,25 +405,25 @@ simde_vst3q_f32(simde_float32_t ptr[HEDLEY_ARRAY_PARAM(12)], simde_float32x4x3_t
                                                           0, 4, 1, 0);
       __typeof__(a_[0].values) m0 = SIMDE_SHUFFLE_VECTOR_(32, 16, r0, a_[2].values,
                                                           0, 1, 4, 2);
-      simde_memcpy(ptr, &m0, sizeof(m0));
+      simde_memcpy(ptr, &m0, 16);
 
       __typeof__(a_[0].values) r1 = SIMDE_SHUFFLE_VECTOR_(32, 16, a_[1].values, a_[2].values,
                                                           1, 5, 2, 0);
       __typeof__(a_[0].values) m1 = SIMDE_SHUFFLE_VECTOR_(32, 16, r1, a_[0].values,
                                                           0, 1, 6, 2);
-      simde_memcpy(&ptr[4], &m1, sizeof(m1));
+      simde_memcpy(&ptr[4], &m1, 16);
 
       __typeof__(a_[0].values) r2 = SIMDE_SHUFFLE_VECTOR_(32, 16, a_[2].values, a_[0].values,
                                                           2, 7, 3, 0);
       __typeof__(a_[0].values) m2 = SIMDE_SHUFFLE_VECTOR_(32, 16, r2, a_[1].values,
                                                           0, 1, 7, 2);
-      simde_memcpy(&ptr[8], &m2, sizeof(m2));
+      simde_memcpy(&ptr[8], &m2, 16);
     #else
       simde_float32_t buf[12];
-      for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 3 ; i++) {
+      for (size_t i = 0; i < 12 ; i++) {
         buf[i] = a_[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, sizeof(buf));
+      simde_memcpy(ptr, buf, 48);
     #endif
   #endif
 }
@@ -445,15 +445,15 @@ simde_vst3q_f64(simde_float64_t ptr[HEDLEY_ARRAY_PARAM(6)], simde_float64x2x3_t 
       __typeof__(a[0].values) r1 = SIMDE_SHUFFLE_VECTOR_(64, 16, a[0].values, a[1].values, 0, 2);
       __typeof__(a[0].values) r2 = SIMDE_SHUFFLE_VECTOR_(64, 16, a[2].values, a[0].values, 0, 3);
       __typeof__(a[0].values) r3 = SIMDE_SHUFFLE_VECTOR_(64, 16, a[1].values, a[2].values, 1, 3);
-      simde_memcpy(ptr, &r1, sizeof(r1));
-      simde_memcpy(&ptr[2], &r2, sizeof(r2));
-      simde_memcpy(&ptr[4], &r3, sizeof(r3));
+      simde_memcpy(ptr, &r1, 16);
+      simde_memcpy(&ptr[2], &r2, 16);
+      simde_memcpy(&ptr[4], &r3, 16);
     #else
       simde_float64_t buf[6];
-      for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 3 ; i++) {
+      for (size_t i = 0; i < 6 ; i++) {
         buf[i] = a[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, sizeof(buf));
+      simde_memcpy(ptr, buf, 48);
     #endif
   #endif
 }
@@ -478,7 +478,7 @@ simde_vst3q_s8(int8_t ptr[HEDLEY_ARRAY_PARAM(48)], simde_int8x16x3_t val) {
 
       __typeof__(a_[0].values) m0 = SIMDE_SHUFFLE_VECTOR_(8, 16, r0, a_[2].values,
                                                           0, 1, 16, 3, 4, 17, 6, 7, 18, 9, 10, 19, 12, 13, 20, 15);
-      simde_memcpy(ptr, &m0, sizeof(m0));
+      simde_memcpy(ptr, &m0, 16);
 
       __typeof__(a_[0].values) r1 = SIMDE_SHUFFLE_VECTOR_(8, 16, a_[1].values, a_[2].values,
                                                           5, 21, 11, 6, 22, 12, 7, 23, 13, 8, 24,
@@ -486,20 +486,20 @@ simde_vst3q_s8(int8_t ptr[HEDLEY_ARRAY_PARAM(48)], simde_int8x16x3_t val) {
 
       __typeof__(a_[0].values) m1 = SIMDE_SHUFFLE_VECTOR_(8, 16, r1, r0,
                                                           0, 1, 18, 3, 4, 21, 6, 7, 24, 9, 10, 27, 12, 13, 30, 15);
-      simde_memcpy(&ptr[16], &m1, sizeof(m1));
+      simde_memcpy(&ptr[16], &m1, 16);
 
       __typeof__(a_[0].values) r2 = SIMDE_SHUFFLE_VECTOR_(8, 16, a_[2].values, a_[0].values,
                                                           10, 27, 0, 11, 28, 0, 12, 29, 0, 13, 30, 0, 14, 31, 0, 15);
 
       __typeof__(a_[0].values) m2 = SIMDE_SHUFFLE_VECTOR_(8, 16, r2, r1,
                                                           0, 1, 18, 3, 4, 21, 6, 7, 24, 9, 10, 27, 12, 13, 30, 15);
-      simde_memcpy(&ptr[32], &m2, sizeof(m2));
+      simde_memcpy(&ptr[32], &m2, 16);
     #else
       int8_t buf[48];
-      for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 3 ; i++) {
+      for (size_t i = 0; i < 48 ; i++) {
         buf[i] = a_[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, sizeof(buf));
+      simde_memcpy(ptr, buf, 48);
     #endif
   #endif
 }
@@ -522,25 +522,25 @@ simde_vst3q_s16(int16_t ptr[HEDLEY_ARRAY_PARAM(24)], simde_int16x8x3_t val) {
                                                           0, 8, 3, 1, 9, 4, 2, 10);
       __typeof__(a_[0].values) m0 = SIMDE_SHUFFLE_VECTOR_(16, 16, r0, a_[2].values,
                                                           0, 1, 8, 3, 4, 9, 6, 7);
-      simde_memcpy(ptr, &m0, sizeof(m0));
+      simde_memcpy(ptr, &m0, 16);
 
       __typeof__(a_[0].values) r1 = SIMDE_SHUFFLE_VECTOR_(16, 16, a_[2].values, a_[1].values,
                                                           2, 5, 11, 3, 6, 12, 4, 7);
       __typeof__(a_[0].values) m1 = SIMDE_SHUFFLE_VECTOR_(16, 16, r1, a_[0].values,
                                                           0, 11, 2, 3, 12, 5, 6, 13);
-      simde_memcpy(&ptr[8], &m1, sizeof(m1));
+      simde_memcpy(&ptr[8], &m1, 16);
 
       __typeof__(a_[0].values) r2 = SIMDE_SHUFFLE_VECTOR_(16, 16, a_[0].values, a_[2].values,
                                                           13, 6, 0, 14, 7, 0, 15, 0);
       __typeof__(a_[0].values) m2 = SIMDE_SHUFFLE_VECTOR_(16, 16, r2, a_[1].values,
                                                           13, 0, 1, 14, 3, 4, 15, 6);
-      simde_memcpy(&ptr[16], &m2, sizeof(m2));
+      simde_memcpy(&ptr[16], &m2, 16);
     #else
       int16_t buf[24];
-      for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 3 ; i++) {
+      for (size_t i = 0; i < 24 ; i++) {
         buf[i] = a_[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, sizeof(buf));
+      simde_memcpy(ptr, buf, 48);
     #endif
   #endif
 }
@@ -563,25 +563,25 @@ simde_vst3q_s32(int32_t ptr[HEDLEY_ARRAY_PARAM(12)], simde_int32x4x3_t val) {
                                                           0, 4, 1, 0);
       __typeof__(a_[0].values) m0 = SIMDE_SHUFFLE_VECTOR_(32, 16, r0, a_[2].values,
                                                           0, 1, 4, 2);
-      simde_memcpy(ptr, &m0, sizeof(m0));
+      simde_memcpy(ptr, &m0, 16);
 
       __typeof__(a_[0].values) r1 = SIMDE_SHUFFLE_VECTOR_(32, 16, a_[1].values, a_[2].values,
                                                           1, 5, 2, 0);
       __typeof__(a_[0].values) m1 = SIMDE_SHUFFLE_VECTOR_(32, 16, r1, a_[0].values,
                                                           0, 1, 6, 2);
-      simde_memcpy(&ptr[4], &m1, sizeof(m1));
+      simde_memcpy(&ptr[4], &m1, 16);
 
       __typeof__(a_[0].values) r2 = SIMDE_SHUFFLE_VECTOR_(32, 16, a_[2].values, a_[0].values,
                                                           2, 7, 3, 0);
       __typeof__(a_[0].values) m2 = SIMDE_SHUFFLE_VECTOR_(32, 16, r2, a_[1].values,
                                                           0, 1, 7, 2);
-      simde_memcpy(&ptr[8], &m2, sizeof(m2));
+      simde_memcpy(&ptr[8], &m2, 16);
     #else
       int32_t buf[12];
-      for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 3 ; i++) {
+      for (size_t i = 0; i < 12 ; i++) {
         buf[i] = a_[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, sizeof(buf));
+      simde_memcpy(ptr, buf, 48);
     #endif
   #endif
 }
@@ -603,15 +603,15 @@ simde_vst3q_s64(int64_t ptr[HEDLEY_ARRAY_PARAM(6)], simde_int64x2x3_t val) {
       __typeof__(a[0].values) r1 = SIMDE_SHUFFLE_VECTOR_(64, 16, a[0].values, a[1].values, 0, 2);
       __typeof__(a[0].values) r2 = SIMDE_SHUFFLE_VECTOR_(64, 16, a[2].values, a[0].values, 0, 3);
       __typeof__(a[0].values) r3 = SIMDE_SHUFFLE_VECTOR_(64, 16, a[1].values, a[2].values, 1, 3);
-      simde_memcpy(ptr, &r1, sizeof(r1));
-      simde_memcpy(&ptr[2], &r2, sizeof(r2));
-      simde_memcpy(&ptr[4], &r3, sizeof(r3));
+      simde_memcpy(ptr, &r1, 16);
+      simde_memcpy(&ptr[2], &r2, 16);
+      simde_memcpy(&ptr[4], &r3, 16);
     #else
       int64_t buf[6];
-      for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 3 ; i++) {
+      for (size_t i = 0; i < 6 ; i++) {
         buf[i] = a[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, sizeof(buf));
+      simde_memcpy(ptr, buf, 48);
     #endif
   #endif
 }
@@ -668,7 +668,7 @@ simde_vst3q_u8(uint8_t ptr[HEDLEY_ARRAY_PARAM(48)], simde_uint8x16x3_t val) {
 
       __typeof__(a_[0].values) m0 = SIMDE_SHUFFLE_VECTOR_(8, 16, r0, a_[2].values,
                                                           0, 1, 16, 3, 4, 17, 6, 7, 18, 9, 10, 19, 12, 13, 20, 15);
-      simde_memcpy(ptr, &m0, sizeof(m0));
+      simde_memcpy(ptr, &m0, 16);
 
       __typeof__(a_[0].values) r1 = SIMDE_SHUFFLE_VECTOR_(8, 16, a_[1].values, a_[2].values,
                                                           5, 21, 11, 6, 22, 12, 7, 23, 13, 8, 24,
@@ -676,20 +676,20 @@ simde_vst3q_u8(uint8_t ptr[HEDLEY_ARRAY_PARAM(48)], simde_uint8x16x3_t val) {
 
       __typeof__(a_[0].values) m1 = SIMDE_SHUFFLE_VECTOR_(8, 16, r1, r0,
                                                           0, 1, 18, 3, 4, 21, 6, 7, 24, 9, 10, 27, 12, 13, 30, 15);
-      simde_memcpy(&ptr[16], &m1, sizeof(m1));
+      simde_memcpy(&ptr[16], &m1, 16);
 
       __typeof__(a_[0].values) r2 = SIMDE_SHUFFLE_VECTOR_(8, 16, a_[2].values, a_[0].values,
                                                           10, 27, 0, 11, 28, 0, 12, 29, 0, 13, 30, 0, 14, 31, 0, 15);
 
       __typeof__(a_[0].values) m2 = SIMDE_SHUFFLE_VECTOR_(8, 16, r2, r1,
                                                           0, 1, 18, 3, 4, 21, 6, 7, 24, 9, 10, 27, 12, 13, 30, 15);
-      simde_memcpy(&ptr[32], &m2, sizeof(m2));
+      simde_memcpy(&ptr[32], &m2, 16);
     #else
       uint8_t buf[48];
-      for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 3 ; i++) {
+      for (size_t i = 0; i < 48 ; i++) {
         buf[i] = a_[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, sizeof(buf));
+      simde_memcpy(ptr, buf, 48);
     #endif
   #endif
 }
@@ -713,25 +713,25 @@ simde_vst3q_u16(uint16_t ptr[HEDLEY_ARRAY_PARAM(24)], simde_uint16x8x3_t val) {
                                                           0, 8, 3, 1, 9, 4, 2, 10);
       __typeof__(a_[0].values) m0 = SIMDE_SHUFFLE_VECTOR_(16, 16, r0, a_[2].values,
                                                           0, 1, 8, 3, 4, 9, 6, 7);
-      simde_memcpy(ptr, &m0, sizeof(m0));
+      simde_memcpy(ptr, &m0, 16);
 
       __typeof__(a_[0].values) r1 = SIMDE_SHUFFLE_VECTOR_(16, 16, a_[2].values, a_[1].values,
                                                           2, 5, 11, 3, 6, 12, 4, 7);
       __typeof__(a_[0].values) m1 = SIMDE_SHUFFLE_VECTOR_(16, 16, r1, a_[0].values,
                                                           0, 11, 2, 3, 12, 5, 6, 13);
-      simde_memcpy(&ptr[8], &m1, sizeof(m1));
+      simde_memcpy(&ptr[8], &m1, 16);
 
       __typeof__(a_[0].values) r2 = SIMDE_SHUFFLE_VECTOR_(16, 16, a_[0].values, a_[2].values,
                                                           13, 6, 0, 14, 7, 0, 15, 0);
       __typeof__(a_[0].values) m2 = SIMDE_SHUFFLE_VECTOR_(16, 16, r2, a_[1].values,
                                                           13, 0, 1, 14, 3, 4, 15, 6);
-      simde_memcpy(&ptr[16], &m2, sizeof(m2));
+      simde_memcpy(&ptr[16], &m2, 16);
     #else
       uint16_t buf[24];
-      for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 3 ; i++) {
+      for (size_t i = 0; i < 24 ; i++) {
         buf[i] = a_[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, sizeof(buf));
+      simde_memcpy(ptr, buf, 48);
     #endif
   #endif
 }
@@ -755,25 +755,25 @@ simde_vst3q_u32(uint32_t ptr[HEDLEY_ARRAY_PARAM(12)], simde_uint32x4x3_t val) {
                                                           0, 4, 1, 0);
       __typeof__(a_[0].values) m0 = SIMDE_SHUFFLE_VECTOR_(32, 16, r0, a_[2].values,
                                                           0, 1, 4, 2);
-      simde_memcpy(ptr, &m0, sizeof(m0));
+      simde_memcpy(ptr, &m0, 16);
 
       __typeof__(a_[0].values) r1 = SIMDE_SHUFFLE_VECTOR_(32, 16, a_[1].values, a_[2].values,
                                                           1, 5, 2, 0);
       __typeof__(a_[0].values) m1 = SIMDE_SHUFFLE_VECTOR_(32, 16, r1, a_[0].values,
                                                           0, 1, 6, 2);
-      simde_memcpy(&ptr[4], &m1, sizeof(m1));
+      simde_memcpy(&ptr[4], &m1, 16);
 
       __typeof__(a_[0].values) r2 = SIMDE_SHUFFLE_VECTOR_(32, 16, a_[2].values, a_[0].values,
                                                           2, 7, 3, 0);
       __typeof__(a_[0].values) m2 = SIMDE_SHUFFLE_VECTOR_(32, 16, r2, a_[1].values,
                                                           0, 1, 7, 2);
-      simde_memcpy(&ptr[8], &m2, sizeof(m2));
+      simde_memcpy(&ptr[8], &m2, 16);
     #else
       uint32_t buf[12];
-      for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 3 ; i++) {
+      for (size_t i = 0; i < 12 ; i++) {
         buf[i] = a_[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, sizeof(buf));
+      simde_memcpy(ptr, buf, 48);
     #endif
   #endif
 }
@@ -795,15 +795,15 @@ simde_vst3q_u64(uint64_t ptr[HEDLEY_ARRAY_PARAM(6)], simde_uint64x2x3_t val) {
       __typeof__(a[0].values) r1 = SIMDE_SHUFFLE_VECTOR_(64, 16, a[0].values, a[1].values, 0, 2);
       __typeof__(a[0].values) r2 = SIMDE_SHUFFLE_VECTOR_(64, 16, a[2].values, a[0].values, 0, 3);
       __typeof__(a[0].values) r3 = SIMDE_SHUFFLE_VECTOR_(64, 16, a[1].values, a[2].values, 1, 3);
-      simde_memcpy(ptr, &r1, sizeof(r1));
-      simde_memcpy(&ptr[2], &r2, sizeof(r2));
-      simde_memcpy(&ptr[4], &r3, sizeof(r3));
+      simde_memcpy(ptr, &r1, 16);
+      simde_memcpy(&ptr[2], &r2, 16);
+      simde_memcpy(&ptr[4], &r3, 16);
     #else
       uint64_t buf[6];
-      for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 3 ; i++) {
+      for (size_t i = 0; i < 6 ; i++) {
         buf[i] = a[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, sizeof(buf));
+      simde_memcpy(ptr, buf, 48);
     #endif
   #endif
 }

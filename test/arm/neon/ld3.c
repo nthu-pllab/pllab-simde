@@ -45,7 +45,7 @@ test_simde_vld3_s8 (SIMDE_MUNIT_TEST_ARGS) {
     },
   };
 
-  for (size_t i = 0 ; i < (sizeof(test_vec) / sizeof(test_vec[0])) ; i++) {
+  for (size_t i = 0 ; i < 8 ; i++) {
     simde_int8x8x3_t r = simde_vld3_s8(test_vec[i].a);
 
     simde_int8x8x3_t expected = {
@@ -120,7 +120,7 @@ test_simde_vld3_f16 (SIMDE_MUNIT_TEST_ARGS) {
        {  SIMDE_FLOAT16_VALUE(-2.70), SIMDE_FLOAT16_VALUE(45.71), SIMDE_FLOAT16_VALUE(39.55), SIMDE_FLOAT16_VALUE(-5.48) } } },
   };
 
-  for (size_t i = 0 ; i < (sizeof(test_vec) / sizeof(test_vec[0])) ; i++) {
+  for (size_t i = 0 ; i < 8 ; i++) {
     simde_float16x4x3_t r = simde_vld3_f16(test_vec[i].a);
 
     simde_float16x4x3_t expected = {
@@ -251,7 +251,7 @@ test_simde_vld3q_f16 (SIMDE_MUNIT_TEST_ARGS) {
          SIMDE_FLOAT16_VALUE(  9.490),  SIMDE_FLOAT16_VALUE( 57.932),  SIMDE_FLOAT16_VALUE( 54.618),  SIMDE_FLOAT16_VALUE( 61.709)  } } },
   };
 
-  for (size_t i = 0 ; i < (sizeof(test_vec) / sizeof(test_vec[0])) ; i++) {
+  for (size_t i = 0 ; i < 8 ; i++) {
     simde_float16x8x3_t r = simde_vld3q_f16(test_vec[i].a);
 
     simde_float16x8x3_t expected = {

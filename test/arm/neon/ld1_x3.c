@@ -44,7 +44,7 @@ test_simde_vld1_f16_x3 (SIMDE_MUNIT_TEST_ARGS) {
      {  SIMDE_FLOAT16_VALUE(-1.16), SIMDE_FLOAT16_VALUE(1.56), SIMDE_FLOAT16_VALUE(-4.94), SIMDE_FLOAT16_VALUE(-5.71) } } },
   };
 
-  for (size_t i = 0; i < (sizeof(test_vec) / sizeof(test_vec[0])); i++) {
+  for (size_t i = 0; i < 5; i++) {
     simde_float16x4x3_t r = simde_vld1_f16_x3(test_vec[i].buf);
     simde_float16x4x3_t expected = {{
         simde_vld1_f16(test_vec[i].expected[0]),
@@ -114,7 +114,7 @@ test_simde_vld1_f32_x3 (SIMDE_MUNIT_TEST_ARGS) {
     },
   };
 
-  for (size_t i = 0; i < (sizeof(test_vec) / sizeof(test_vec[0])); i++) {
+  for (size_t i = 0; i < 8; i++) {
     simde_float32x2x3_t r = simde_vld1_f32_x3(test_vec[i].buf);
     simde_float32x2x3_t expected = {{
         simde_vld1_f32(test_vec[i].expected[0]),
@@ -189,7 +189,7 @@ test_simde_vld1_f64_x3 (SIMDE_MUNIT_TEST_ARGS) {
     },
   };
 
-  for (size_t i = 0; i < (sizeof(test_vec) / sizeof(test_vec[0])); i++) {
+  for (size_t i = 0; i < 8; i++) {
     simde_float64x1x3_t r = simde_vld1_f64_x3(test_vec[i].buf);
     simde_float64x1x3_t expected = {{
         simde_vld1_f64(test_vec[i].expected[0]),
@@ -280,7 +280,7 @@ test_simde_vld1_s8_x3 (SIMDE_MUNIT_TEST_ARGS) {
     },
   };
 
-  for (size_t i = 0; i < (sizeof(test_vec) / sizeof(test_vec[0])); i++) {
+  for (size_t i = 0; i < 8; i++) {
     simde_int8x8x3_t r = simde_vld1_s8_x3(test_vec[i].buf);
     simde_int8x8x3_t expected = {{
         simde_vld1_s8(test_vec[i].expected[0]),
@@ -361,7 +361,7 @@ test_simde_vld1_s16_x3 (SIMDE_MUNIT_TEST_ARGS) {
     },
   };
 
-  for (size_t i = 0; i < (sizeof(test_vec) / sizeof(test_vec[0])); i++) {
+  for (size_t i = 0; i < 8; i++) {
     simde_int16x4x3_t r = simde_vld1_s16_x3(test_vec[i].buf);
     simde_int16x4x3_t expected = {{
         simde_vld1_s16(test_vec[i].expected[0]),
@@ -434,7 +434,7 @@ test_simde_vld1_s32_x3 (SIMDE_MUNIT_TEST_ARGS) {
     },
   };
 
-  for (size_t i = 0; i < (sizeof(test_vec) / sizeof(test_vec[0])); i++) {
+  for (size_t i = 0; i < 8; i++) {
     simde_int32x2x3_t r = simde_vld1_s32_x3(test_vec[i].buf);
     simde_int32x2x3_t expected = {{
         simde_vld1_s32(test_vec[i].expected[0]),
@@ -507,7 +507,7 @@ test_simde_vld1_s64_x3 (SIMDE_MUNIT_TEST_ARGS) {
     },
   };
 
-  for (size_t i = 0; i < (sizeof(test_vec) / sizeof(test_vec[0])); i++) {
+  for (size_t i = 0; i < 8; i++) {
     simde_int64x1x3_t r = simde_vld1_s64_x3(test_vec[i].buf);
     simde_int64x1x3_t expected = {{
         simde_vld1_s64(test_vec[i].expected[0]),
@@ -596,7 +596,7 @@ test_simde_vld1_u8_x3 (SIMDE_MUNIT_TEST_ARGS) {
     },
   };
 
-  for (size_t i = 0; i < (sizeof(test_vec) / sizeof(test_vec[0])); i++) {
+  for (size_t i = 0; i < 8; i++) {
     simde_uint8x8x3_t r = simde_vld1_u8_x3(test_vec[i].buf);
     simde_uint8x8x3_t expected = {{
         simde_vld1_u8(test_vec[i].expected[0]),
@@ -677,7 +677,7 @@ test_simde_vld1_u16_x3 (SIMDE_MUNIT_TEST_ARGS) {
     },
   };
 
-  for (size_t i = 0; i < (sizeof(test_vec) / sizeof(test_vec[0])); i++) {
+  for (size_t i = 0; i < 8; i++) {
     simde_uint16x4x3_t r = simde_vld1_u16_x3(test_vec[i].buf);
     simde_uint16x4x3_t expected = {{
         simde_vld1_u16(test_vec[i].expected[0]),
@@ -750,7 +750,7 @@ test_simde_vld1_u32_x3 (SIMDE_MUNIT_TEST_ARGS) {
     },
   };
 
-  for (size_t i = 0; i < (sizeof(test_vec) / sizeof(test_vec[0])); i++) {
+  for (size_t i = 0; i < 8; i++) {
     simde_uint32x2x3_t r = simde_vld1_u32_x3(test_vec[i].buf);
     simde_uint32x2x3_t expected = {{
         simde_vld1_u32(test_vec[i].expected[0]),
@@ -823,7 +823,7 @@ test_simde_vld1_u64_x3 (SIMDE_MUNIT_TEST_ARGS) {
     },
   };
 
-  for (size_t i = 0; i < (sizeof(test_vec) / sizeof(test_vec[0])); i++) {
+  for (size_t i = 0; i < 8; i++) {
     simde_uint64x1x3_t r = simde_vld1_u64_x3(test_vec[i].buf);
     simde_uint64x1x3_t expected = {{
         simde_vld1_u64(test_vec[i].expected[0]),

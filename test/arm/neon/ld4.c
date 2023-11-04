@@ -63,7 +63,7 @@ test_simde_vld4_f16 (SIMDE_MUNIT_TEST_ARGS) {
        {  SIMDE_FLOAT16_VALUE(-32.75), SIMDE_FLOAT16_VALUE(-23.80), SIMDE_FLOAT16_VALUE(6.68), SIMDE_FLOAT16_VALUE(-9.27) } } },
   };
 
-  for (size_t i = 0 ; i < 8 ; i++) {
+  for (size_t i = 0 ; i < (sizeof(test_vec) / sizeof(test_vec[0])) ; i++) {
     simde_float16x4x4_t r = simde_vld4_f16(test_vec[i].a);
 
     simde_float16x4x4_t expected = {
@@ -228,7 +228,7 @@ test_simde_vld4q_f16 (SIMDE_MUNIT_TEST_ARGS) {
          SIMDE_FLOAT16_VALUE( 58.329), SIMDE_FLOAT16_VALUE( -  0.973),  SIMDE_FLOAT16_VALUE( 76.632),  SIMDE_FLOAT16_VALUE( 26.405)  } } },
   };
 
-  for (size_t i = 0 ; i < 8 ; i++) {
+  for (size_t i = 0 ; i < (sizeof(test_vec) / sizeof(test_vec[0])) ; i++) {
     simde_float16x8x4_t r = simde_vld4q_f16(test_vec[i].a);
 
     simde_float16x8x4_t expected = {

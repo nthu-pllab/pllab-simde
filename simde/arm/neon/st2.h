@@ -47,7 +47,7 @@ simde_vst2_f16(simde_float16_t *ptr, simde_float16x4x2_t val) {
     simde_float16_t buf[8];
     simde_float16x4_private a_[2] = {simde_float16x4_to_private(val.val[0]),
                                      simde_float16x4_to_private(val.val[1])};
-    for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 2 ; i++) {
+    for (size_t i = 0; i < 8 ; i++) {
       buf[i] = a_[i % 2].values[i / 2];
     }
     simde_memcpy(ptr, buf, 16);

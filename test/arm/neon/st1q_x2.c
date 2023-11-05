@@ -85,7 +85,7 @@ test_simde_vst1q_f16_x2 (SIMDE_MUNIT_TEST_ARGS) {
     }};
     simde_float16 r_[16];
     simde_vst1q_f16_x2(r_, val);
-    simde_assert_equal_i(0, simde_memcmp(r_, test_vec[i].r, 32));
+    simde_assert_equal_i(0, simde_memcmp(r_, test_vec[i].r, sizeof(test_vec[i].r)));
   }
 
   return 0;

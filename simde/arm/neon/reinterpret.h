@@ -1693,7 +1693,7 @@ simde_vreinterpret_u16_f16(simde_float16x4_t a) {
   #else
     simde_uint16x4_private r_;
     simde_float16x4_private a_ = simde_float16x4_to_private(a);
-    simde_memcpy(&r_, &a_, sizeof(r_));
+    simde_memcpy(&r_, &a_, 8);
     return simde_uint16x4_from_private(r_);
   #endif
 }
@@ -2169,7 +2169,7 @@ simde_vreinterpretq_u16_f16(simde_float16x8_t a) {
   #else
     simde_uint16x8_private r_;
     simde_float16x8_private a_ = simde_float16x8_to_private(a);
-    simde_memcpy(&r_, &a_, sizeof(r_));
+    simde_memcpy(&r_, &a_, 16);
     return simde_uint16x8_from_private(r_);
   #endif
 }
@@ -2339,7 +2339,7 @@ simde_vreinterpret_u64_f16(simde_float16x4_t a) {
   #else
     simde_uint64x1_private r_;
     simde_float16x4_private a_ = simde_float16x4_to_private(a);
-    simde_memcpy(&r_, &a_, sizeof(r_));
+    simde_memcpy(&r_, &a_, 8);
     return simde_uint64x1_from_private(r_);
   #endif
 }
@@ -3496,7 +3496,7 @@ simde_vreinterpret_f32_f16(simde_float16x4_t a) {
   #else
     simde_float32x2_private r_;
     simde_float16x4_private a_ = simde_float16x4_to_private(a);
-    simde_memcpy(&r_, &a_, sizeof(r_));
+    simde_memcpy(&r_, &a_, 8);
     return simde_float32x2_from_private(r_);
   #endif
 }
@@ -3513,7 +3513,7 @@ simde_vreinterpretq_f32_f16(simde_float16x8_t a) {
   #else
     simde_float32x4_private r_;
     simde_float16x8_private a_ = simde_float16x8_to_private(a);
-    simde_memcpy(&r_, &a_, sizeof(r_));
+    simde_memcpy(&r_, &a_, 16);
     return simde_float32x4_from_private(r_);
   #endif
 }
@@ -3530,7 +3530,7 @@ simde_vreinterpret_f64_f16(simde_float16x4_t a) {
   #else
     simde_float64x1_private r_;
     simde_float16x4_private a_ = simde_float16x4_to_private(a);
-    simde_memcpy(&r_, &a_, sizeof(r_));
+    simde_memcpy(&r_, &a_, 8);
     return simde_float64x1_from_private(r_);
   #endif
 }
@@ -3547,7 +3547,7 @@ simde_vreinterpretq_f64_f16(simde_float16x8_t a) {
   #else
     simde_float64x2_private r_;
     simde_float16x8_private a_ = simde_float16x8_to_private(a);
-    simde_memcpy(&r_, &a_, sizeof(r_));
+    simde_memcpy(&r_, &a_, 16);
     return simde_float64x2_from_private(r_);
   #endif
 }
@@ -3564,7 +3564,7 @@ simde_vreinterpret_u8_f16(simde_float16x4_t a) {
   #else
     simde_uint8x8_private r_;
     simde_float16x4_private a_ = simde_float16x4_to_private(a);
-    simde_memcpy(&r_, &a_, sizeof(r_));
+    simde_memcpy(&r_, &a_, 8);
     return simde_uint8x8_from_private(r_);
   #endif
 }
@@ -3581,7 +3581,7 @@ simde_vreinterpretq_u8_f16(simde_float16x8_t a) {
   #else
     simde_uint8x16_private r_;
     simde_float16x8_private a_ = simde_float16x8_to_private(a);
-    simde_memcpy(&r_, &a_, sizeof(r_));
+    simde_memcpy(&r_, &a_, 16);
     return simde_uint8x16_from_private(r_);
   #endif
 }
@@ -3598,7 +3598,7 @@ simde_vreinterpret_s8_f16(simde_float16x4_t a) {
   #else
     simde_int8x8_private r_;
     simde_float16x4_private a_ = simde_float16x4_to_private(a);
-    simde_memcpy(&r_, &a_, sizeof(r_));
+    simde_memcpy(&r_, &a_, 8);
     return simde_int8x8_from_private(r_);
   #endif
 }
@@ -3615,7 +3615,7 @@ simde_vreinterpretq_s8_f16(simde_float16x8_t a) {
   #else
     simde_int8x16_private r_;
     simde_float16x8_private a_ = simde_float16x8_to_private(a);
-    simde_memcpy(&r_, &a_, sizeof(r_));
+    simde_memcpy(&r_, &a_, 16);
     return simde_int8x16_from_private(r_);
   #endif
 }
@@ -3632,7 +3632,7 @@ simde_vreinterpret_s16_f16(simde_float16x4_t a) {
   #else
     simde_int16x4_private r_;
     simde_float16x4_private a_ = simde_float16x4_to_private(a);
-    simde_memcpy(&r_, &a_, sizeof(r_));
+    simde_memcpy(&r_, &a_, 8);
     return simde_int16x4_from_private(r_);
   #endif
 }
@@ -3649,7 +3649,7 @@ simde_vreinterpretq_s16_f16(simde_float16x8_t a) {
   #else
     simde_int16x8_private r_;
     simde_float16x8_private a_ = simde_float16x8_to_private(a);
-    simde_memcpy(&r_, &a_, sizeof(r_));
+    simde_memcpy(&r_, &a_, 16);
     return simde_int16x8_from_private(r_);
   #endif
 }
@@ -3666,7 +3666,7 @@ simde_vreinterpret_s32_f16(simde_float16x4_t a) {
   #else
     simde_int32x2_private r_;
     simde_float16x4_private a_ = simde_float16x4_to_private(a);
-    simde_memcpy(&r_, &a_, sizeof(r_));
+    simde_memcpy(&r_, &a_, 8);
     return simde_int32x2_from_private(r_);
   #endif
 }
@@ -3683,7 +3683,7 @@ simde_vreinterpretq_s32_f16(simde_float16x8_t a) {
   #else
     simde_int32x4_private r_;
     simde_float16x8_private a_ = simde_float16x8_to_private(a);
-    simde_memcpy(&r_, &a_, sizeof(r_));
+    simde_memcpy(&r_, &a_, 16);
     return simde_int32x4_from_private(r_);
   #endif
 }
@@ -3700,7 +3700,7 @@ simde_vreinterpret_s64_f16(simde_float16x4_t a) {
   #else
     simde_int64x1_private r_;
     simde_float16x4_private a_ = simde_float16x4_to_private(a);
-    simde_memcpy(&r_, &a_, sizeof(r_));
+    simde_memcpy(&r_, &a_, 8);
     return simde_int64x1_from_private(r_);
   #endif
 }
@@ -3717,7 +3717,7 @@ simde_vreinterpretq_s64_f16(simde_float16x8_t a) {
   #else
     simde_int64x2_private r_;
     simde_float16x8_private a_ = simde_float16x8_to_private(a);
-    simde_memcpy(&r_, &a_, sizeof(r_));
+    simde_memcpy(&r_, &a_, 16);
     return simde_int64x2_from_private(r_);
   #endif
 }
@@ -3734,7 +3734,7 @@ simde_vreinterpret_u32_f16(simde_float16x4_t a) {
   #else
     simde_uint32x2_private r_;
     simde_float16x4_private a_ = simde_float16x4_to_private(a);
-    simde_memcpy(&r_, &a_, sizeof(r_));
+    simde_memcpy(&r_, &a_, 8);
     return simde_uint32x2_from_private(r_);
   #endif
 }
@@ -3751,7 +3751,7 @@ simde_vreinterpretq_u32_f16(simde_float16x8_t a) {
   #else
     simde_uint32x4_private r_;
     simde_float16x8_private a_ = simde_float16x8_to_private(a);
-    simde_memcpy(&r_, &a_, sizeof(r_));
+    simde_memcpy(&r_, &a_, 16);
     return simde_uint32x4_from_private(r_);
   #endif
 }
@@ -3768,7 +3768,7 @@ simde_vreinterpretq_u64_f16(simde_float16x8_t a) {
   #else
     simde_uint64x2_private r_;
     simde_float16x8_private a_ = simde_float16x8_to_private(a);
-    simde_memcpy(&r_, &a_, sizeof(r_));
+    simde_memcpy(&r_, &a_, 16);
     return simde_uint64x2_from_private(r_);
   #endif
 }

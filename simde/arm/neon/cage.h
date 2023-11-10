@@ -214,7 +214,7 @@ simde_vcageq_f16(simde_float16x8_t a, simde_float16x8_t b) {
       a_ = simde_float16x8_to_private(a),
       b_ = simde_float16x8_to_private(b);
     simde_uint16x8_private r_;
-  
+
     #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 64)
       #if SIMDE_NATURAL_VECTOR_SIZE < 128
         vuint16m2_t
@@ -263,16 +263,16 @@ simde_vcageq_f32(simde_float32x4_t a, simde_float32x4_t b) {
       vuint32m2_t
         vs_0 = __riscv_vmv_v_x_u32m2(UINT32_C(0), 4);
       vbool32_t mask = __riscv_vmfge_vv_f32m2_b32(
-        __riscv_vfabs_v_f32m2(a_.sv128, 4), 
-        __riscv_vfabs_v_f32m2(b_.sv128, 4), 
+        __riscv_vfabs_v_f32m2(a_.sv128, 4),
+        __riscv_vfabs_v_f32m2(b_.sv128, 4),
         4);
       r_.sv128 = __riscv_vmerge_vxm_u32m2(vs_0, -1, mask, 4);
     #else
       vuint32m1_t
         vs_0 = __riscv_vmv_v_x_u32m1(UINT32_C(0), 4);
       vbool32_t mask = __riscv_vmfge_vv_f32m1_b32(
-        __riscv_vfabs_v_f32m1(a_.sv128, 4), 
-        __riscv_vfabs_v_f32m1(b_.sv128, 4), 
+        __riscv_vfabs_v_f32m1(a_.sv128, 4),
+        __riscv_vfabs_v_f32m1(b_.sv128, 4),
         4);
       r_.sv128 = __riscv_vmerge_vxm_u32m1(vs_0, -1, mask, 4);
     #endif
@@ -302,16 +302,16 @@ simde_vcageq_f64(simde_float64x2_t a, simde_float64x2_t b) {
       vuint64m2_t
         vs_0 = __riscv_vmv_v_x_u64m2(UINT64_C(0), 2);
       vbool64_t mask = __riscv_vmfge_vv_f64m2_b64(
-        __riscv_vfabs_v_f64m2(a_.sv128, 2), 
-        __riscv_vfabs_v_f64m2(b_.sv128, 2), 
+        __riscv_vfabs_v_f64m2(a_.sv128, 2),
+        __riscv_vfabs_v_f64m2(b_.sv128, 2),
         2);
       r_.sv128 = __riscv_vmerge_vxm_u64m2(vs_0, -1, mask, 2);
     #else
       vuint64m1_t
         vs_0 = __riscv_vmv_v_x_u64m1(UINT64_C(0), 2);
       vbool64_t mask = __riscv_vmfge_vv_f64m1_b64(
-        __riscv_vfabs_v_f64m1(a_.sv128, 2), 
-        __riscv_vfabs_v_f64m1(b_.sv128, 2), 
+        __riscv_vfabs_v_f64m1(a_.sv128, 2),
+        __riscv_vfabs_v_f64m1(b_.sv128, 2),
         2);
       r_.sv128 = __riscv_vmerge_vxm_u64m1(vs_0, -1, mask, 2);
     #endif

@@ -468,9 +468,9 @@ simde_vaddq_f16(simde_float16x8_t a, simde_float16x8_t b) {
 
     #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 64)
       #if SIMDE_NATURAL_VECTOR_SIZE < 128
-        r_.sv128 = __riscv_vfadd_vv_f16m1(a_.sv128 , b_.sv128 , 8);
+        r_.sv128 = __riscv_vfadd_vv_f16m2(a_.sv128 , b_.sv128 , 8);
       #else
-        r_.sv128 = __riscv_vfadd_vv_f16mf2(a_.sv128 , b_.sv128 , 8);
+        r_.sv128 = __riscv_vfadd_vv_f16m1(a_.sv128 , b_.sv128 , 8);
       #endif
     #else
       SIMDE_VECTORIZE
@@ -508,6 +508,12 @@ simde_vaddq_f32(simde_float32x4_t a, simde_float32x4_t b) {
       r_.m128 = _mm_add_ps(a_.m128, b_.m128);
     #elif defined(SIMDE_WASM_SIMD128_NATIVE)
       r_.v128 = wasm_f32x4_add(a_.v128, b_.v128);
+    #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 64)
+      #if SIMDE_NATURAL_VECTOR_SIZE < 128
+        r_.sv128 = __riscv_vfadd_vv_f32m2(a_.sv128 , b_.sv128 , 4);
+      #else
+        r_.sv128 = __riscv_vfadd_vv_f32m1(a_.sv128 , b_.sv128 , 4);
+      #endif
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = a_.values + b_.values;
     #else
@@ -542,6 +548,14 @@ simde_vaddq_f64(simde_float64x2_t a, simde_float64x2_t b) {
       r_.m128d = _mm_add_pd(a_.m128d, b_.m128d);
     #elif defined(SIMDE_WASM_SIMD128_NATIVE)
       r_.v128 = wasm_f64x2_add(a_.v128, b_.v128);
+    #elif defined(SIMDE_WASM_SIMD128_NATIVE)
+      r_.v128 = wasm_f32x4_add(a_.v128, b_.v128);
+    #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 64)
+      #if SIMDE_NATURAL_VECTOR_SIZE < 128
+        r_.sv128 = __riscv_vfadd_vv_f64m2(a_.sv128 , b_.sv128 , 2);
+      #else
+        r_.sv128 = __riscv_vfadd_vv_f64m1(a_.sv128 , b_.sv128 , 2);
+      #endif
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = a_.values + b_.values;
     #else
@@ -580,7 +594,7 @@ simde_vaddq_s8(simde_int8x16_t a, simde_int8x16_t b) {
       r_.values = a_.values + b_.values;
     #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 64)
       #if SIMDE_NATURAL_VECTOR_SIZE < 128
-        r_.sv128 = __riscv_vadd_vv_i8mf2(a_.sv128 , b_.sv128 , 16);
+        r_.sv128 = __riscv_vadd_vv_i8m2(a_.sv128 , b_.sv128 , 16);
       #else
         r_.sv128 = __riscv_vadd_vv_i8m1(a_.sv128 , b_.sv128 , 16);
       #endif
@@ -616,6 +630,12 @@ simde_vaddq_s16(simde_int16x8_t a, simde_int16x8_t b) {
       r_.m128i = _mm_add_epi16(a_.m128i, b_.m128i);
     #elif defined(SIMDE_WASM_SIMD128_NATIVE)
       r_.v128 = wasm_i16x8_add(a_.v128, b_.v128);
+    #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 64)
+      #if SIMDE_NATURAL_VECTOR_SIZE < 128
+        r_.sv128 = __riscv_vadd_vv_i16m2(a_.sv128 , b_.sv128 , 8);
+      #else
+        r_.sv128 = __riscv_vadd_vv_i16m1(a_.sv128 , b_.sv128 , 8);
+      #endif
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = a_.values + b_.values;
     #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 64)
@@ -658,7 +678,7 @@ simde_vaddq_s32(simde_int32x4_t a, simde_int32x4_t b) {
       r_.v128 = wasm_i32x4_add(a_.v128, b_.v128);
     #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 64)
       #if SIMDE_NATURAL_VECTOR_SIZE < 128
-        r_.sv128 = __riscv_vadd_vv_i32mf2(a_.sv128 , b_.sv128 , 4);
+        r_.sv128 = __riscv_vadd_vv_i32m2(a_.sv128 , b_.sv128 , 4);
       #else
         r_.sv128 = __riscv_vadd_vv_i32m1(a_.sv128 , b_.sv128 , 4);
       #endif
@@ -696,6 +716,12 @@ simde_vaddq_s64(simde_int64x2_t a, simde_int64x2_t b) {
       r_.m128i = _mm_add_epi64(a_.m128i, b_.m128i);
     #elif defined(SIMDE_WASM_SIMD128_NATIVE)
       r_.v128 = wasm_i64x2_add(a_.v128, b_.v128);
+    #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 64)
+      #if SIMDE_NATURAL_VECTOR_SIZE < 128
+        r_.sv128 = __riscv_vadd_vv_i64m2(a_.sv128 , b_.sv128 , 2);
+      #else
+        r_.sv128 = __riscv_vadd_vv_i64m1(a_.sv128 , b_.sv128 , 2);
+      #endif
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = a_.values + b_.values;
     #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 64)
@@ -732,7 +758,13 @@ simde_vaddq_u8(simde_uint8x16_t a, simde_uint8x16_t b) {
       a_ = simde_uint8x16_to_private(a),
       b_ = simde_uint8x16_to_private(b);
 
-    #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 64)
+      #if SIMDE_NATURAL_VECTOR_SIZE < 128
+        r_.sv128 = __riscv_vadd_vv_u8m2(a_.sv128 , b_.sv128 , 16);
+      #else
+        r_.sv128 = __riscv_vadd_vv_u8m1(a_.sv128 , b_.sv128 , 16);
+      #endif
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = a_.values + b_.values;
     #else
       SIMDE_VECTORIZE
@@ -762,7 +794,13 @@ simde_vaddq_u16(simde_uint16x8_t a, simde_uint16x8_t b) {
       a_ = simde_uint16x8_to_private(a),
       b_ = simde_uint16x8_to_private(b);
 
-    #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 64)
+      #if SIMDE_NATURAL_VECTOR_SIZE < 128
+        r_.sv128 = __riscv_vadd_vv_u16m2(a_.sv128 , b_.sv128 , 8);
+      #else
+        r_.sv128 = __riscv_vadd_vv_u16m1(a_.sv128 , b_.sv128 , 8);
+      #endif
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = a_.values + b_.values;
     #else
       SIMDE_VECTORIZE
@@ -792,7 +830,13 @@ simde_vaddq_u32(simde_uint32x4_t a, simde_uint32x4_t b) {
       a_ = simde_uint32x4_to_private(a),
       b_ = simde_uint32x4_to_private(b);
 
-    #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 64)
+      #if SIMDE_NATURAL_VECTOR_SIZE < 128
+        r_.sv128 = __riscv_vadd_vv_u32m2(a_.sv128 , b_.sv128 , 4);
+      #else
+        r_.sv128 = __riscv_vadd_vv_u32m1(a_.sv128 , b_.sv128 , 4);
+      #endif
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = a_.values + b_.values;
     #else
       SIMDE_VECTORIZE
@@ -822,7 +866,13 @@ simde_vaddq_u64(simde_uint64x2_t a, simde_uint64x2_t b) {
       a_ = simde_uint64x2_to_private(a),
       b_ = simde_uint64x2_to_private(b);
 
-    #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 64)
+      #if SIMDE_NATURAL_VECTOR_SIZE < 128
+        r_.sv128 = __riscv_vadd_vv_u64m2(a_.sv128 , b_.sv128 , 2);
+      #else
+        r_.sv128 = __riscv_vadd_vv_u64m1(a_.sv128 , b_.sv128 , 2);
+      #endif
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = a_.values + b_.values;
     #else
       SIMDE_VECTORIZE

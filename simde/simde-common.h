@@ -1133,15 +1133,26 @@ HEDLEY_DIAGNOSTIC_POP
 #if defined(SIMDE_ARCH_RISCV_ZVE64D) && SIMDE_NATURAL_VECTOR_SIZE >= 64
   #define RVV_FIXED_TYPE_DEF(name, lmul) \
     typedef vint8##name##_t  fixed_vint8##name##_t __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen * lmul))); \
-    typedef vint16##name##_t fixed_vint16##name##_t __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen * lmul))); \
-    typedef vint32##name##_t fixed_vint32##name##_t __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen * lmul))); \
-    typedef vuint8##name##_t fixed_vuint8##name##_t __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen * lmul))); \
-    typedef vuint16##name##_t fixed_vuint16##name##_t __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen * lmul))); \
-    typedef vuint32##name##_t fixed_vuint32##name##_t __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen * lmul))); \
-    typedef vfloat32##name##_t fixed_vfloat32##name##_t __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen * lmul)));
+    typedef vuint8##name##_t fixed_vuint8##name##_t __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen * lmul)));
+    RVV_FIXED_TYPE_DEF(mf8, 1/8);
+    RVV_FIXED_TYPE_DEF(mf4, 1/4);
     RVV_FIXED_TYPE_DEF(mf2, 1/2);
     RVV_FIXED_TYPE_DEF(m1, 1);
     RVV_FIXED_TYPE_DEF(m2, 2);
+  #define RVV_FIXED_TYPE_DEF_16B(name, lmul) \
+    typedef vint16##name##_t fixed_vint16##name##_t __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen * lmul))); \
+    typedef vuint16##name##_t fixed_vuint16##name##_t __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen * lmul)));
+    RVV_FIXED_TYPE_DEF_16B(mf4, 1/4);
+    RVV_FIXED_TYPE_DEF_16B(mf2, 1/2);
+    RVV_FIXED_TYPE_DEF_16B(m1, 1);
+    RVV_FIXED_TYPE_DEF_16B(m2, 2);
+  #define RVV_FIXED_TYPE_DEF_32B(name, lmul) \
+    typedef vint32##name##_t fixed_vint32##name##_t __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen * lmul))); \
+    typedef vuint32##name##_t fixed_vuint32##name##_t __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen * lmul))); \
+    typedef vfloat32##name##_t fixed_vfloat32##name##_t __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen * lmul)));
+    RVV_FIXED_TYPE_DEF_32B(mf2, 1/2);
+    RVV_FIXED_TYPE_DEF_32B(m1, 1);
+    RVV_FIXED_TYPE_DEF_32B(m2, 2);
   #define RVV_FIXED_TYPE_DEF_64B(name, lmul) \
     typedef vint64##name##_t fixed_vint64##name##_t __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen * lmul))); \
     typedef vuint64##name##_t fixed_vuint64##name##_t __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen * lmul))); \
@@ -1151,6 +1162,7 @@ HEDLEY_DIAGNOSTIC_POP
   #if defined(SIMDE_ARCH_RISCV_ZVFH)
     #define RVV_FIXED_TYPE_DEF_16F(name, lmul) \
       typedef vfloat16##name##_t fixed_vfloat16##name##_t __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen * lmul)));
+    RVV_FIXED_TYPE_DEF_16F(mf4, 1/4);
     RVV_FIXED_TYPE_DEF_16F(mf2, 1/2);
     RVV_FIXED_TYPE_DEF_16F(m1, 1);
     RVV_FIXED_TYPE_DEF_16F(m2, 2);

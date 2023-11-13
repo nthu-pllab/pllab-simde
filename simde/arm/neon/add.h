@@ -89,7 +89,7 @@ simde_vadd_f16(simde_float16x4_t a, simde_float16x4_t b) {
       b_ = simde_float16x4_to_private(b);
 
     SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+    for (size_t i = 0 ; i < 4 ; i++) {
       r_.values[i] = simde_vaddh_f16(a_.values[i], b_.values[i]);
     }
 
@@ -567,12 +567,10 @@ simde_vaddq_s32(simde_int32x4_t a, simde_int32x4_t b) {
       r_.m128i = _mm_add_epi32(a_.m128i, b_.m128i);
     #elif defined(SIMDE_WASM_SIMD128_NATIVE)
       r_.v128 = wasm_i32x4_add(a_.v128, b_.v128);
-    #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 64)
-      #if SIMDE_NATURAL_VECTOR_SIZE < 128
-        r_.sv128 = __riscv_vadd_vv_i32m2(a_.sv128 , b_.sv128 , 4);
-      #elif SIMDE_NATURAL_VECTOR_SIZE >= 128 && SIMDE_NATURAL_VECTOR_SIZE < 256
+    #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+      #if SIMDE_NATURAL_VECTOR_SIZE == 128
         r_.sv128 = __riscv_vadd_vv_i32m1(a_.sv128 , b_.sv128 , 4);
-      #else
+      #elif SIMDE_NATURAL_VECTOR_SIZE >= 256
         r_.sv128 = __riscv_vadd_vv_i32mf2(a_.sv128 , b_.sv128 , 4);
       #endif
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)

@@ -49,11 +49,11 @@ typedef union {
   #endif
 
   #if defined(SIMDE_RISCV_V_NATIVE)
-    #if SIMDE_NATURAL_VECTOR_SIZE >= 64 && SIMDE_NATURAL_VECTOR_SIZE < 128
+    #if SIMDE_NATURAL_VECTOR_SIZE == 64
       fixed_vint8m1_t sv64;
-    #elif SIMDE_NATURAL_VECTOR_SIZE >= 128 && SIMDE_NATURAL_VECTOR_SIZE < 256
+    #elif SIMDE_NATURAL_VECTOR_SIZE == 128
       fixed_vint8mf2_t sv64;
-    #elif SIMDE_NATURAL_VECTOR_SIZE >= 256 && SIMDE_NATURAL_VECTOR_SIZE < 512
+    #elif SIMDE_NATURAL_VECTOR_SIZE == 256
       fixed_vint8mf4_t sv64;
     #elif SIMDE_NATURAL_VECTOR_SIZE >= 512
       fixed_vint8mf8_t sv64;
@@ -70,9 +70,9 @@ typedef union {
   #endif
 
   #if defined(SIMDE_RISCV_V_NATIVE)
-    #if SIMDE_NATURAL_VECTOR_SIZE >= 64 && SIMDE_NATURAL_VECTOR_SIZE < 128
+    #if SIMDE_NATURAL_VECTOR_SIZE == 64
       fixed_vint16m1_t sv64;
-    #elif SIMDE_NATURAL_VECTOR_SIZE >= 128 && SIMDE_NATURAL_VECTOR_SIZE < 256
+    #elif SIMDE_NATURAL_VECTOR_SIZE == 128
       fixed_vint16mf2_t sv64;
     #elif SIMDE_NATURAL_VECTOR_SIZE >= 256
       fixed_vint16mf4_t sv64;
@@ -89,7 +89,7 @@ typedef union {
   #endif
 
   #if defined(SIMDE_RISCV_V_NATIVE)
-    #if SIMDE_NATURAL_VECTOR_SIZE >= 64 && SIMDE_NATURAL_VECTOR_SIZE < 128
+    #if SIMDE_NATURAL_VECTOR_SIZE == 64
       fixed_vint32m1_t sv64;
     #elif SIMDE_NATURAL_VECTOR_SIZE >= 128
       fixed_vint32mf2_t sv64;
@@ -119,11 +119,11 @@ typedef union {
   #endif
 
   #if defined(SIMDE_RISCV_V_NATIVE)
-    #if SIMDE_NATURAL_VECTOR_SIZE >= 64 && SIMDE_NATURAL_VECTOR_SIZE < 128
+    #if SIMDE_NATURAL_VECTOR_SIZE == 64
       fixed_vuint8m1_t sv64;
-    #elif SIMDE_NATURAL_VECTOR_SIZE >= 128 && SIMDE_NATURAL_VECTOR_SIZE < 256
+    #elif SIMDE_NATURAL_VECTOR_SIZE == 128
       fixed_vuint8mf2_t sv64;
-    #elif SIMDE_NATURAL_VECTOR_SIZE >= 256 && SIMDE_NATURAL_VECTOR_SIZE < 512
+    #elif SIMDE_NATURAL_VECTOR_SIZE == 256
       fixed_vuint8mf4_t sv64;
     #elif SIMDE_NATURAL_VECTOR_SIZE >= 512
       fixed_vuint8mf8_t sv64;
@@ -140,9 +140,9 @@ typedef union {
   #endif
 
   #if defined(SIMDE_RISCV_V_NATIVE)
-    #if SIMDE_NATURAL_VECTOR_SIZE >= 64 && SIMDE_NATURAL_VECTOR_SIZE < 128
+    #if SIMDE_NATURAL_VECTOR_SIZE == 64
       fixed_vuint16m1_t sv64;
-    #elif SIMDE_NATURAL_VECTOR_SIZE >= 128 && SIMDE_NATURAL_VECTOR_SIZE < 256
+    #elif SIMDE_NATURAL_VECTOR_SIZE == 128
       fixed_vuint16mf2_t sv64;
     #elif SIMDE_NATURAL_VECTOR_SIZE >= 256
       fixed_vuint16mf4_t sv64;
@@ -159,7 +159,7 @@ typedef union {
   #endif
 
   #if defined(SIMDE_RISCV_V_NATIVE)
-    #if SIMDE_NATURAL_VECTOR_SIZE >= 64 && SIMDE_NATURAL_VECTOR_SIZE < 128
+    #if SIMDE_NATURAL_VECTOR_SIZE == 64
       fixed_vuint32m1_t sv64;
     #elif SIMDE_NATURAL_VECTOR_SIZE >= 128
       fixed_vuint32mf2_t sv64;
@@ -193,9 +193,9 @@ typedef union {
   #endif
 
   #if defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH
-    #if SIMDE_NATURAL_VECTOR_SIZE >= 64 && SIMDE_NATURAL_VECTOR_SIZE < 128
+    #if SIMDE_NATURAL_VECTOR_SIZE == 64
       fixed_vfloat16m1_t sv64;
-    #elif SIMDE_NATURAL_VECTOR_SIZE >= 128 && SIMDE_NATURAL_VECTOR_SIZE < 256
+    #elif SIMDE_NATURAL_VECTOR_SIZE == 128
       fixed_vfloat16mf2_t sv64;
     #elif SIMDE_NATURAL_VECTOR_SIZE >= 256
       fixed_vfloat16mf4_t sv64;
@@ -212,7 +212,7 @@ typedef union {
   #endif
 
   #if defined(SIMDE_RISCV_V_NATIVE)
-    #if SIMDE_NATURAL_VECTOR_SIZE >= 64 && SIMDE_NATURAL_VECTOR_SIZE < 128
+    #if SIMDE_NATURAL_VECTOR_SIZE == 64
       fixed_vfloat32m1_t sv64;
     #elif SIMDE_NATURAL_VECTOR_SIZE >= 128
       fixed_vfloat32mf2_t sv64;
@@ -228,7 +228,7 @@ typedef union {
     __m64 m64;
   #endif
 
-  #if defined(SIMDE_RISCV_V_NATIVE)
+  #if defined(SIMDE_RISCV_V_NATIVE) && SIMDE_NATURAL_VECTOR_SIZE >= 64
       fixed_vfloat64m1_t sv64;
   #endif
 
@@ -250,13 +250,13 @@ typedef union {
   #endif
 
   #if defined(SIMDE_RISCV_V_NATIVE)
-    #if SIMDE_NATURAL_VECTOR_SIZE >= 64 && SIMDE_NATURAL_VECTOR_SIZE < 128
+    #if SIMDE_NATURAL_VECTOR_SIZE == 64
       fixed_vint8m2_t sv128;
-    #elif SIMDE_NATURAL_VECTOR_SIZE >= 128 && SIMDE_NATURAL_VECTOR_SIZE < 256
+    #elif SIMDE_NATURAL_VECTOR_SIZE == 128
       fixed_vint8m1_t sv128;
-    #elif SIMDE_NATURAL_VECTOR_SIZE >= 256 && SIMDE_NATURAL_VECTOR_SIZE < 512
+    #elif SIMDE_NATURAL_VECTOR_SIZE == 256
       fixed_vint8mf2_t sv128;
-    #elif SIMDE_NATURAL_VECTOR_SIZE >= 512 && SIMDE_NATURAL_VECTOR_SIZE < 1024
+    #elif SIMDE_NATURAL_VECTOR_SIZE == 512
       fixed_vint8mf4_t sv128;
     #elif SIMDE_NATURAL_VECTOR_SIZE >= 1024
       fixed_vint8mf8_t sv128;
@@ -281,11 +281,11 @@ typedef union {
   #endif
 
   #if defined(SIMDE_RISCV_V_NATIVE)
-    #if SIMDE_NATURAL_VECTOR_SIZE >= 64 && SIMDE_NATURAL_VECTOR_SIZE < 128
+    #if SIMDE_NATURAL_VECTOR_SIZE == 64
       fixed_vint16m2_t sv128;
-    #elif SIMDE_NATURAL_VECTOR_SIZE >= 128 && SIMDE_NATURAL_VECTOR_SIZE < 256
+    #elif SIMDE_NATURAL_VECTOR_SIZE == 128
       fixed_vint16m1_t sv128;
-    #elif SIMDE_NATURAL_VECTOR_SIZE >= 256 && SIMDE_NATURAL_VECTOR_SIZE < 512
+    #elif SIMDE_NATURAL_VECTOR_SIZE == 256
       fixed_vint16mf2_t sv128;
     #elif SIMDE_NATURAL_VECTOR_SIZE >= 512
       fixed_vint16mf4_t sv128;
@@ -314,9 +314,9 @@ typedef union {
   #endif
 
   #if defined(SIMDE_RISCV_V_NATIVE)
-    #if SIMDE_NATURAL_VECTOR_SIZE >= 64 && SIMDE_NATURAL_VECTOR_SIZE < 128
+    #if SIMDE_NATURAL_VECTOR_SIZE == 64
       fixed_vint32m2_t sv128;
-    #elif SIMDE_NATURAL_VECTOR_SIZE >= 128 && SIMDE_NATURAL_VECTOR_SIZE < 256
+    #elif SIMDE_NATURAL_VECTOR_SIZE == 128
       fixed_vint32m1_t sv128;
     #elif SIMDE_NATURAL_VECTOR_SIZE >= 256
       fixed_vint32mf2_t sv128;
@@ -341,7 +341,7 @@ typedef union {
   #endif
 
   #if defined(SIMDE_RISCV_V_NATIVE)
-    #if SIMDE_NATURAL_VECTOR_SIZE >= 64 && SIMDE_NATURAL_VECTOR_SIZE < 128
+    #if SIMDE_NATURAL_VECTOR_SIZE == 64
       fixed_vint64m2_t sv128;
     #elif SIMDE_NATURAL_VECTOR_SIZE >= 128
       fixed_vint64m1_t sv128;
@@ -366,13 +366,13 @@ typedef union {
   #endif
 
   #if defined(SIMDE_RISCV_V_NATIVE)
-    #if SIMDE_NATURAL_VECTOR_SIZE >= 64 && SIMDE_NATURAL_VECTOR_SIZE < 128
+    #if SIMDE_NATURAL_VECTOR_SIZE == 64
       fixed_vuint8m2_t sv128;
-    #elif SIMDE_NATURAL_VECTOR_SIZE >= 128 && SIMDE_NATURAL_VECTOR_SIZE < 256
+    #elif SIMDE_NATURAL_VECTOR_SIZE == 128
       fixed_vuint8m1_t sv128;
-    #elif SIMDE_NATURAL_VECTOR_SIZE >= 256 && SIMDE_NATURAL_VECTOR_SIZE < 512
+    #elif SIMDE_NATURAL_VECTOR_SIZE == 256
       fixed_vuint8mf2_t sv128;
-    #elif SIMDE_NATURAL_VECTOR_SIZE >= 512 && SIMDE_NATURAL_VECTOR_SIZE < 1024
+    #elif SIMDE_NATURAL_VECTOR_SIZE == 512
       fixed_vuint8mf4_t sv128;
     #elif SIMDE_NATURAL_VECTOR_SIZE >= 1024
       fixed_vuint8mf8_t sv128;
@@ -397,11 +397,11 @@ typedef union {
   #endif
 
   #if defined(SIMDE_RISCV_V_NATIVE)
-    #if SIMDE_NATURAL_VECTOR_SIZE >= 64 && SIMDE_NATURAL_VECTOR_SIZE < 128
+    #if SIMDE_NATURAL_VECTOR_SIZE == 64
       fixed_vuint16m2_t sv128;
-    #elif SIMDE_NATURAL_VECTOR_SIZE >= 128 && SIMDE_NATURAL_VECTOR_SIZE < 256
+    #elif SIMDE_NATURAL_VECTOR_SIZE == 128
       fixed_vuint16m1_t sv128;
-    #elif SIMDE_NATURAL_VECTOR_SIZE >= 256 && SIMDE_NATURAL_VECTOR_SIZE < 512
+    #elif SIMDE_NATURAL_VECTOR_SIZE == 256
       fixed_vuint16mf2_t sv128;
     #elif SIMDE_NATURAL_VECTOR_SIZE >= 512
       fixed_vuint16mf4_t sv128;
@@ -426,9 +426,9 @@ typedef union {
   #endif
 
   #if defined(SIMDE_RISCV_V_NATIVE)
-    #if SIMDE_NATURAL_VECTOR_SIZE >= 64 && SIMDE_NATURAL_VECTOR_SIZE < 128
+    #if SIMDE_NATURAL_VECTOR_SIZE == 64
       fixed_vuint32m2_t sv128;
-    #elif SIMDE_NATURAL_VECTOR_SIZE >= 128 && SIMDE_NATURAL_VECTOR_SIZE < 256
+    #elif SIMDE_NATURAL_VECTOR_SIZE == 128
       fixed_vuint32m1_t sv128;
     #elif SIMDE_NATURAL_VECTOR_SIZE >= 256
       fixed_vuint32mf2_t sv128;
@@ -453,7 +453,7 @@ typedef union {
   #endif
 
   #if defined(SIMDE_RISCV_V_NATIVE)
-    #if SIMDE_NATURAL_VECTOR_SIZE >= 64 && SIMDE_NATURAL_VECTOR_SIZE < 128
+    #if SIMDE_NATURAL_VECTOR_SIZE == 64
       fixed_vuint64m2_t sv128;
     #elif SIMDE_NATURAL_VECTOR_SIZE >= 128
       fixed_vuint64m1_t sv128;
@@ -482,11 +482,11 @@ typedef union {
   #endif
 
   #if defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH
-    #if SIMDE_NATURAL_VECTOR_SIZE >= 64 && SIMDE_NATURAL_VECTOR_SIZE < 128
+    #if SIMDE_NATURAL_VECTOR_SIZE == 64
       fixed_vfloat16m2_t sv128;
-    #elif SIMDE_NATURAL_VECTOR_SIZE >= 128 && SIMDE_NATURAL_VECTOR_SIZE < 256
+    #elif SIMDE_NATURAL_VECTOR_SIZE == 128
       fixed_vfloat16m1_t sv128;
-    #elif SIMDE_NATURAL_VECTOR_SIZE >= 256 && SIMDE_NATURAL_VECTOR_SIZE < 512
+    #elif SIMDE_NATURAL_VECTOR_SIZE == 256
       fixed_vfloat16mf2_t sv128;
     #elif SIMDE_NATURAL_VECTOR_SIZE >= 512
       fixed_vfloat16mf4_t sv128;
@@ -511,9 +511,9 @@ typedef union {
   #endif
 
   #if defined(SIMDE_RISCV_V_NATIVE)
-    #if SIMDE_NATURAL_VECTOR_SIZE >= 64 && SIMDE_NATURAL_VECTOR_SIZE < 128
+    #if SIMDE_NATURAL_VECTOR_SIZE == 64
       fixed_vfloat32m2_t sv128;
-    #elif SIMDE_NATURAL_VECTOR_SIZE >= 128 && SIMDE_NATURAL_VECTOR_SIZE < 512
+    #elif SIMDE_NATURAL_VECTOR_SIZE == 128
       fixed_vfloat32m1_t sv128;
     #elif SIMDE_NATURAL_VECTOR_SIZE >= 256
       fixed_vfloat32mf2_t sv128;
@@ -538,7 +538,7 @@ typedef union {
   #endif
 
   #if defined(SIMDE_RISCV_V_NATIVE)
-    #if SIMDE_NATURAL_VECTOR_SIZE >= 64 && SIMDE_NATURAL_VECTOR_SIZE < 128
+    #if SIMDE_NATURAL_VECTOR_SIZE == 64
       fixed_vfloat64m2_t sv128;
     #elif SIMDE_NATURAL_VECTOR_SIZE >= 128
       fixed_vfloat64m1_t sv128;

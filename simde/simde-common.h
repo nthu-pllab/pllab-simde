@@ -1131,14 +1131,14 @@ HEDLEY_DIAGNOSTIC_POP
 
 /* Initial support for RISCV V extensions based on ZVE64D. */
 #if defined(SIMDE_ARCH_RISCV_ZVE64D) && SIMDE_NATURAL_VECTOR_SIZE >= 64
-  #define RVV_FIXED_TYPE_DEF(name, lmul) \
+  #define RVV_FIXED_TYPE_DEF_8B(name, lmul) \
     typedef vint8##name##_t  fixed_vint8##name##_t __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen * lmul))); \
     typedef vuint8##name##_t fixed_vuint8##name##_t __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen * lmul)));
-    RVV_FIXED_TYPE_DEF(mf8, 1/8);
-    RVV_FIXED_TYPE_DEF(mf4, 1/4);
-    RVV_FIXED_TYPE_DEF(mf2, 1/2);
-    RVV_FIXED_TYPE_DEF(m1, 1);
-    RVV_FIXED_TYPE_DEF(m2, 2);
+    RVV_FIXED_TYPE_DEF_8B(mf8, 1/8);
+    RVV_FIXED_TYPE_DEF_8B(mf4, 1/4);
+    RVV_FIXED_TYPE_DEF_8B(mf2, 1/2);
+    RVV_FIXED_TYPE_DEF_8B(m1, 1);
+    RVV_FIXED_TYPE_DEF_8B(m2, 2);
   #define RVV_FIXED_TYPE_DEF_16B(name, lmul) \
     typedef vint16##name##_t fixed_vint16##name##_t __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen * lmul))); \
     typedef vuint16##name##_t fixed_vuint16##name##_t __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen * lmul)));

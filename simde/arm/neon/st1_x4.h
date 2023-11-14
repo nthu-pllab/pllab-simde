@@ -49,7 +49,7 @@ simde_vst1_f16_x4(simde_float16_t ptr[HEDLEY_ARRAY_PARAM(16)], simde_float16x4x4
     for (size_t i = 0; i < 16 ; i++) {
       buf[i] = a_[i / 4].values[i % 4];
     }
-    simde_memcpy(ptr, buf, 32);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)

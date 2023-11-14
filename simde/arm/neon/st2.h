@@ -50,7 +50,7 @@ simde_vst2_f16(simde_float16_t *ptr, simde_float16x4x2_t val) {
     for (size_t i = 0; i < 8 ; i++) {
       buf[i] = a_[i % 2].values[i / 2];
     }
-    simde_memcpy(ptr, buf, 16);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -70,7 +70,7 @@ simde_vst2_f32(simde_float32_t *ptr, simde_float32x2x2_t val) {
     for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 2 ; i++) {
       buf[i] = a_[i % 2].values[i / 2];
     }
-    simde_memcpy(ptr, buf, 16);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -90,7 +90,7 @@ simde_vst2_f64(simde_float64_t *ptr, simde_float64x1x2_t val) {
     for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 2 ; i++) {
       buf[i] = a_[i % 2].values[i / 2];
     }
-    simde_memcpy(ptr, buf, 16);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A64V8_ENABLE_NATIVE_ALIASES)
@@ -110,7 +110,7 @@ simde_vst2_s8(int8_t *ptr, simde_int8x8x2_t val) {
     for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 2 ; i++) {
       buf[i] = a_[i % 2].values[i / 2];
     }
-    simde_memcpy(ptr, buf, 16);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -130,7 +130,7 @@ simde_vst2_s16(int16_t *ptr, simde_int16x4x2_t val) {
     for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 2 ; i++) {
       buf[i] = a_[i % 2].values[i / 2];
     }
-    simde_memcpy(ptr, buf, 16);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -150,7 +150,7 @@ simde_vst2_s32(int32_t *ptr, simde_int32x2x2_t val) {
     for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 2 ; i++) {
       buf[i] = a_[i % 2].values[i / 2];
     }
-    simde_memcpy(ptr, buf, 16);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -170,7 +170,7 @@ simde_vst2_s64(int64_t *ptr, simde_int64x1x2_t val) {
     for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 2 ; i++) {
       buf[i] = a_[i % 2].values[i / 2];
     }
-    simde_memcpy(ptr, buf, 16);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -190,7 +190,7 @@ simde_vst2_u8(uint8_t *ptr, simde_uint8x8x2_t val) {
     for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 2 ; i++) {
       buf[i] = a_[i % 2].values[i / 2];
     }
-    simde_memcpy(ptr, buf, 16);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -210,7 +210,7 @@ simde_vst2_u16(uint16_t *ptr, simde_uint16x4x2_t val) {
     for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 2 ; i++) {
       buf[i] = a_[i % 2].values[i / 2];
     }
-    simde_memcpy(ptr, buf, 16);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -230,7 +230,7 @@ simde_vst2_u32(uint32_t *ptr, simde_uint32x2x2_t val) {
     for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 2 ; i++) {
       buf[i] = a_[i % 2].values[i / 2];
     }
-    simde_memcpy(ptr, buf, 16);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -250,7 +250,7 @@ simde_vst2_u64(uint64_t *ptr, simde_uint64x1x2_t val) {
     for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 2 ; i++) {
       buf[i] = a_[i % 2].values[i / 2];
     }
-    simde_memcpy(ptr, buf, 16);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -302,7 +302,7 @@ simde_vst2q_f64(simde_float64_t *ptr, simde_float64x2x2_t val) {
     for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 2 ; i++) {
       buf[i] = a_[i % 2].values[i / 2];
     }
-    simde_memcpy(ptr, buf, 32);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A64V8_ENABLE_NATIVE_ALIASES)
@@ -370,7 +370,7 @@ simde_vst2q_s64(int64_t *ptr, simde_int64x2x2_t val) {
     for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 2 ; i++) {
       buf[i] = a_[i % 2].values[i / 2];
     }
-    simde_memcpy(ptr, buf, 32);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A64V8_ENABLE_NATIVE_ALIASES)
@@ -438,7 +438,7 @@ simde_vst2q_u64(uint64_t *ptr, simde_uint64x2x2_t val) {
     for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 2 ; i++) {
       buf[i] = a_[i % 2].values[i / 2];
     }
-    simde_memcpy(ptr, buf, 32);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A64V8_ENABLE_NATIVE_ALIASES)

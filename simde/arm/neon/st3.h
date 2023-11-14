@@ -51,7 +51,7 @@ simde_vst3_f16(simde_float16_t ptr[HEDLEY_ARRAY_PARAM(12)], simde_float16x4x3_t 
     for (size_t i = 0; i < 12 ; i++) {
       buf[i] = a[i % 3].values[i / 3];
     }
-    simde_memcpy(ptr, buf, 24);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -80,7 +80,7 @@ simde_vst3_f32(simde_float32_t ptr[HEDLEY_ARRAY_PARAM(6)], simde_float32x2x3_t v
       for (size_t i = 0; i < 6 ; i++) {
         buf[i] = a[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, 24);
+      simde_memcpy(ptr, buf, sizeof(buf));
     #endif
   #endif
 }
@@ -140,7 +140,7 @@ simde_vst3_s8(int8_t ptr[HEDLEY_ARRAY_PARAM(24)], simde_int8x8x3_t val) {
       for (size_t i = 0; i < 24 ; i++) {
         buf[i] = a_[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, 24);
+      simde_memcpy(ptr, buf, sizeof(buf));
     #endif
   #endif
 }
@@ -181,7 +181,7 @@ simde_vst3_s16(int16_t ptr[HEDLEY_ARRAY_PARAM(12)], simde_int16x4x3_t val) {
       for (size_t i = 0; i < 12 ; i++) {
         buf[i] = a_[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, 24);
+      simde_memcpy(ptr, buf, sizeof(buf));
     #endif
   #endif
 }
@@ -211,7 +211,7 @@ simde_vst3_s32(int32_t ptr[HEDLEY_ARRAY_PARAM(6)], simde_int32x2x3_t val) {
       for (size_t i = 0; i < 6 ; i++) {
         buf[i] = a[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, 24);
+      simde_memcpy(ptr, buf, sizeof(buf));
     #endif
   #endif
 }
@@ -271,7 +271,7 @@ simde_vst3_u8(uint8_t ptr[HEDLEY_ARRAY_PARAM(24)], simde_uint8x8x3_t val) {
       for (size_t i = 0; i < 24 ; i++) {
         buf[i] = a_[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, 24);
+      simde_memcpy(ptr, buf, sizeof(buf));
     #endif
   #endif
 }
@@ -312,7 +312,7 @@ simde_vst3_u16(uint16_t ptr[HEDLEY_ARRAY_PARAM(12)], simde_uint16x4x3_t val) {
       for (size_t i = 0; i < 12 ; i++) {
         buf[i] = a_[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, 24);
+      simde_memcpy(ptr, buf, sizeof(buf));
     #endif
   #endif
 }
@@ -342,7 +342,7 @@ simde_vst3_u32(uint32_t ptr[HEDLEY_ARRAY_PARAM(6)], simde_uint32x2x3_t val) {
       for (size_t i = 0; i < 6 ; i++) {
         buf[i] = a[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, 24);
+      simde_memcpy(ptr, buf, sizeof(buf));
     #endif
   #endif
 }
@@ -383,7 +383,7 @@ simde_vst3q_f16(simde_float16_t ptr[HEDLEY_ARRAY_PARAM(24)], simde_float16x8x3_t
     for (size_t i = 0; i < 24 ; i++) {
       buf[i] = a_[i % 3].values[i / 3];
     }
-    simde_memcpy(ptr, buf, 48);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -423,7 +423,7 @@ simde_vst3q_f32(simde_float32_t ptr[HEDLEY_ARRAY_PARAM(12)], simde_float32x4x3_t
       for (size_t i = 0; i < 12 ; i++) {
         buf[i] = a_[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, 48);
+      simde_memcpy(ptr, buf, sizeof(buf));
     #endif
   #endif
 }
@@ -453,7 +453,7 @@ simde_vst3q_f64(simde_float64_t ptr[HEDLEY_ARRAY_PARAM(6)], simde_float64x2x3_t 
       for (size_t i = 0; i < 6 ; i++) {
         buf[i] = a[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, 48);
+      simde_memcpy(ptr, buf, sizeof(buf));
     #endif
   #endif
 }
@@ -499,7 +499,7 @@ simde_vst3q_s8(int8_t ptr[HEDLEY_ARRAY_PARAM(48)], simde_int8x16x3_t val) {
       for (size_t i = 0; i < 48 ; i++) {
         buf[i] = a_[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, 48);
+      simde_memcpy(ptr, buf, sizeof(buf));
     #endif
   #endif
 }
@@ -540,7 +540,7 @@ simde_vst3q_s16(int16_t ptr[HEDLEY_ARRAY_PARAM(24)], simde_int16x8x3_t val) {
       for (size_t i = 0; i < 24 ; i++) {
         buf[i] = a_[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, 48);
+      simde_memcpy(ptr, buf, sizeof(buf));
     #endif
   #endif
 }
@@ -581,7 +581,7 @@ simde_vst3q_s32(int32_t ptr[HEDLEY_ARRAY_PARAM(12)], simde_int32x4x3_t val) {
       for (size_t i = 0; i < 12 ; i++) {
         buf[i] = a_[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, 48);
+      simde_memcpy(ptr, buf, sizeof(buf));
     #endif
   #endif
 }
@@ -611,7 +611,7 @@ simde_vst3q_s64(int64_t ptr[HEDLEY_ARRAY_PARAM(6)], simde_int64x2x3_t val) {
       for (size_t i = 0; i < 6 ; i++) {
         buf[i] = a[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, 48);
+      simde_memcpy(ptr, buf, sizeof(buf));
     #endif
   #endif
 }
@@ -689,7 +689,7 @@ simde_vst3q_u8(uint8_t ptr[HEDLEY_ARRAY_PARAM(48)], simde_uint8x16x3_t val) {
       for (size_t i = 0; i < 48 ; i++) {
         buf[i] = a_[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, 48);
+      simde_memcpy(ptr, buf, sizeof(buf));
     #endif
   #endif
 }
@@ -731,7 +731,7 @@ simde_vst3q_u16(uint16_t ptr[HEDLEY_ARRAY_PARAM(24)], simde_uint16x8x3_t val) {
       for (size_t i = 0; i < 24 ; i++) {
         buf[i] = a_[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, 48);
+      simde_memcpy(ptr, buf, sizeof(buf));
     #endif
   #endif
 }
@@ -773,7 +773,7 @@ simde_vst3q_u32(uint32_t ptr[HEDLEY_ARRAY_PARAM(12)], simde_uint32x4x3_t val) {
       for (size_t i = 0; i < 12 ; i++) {
         buf[i] = a_[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, 48);
+      simde_memcpy(ptr, buf, sizeof(buf));
     #endif
   #endif
 }
@@ -803,7 +803,7 @@ simde_vst3q_u64(uint64_t ptr[HEDLEY_ARRAY_PARAM(6)], simde_uint64x2x3_t val) {
       for (size_t i = 0; i < 6 ; i++) {
         buf[i] = a[i % 3].values[i / 3];
       }
-      simde_memcpy(ptr, buf, 48);
+      simde_memcpy(ptr, buf, sizeof(buf));
     #endif
   #endif
 }

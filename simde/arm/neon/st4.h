@@ -49,7 +49,7 @@ simde_vst4_f16(simde_float16_t *ptr, simde_float16x4x4_t val) {
     for (size_t i = 0; i < 16 ; i++) {
       buf[i] = a_[i % 4].values[i / 4];
     }
-    simde_memcpy(ptr, buf, 32);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -69,7 +69,7 @@ simde_vst4_f32(simde_float32_t *ptr, simde_float32x2x4_t val) {
     for (size_t i = 0; i < 8 ; i++) {
       buf[i] = a_[i % 4].values[i / 4];
     }
-    simde_memcpy(ptr, buf, 32);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -89,7 +89,7 @@ simde_vst4_f64(simde_float64_t *ptr, simde_float64x1x4_t val) {
     for (size_t i = 0; i < 4 ; i++) {
       buf[i] = a_[i % 4].values[i / 4];
     }
-    simde_memcpy(ptr, buf, 32);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A64V8_ENABLE_NATIVE_ALIASES)
@@ -109,7 +109,7 @@ simde_vst4_s8(int8_t *ptr, simde_int8x8x4_t val) {
     for (size_t i = 0; i < 32 ; i++) {
       buf[i] = a_[i % 4].values[i / 4];
     }
-    simde_memcpy(ptr, buf, 32);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -129,7 +129,7 @@ simde_vst4_s16(int16_t *ptr, simde_int16x4x4_t val) {
     for (size_t i = 0; i < 16 ; i++) {
       buf[i] = a_[i % 4].values[i / 4];
     }
-    simde_memcpy(ptr, buf, 32);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -149,7 +149,7 @@ simde_vst4_s32(int32_t *ptr, simde_int32x2x4_t val) {
     for (size_t i = 0; i < 8 ; i++) {
       buf[i] = a_[i % 4].values[i / 4];
     }
-    simde_memcpy(ptr, buf, 32);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -169,7 +169,7 @@ simde_vst4_s64(int64_t *ptr, simde_int64x1x4_t val) {
     for (size_t i = 0; i < 4 ; i++) {
       buf[i] = a_[i % 4].values[i / 4];
     }
-    simde_memcpy(ptr, buf, 32);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A64V8_ENABLE_NATIVE_ALIASES)
@@ -189,7 +189,7 @@ simde_vst4_u8(uint8_t *ptr, simde_uint8x8x4_t val) {
     for (size_t i = 0; i < 32 ; i++) {
       buf[i] = a_[i % 4].values[i / 4];
     }
-    simde_memcpy(ptr, buf, 32);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -209,7 +209,7 @@ simde_vst4_u16(uint16_t *ptr, simde_uint16x4x4_t val) {
     for (size_t i = 0; i < 16 ; i++) {
       buf[i] = a_[i % 4].values[i / 4];
     }
-    simde_memcpy(ptr, buf, 32);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -229,7 +229,7 @@ simde_vst4_u32(uint32_t *ptr, simde_uint32x2x4_t val) {
     for (size_t i = 0; i < 8 ; i++) {
       buf[i] = a_[i % 4].values[i / 4];
     }
-    simde_memcpy(ptr, buf, 32);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -249,7 +249,7 @@ simde_vst4_u64(uint64_t *ptr, simde_uint64x1x4_t val) {
     for (size_t i = 0; i < 4 ; i++) {
       buf[i] = a_[i % 4].values[i / 4];
     }
-    simde_memcpy(ptr, buf, 32);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A64V8_ENABLE_NATIVE_ALIASES)
@@ -269,7 +269,7 @@ simde_vst4q_f16(simde_float16_t *ptr, simde_float16x8x4_t val) {
     for (size_t i = 0; i < 32 ; i++) {
       buf[i] = a_[i % 4].values[i / 4];
     }
-    simde_memcpy(ptr, buf, 64);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -289,7 +289,7 @@ simde_vst4q_f32(simde_float32_t *ptr, simde_float32x4x4_t val) {
     for (size_t i = 0; i < 16 ; i++) {
       buf[i] = a_[i % 4].values[i / 4];
     }
-    simde_memcpy(ptr, buf, 64);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -309,7 +309,7 @@ simde_vst4q_f64(simde_float64_t *ptr, simde_float64x2x4_t val) {
     for (size_t i = 0; i < 8 ; i++) {
       buf[i] = a_[i % 4].values[i / 4];
     }
-    simde_memcpy(ptr, buf, 64);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A64V8_ENABLE_NATIVE_ALIASES)
@@ -329,7 +329,7 @@ simde_vst4q_s8(int8_t *ptr, simde_int8x16x4_t val) {
     for (size_t i = 0; i < 64 ; i++) {
       buf[i] = a_[i % 4].values[i / 4];
     }
-    simde_memcpy(ptr, buf, 64);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -349,7 +349,7 @@ simde_vst4q_s16(int16_t *ptr, simde_int16x8x4_t val) {
     for (size_t i = 0; i < 32 ; i++) {
       buf[i] = a_[i % 4].values[i / 4];
     }
-    simde_memcpy(ptr, buf, 64);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -369,7 +369,7 @@ simde_vst4q_s32(int32_t *ptr, simde_int32x4x4_t val) {
     for (size_t i = 0; i < 16 ; i++) {
       buf[i] = a_[i % 4].values[i / 4];
     }
-    simde_memcpy(ptr, buf, 64);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -389,7 +389,7 @@ simde_vst4q_s64(int64_t *ptr, simde_int64x2x4_t val) {
     for (size_t i = 0; i < 8 ; i++) {
       buf[i] = a_[i % 4].values[i / 4];
     }
-    simde_memcpy(ptr, buf, 64);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A64V8_ENABLE_NATIVE_ALIASES)
@@ -410,7 +410,7 @@ simde_vst4q_u8(uint8_t *ptr, simde_uint8x16x4_t val) {
     for (size_t i = 0; i < 64 ; i++) {
       buf[i] = a_[i % 4].values[i / 4];
     }
-    simde_memcpy(ptr, buf, 64);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -430,7 +430,7 @@ simde_vst4q_u16(uint16_t *ptr, simde_uint16x8x4_t val) {
     for (size_t i = 0; i < 32 ; i++) {
       buf[i] = a_[i % 4].values[i / 4];
     }
-    simde_memcpy(ptr, buf, 64);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -450,7 +450,7 @@ simde_vst4q_u32(uint32_t *ptr, simde_uint32x4x4_t val) {
     for (size_t i = 0; i < 16 ; i++) {
       buf[i] = a_[i % 4].values[i / 4];
     }
-    simde_memcpy(ptr, buf, 64);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -470,7 +470,7 @@ simde_vst4q_u64(uint64_t *ptr, simde_uint64x2x4_t val) {
     for (size_t i = 0; i < 8 ; i++) {
       buf[i] = a_[i % 4].values[i / 4];
     }
-    simde_memcpy(ptr, buf, 64);
+    simde_memcpy(ptr, buf, sizeof(buf));
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A64V8_ENABLE_NATIVE_ALIASES)

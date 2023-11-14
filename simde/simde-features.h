@@ -377,7 +377,7 @@
 
 /*TODO: Support for other Zve* extensions ?*/
 #if !defined(SIMDE_RISCV_V_NATIVE) && !defined(SIMDE_RISCV_V_NO_NATIVE) && !defined(SIMDE_NO_NATIVE)
-  #if defined(SIMDE_ARCH_RISCV_ZVE64D)
+  #if defined(SIMDE_ARCH_RISCV_V)
     #define SIMDE_RISCV_V_NATIVE
   #endif
 #endif

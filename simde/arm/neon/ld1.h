@@ -24,9 +24,9 @@
  *   2020      Evan Nemerson <evan@nemerson.com>
  *   2021      Zhi An Ng <zhin@google.com> (Copyright owned by Google, LLC)
  */
-// FIXME :  The vector lengths of RVV and Neon may differ, so copying sizeof(union) of bytes \
-            from one memory location to another may pollute memory. \
-            Currently, instructions that may lead to this error include: ld1.h, ld2.h.
+/* FIXME :  The vector lengths of RVV and Neon may differ, so copying sizeof(union) of bytes 
+            from one memory location to another may pollute memory. 
+            Currently, instructions that may lead to this error include: ld1.h, ld2.h.*/
 #if !defined(SIMDE_ARM_NEON_LD1_H)
 #define SIMDE_ARM_NEON_LD1_H
 

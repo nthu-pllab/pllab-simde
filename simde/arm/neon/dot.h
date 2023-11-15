@@ -56,7 +56,7 @@ simde_vdot_s32(simde_int32x2_t r, simde_int8x8_t a, simde_int8x8_t b) {
     simde_int8x8_private
       a_ = simde_int8x8_to_private(a),
       b_ = simde_int8x8_to_private(b);
-      #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE == 128)
+      #if defined(SIMDE_RISCV_V_NATIVE)
         simde_int32x2_private r_tmp = simde_int32x2_to_private(r);
         vint16m2_t vd_low = __riscv_vwmul_vv_i16m2 (a_.sv64, b_.sv64, 8);
         vint16m2_t vd_high = __riscv_vslidedown_vx_i16m2(vd_low, 4, 8);
@@ -102,7 +102,7 @@ simde_vdot_u32(simde_uint32x2_t r, simde_uint8x8_t a, simde_uint8x8_t b) {
       a_ = simde_uint8x8_to_private(a),
       b_ = simde_uint8x8_to_private(b);
 
-    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE == 128)
+      #if defined(SIMDE_RISCV_V_NATIVE)
         simde_uint32x2_private r_tmp = simde_uint32x2_to_private(r);
         vuint16m2_t vd_low = __riscv_vwmulu_vv_u16m2 (a_.sv64, b_.sv64, 8);
         vuint16m2_t vd_high = __riscv_vslidedown_vx_u16m2(vd_low, 4, 8);
@@ -149,7 +149,7 @@ simde_vdotq_s32(simde_int32x4_t r, simde_int8x16_t a, simde_int8x16_t b) {
     simde_int8x16_private
       a_ = simde_int8x16_to_private(a),
       b_ = simde_int8x16_to_private(b);
-    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE == 128)
+      #if defined(SIMDE_RISCV_V_NATIVE)
         simde_int32x4_private r_tmp = simde_int32x4_to_private(r);
         vint16m2_t vd_low = __riscv_vwmul_vv_i16m2 (a_.sv128, b_.sv128, 16);
         vint32m1_t vd = __riscv_vmv_v_x_i32m1(0, 4);
@@ -198,7 +198,7 @@ simde_vdotq_u32(simde_uint32x4_t r, simde_uint8x16_t a, simde_uint8x16_t b) {
     simde_uint8x16_private
       a_ = simde_uint8x16_to_private(a),
       b_ = simde_uint8x16_to_private(b);
-    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE == 128)
+      #if defined(SIMDE_RISCV_V_NATIVE)
         simde_uint32x4_private r_tmp = simde_uint32x4_to_private(r);
         vuint16m2_t vd_low = __riscv_vwmulu_vv_u16m2 (a_.sv128, b_.sv128, 16);
         vuint32m1_t vd = __riscv_vmv_v_x_u32m1(0, 4);

@@ -49,7 +49,13 @@ simde_vbsl_f16(simde_uint16x4_t a, simde_float16x4_t b, simde_float16x4_t c) {
       b_ = simde_uint16x4_to_private(simde_vreinterpret_u16_f16(b)),
       c_ = simde_uint16x4_to_private(simde_vreinterpret_u16_f16(c));
 
-    #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint16m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u16m1(a_.sv64, 4);
+      a_and_b = __riscv_vand_vv_u16m1(a_.sv64, b_.sv64, 4);
+      not_a_and_c = __riscv_vand_vv_u16m1(not_a, c_.sv64, 4);
+      r_.sv64 = __riscv_vor_vv_u16m1(a_and_b, not_a_and_c, 4);
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = c_.values ^ ((b_.values ^ c_.values) & a_.values);
     #else
       SIMDE_VECTORIZE
@@ -78,7 +84,13 @@ simde_vbsl_f32(simde_uint32x2_t a, simde_float32x2_t b, simde_float32x2_t c) {
       b_ = simde_uint32x2_to_private(simde_vreinterpret_u32_f32(b)),
       c_ = simde_uint32x2_to_private(simde_vreinterpret_u32_f32(c));
 
-    #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint32m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u32m1(a_.sv64, 2);
+      a_and_b = __riscv_vand_vv_u32m1(a_.sv64, b_.sv64, 2);
+      not_a_and_c = __riscv_vand_vv_u32m1(not_a, c_.sv64, 2);
+      r_.sv64 = __riscv_vor_vv_u32m1(a_and_b, not_a_and_c, 2);
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = c_.values ^ ((b_.values ^ c_.values) & a_.values);
     #else
       SIMDE_VECTORIZE
@@ -107,7 +119,13 @@ simde_vbsl_f64(simde_uint64x1_t a, simde_float64x1_t b, simde_float64x1_t c) {
       b_ = simde_uint64x1_to_private(simde_vreinterpret_u64_f64(b)),
       c_ = simde_uint64x1_to_private(simde_vreinterpret_u64_f64(c));
 
-    #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint64m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u64m1(a_.sv64, 1);
+      a_and_b = __riscv_vand_vv_u64m1(a_.sv64, b_.sv64, 1);
+      not_a_and_c = __riscv_vand_vv_u64m1(not_a, c_.sv64, 1);
+      r_.sv64 = __riscv_vor_vv_u64m1(a_and_b, not_a_and_c, 1);
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = c_.values ^ ((b_.values ^ c_.values) & a_.values);
     #else
       SIMDE_VECTORIZE
@@ -136,7 +154,13 @@ simde_vbsl_s8(simde_uint8x8_t a, simde_int8x8_t b, simde_int8x8_t c) {
       b_ = simde_uint8x8_to_private(simde_vreinterpret_u8_s8(b)),
       c_ = simde_uint8x8_to_private(simde_vreinterpret_u8_s8(c));
 
-    #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint8m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u8m1(a_.sv64, 8);
+      a_and_b = __riscv_vand_vv_u8m1(a_.sv64, b_.sv64, 8);
+      not_a_and_c = __riscv_vand_vv_u8m1(not_a, c_.sv64, 8);
+      r_.sv64 = __riscv_vor_vv_u8m1(a_and_b, not_a_and_c, 8);
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = c_.values ^ ((b_.values ^ c_.values) & a_.values);
     #else
       SIMDE_VECTORIZE
@@ -165,7 +189,13 @@ simde_vbsl_s16(simde_uint16x4_t a, simde_int16x4_t b, simde_int16x4_t c) {
       b_ = simde_uint16x4_to_private(simde_vreinterpret_u16_s16(b)),
       c_ = simde_uint16x4_to_private(simde_vreinterpret_u16_s16(c));
 
-    #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint16m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u16m1(a_.sv64, 4);
+      a_and_b = __riscv_vand_vv_u16m1(a_.sv64, b_.sv64, 4);
+      not_a_and_c = __riscv_vand_vv_u16m1(not_a, c_.sv64, 4);
+      r_.sv64 = __riscv_vor_vv_u16m1(a_and_b, not_a_and_c, 4);
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = c_.values ^ ((b_.values ^ c_.values) & a_.values);
     #else
       SIMDE_VECTORIZE
@@ -194,6 +224,12 @@ simde_vbsl_s32(simde_uint32x2_t a, simde_int32x2_t b, simde_int32x2_t c) {
       b_ = simde_uint32x2_to_private(simde_vreinterpret_u32_s32(b)),
       c_ = simde_uint32x2_to_private(simde_vreinterpret_u32_s32(c));
 
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint32m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u32m1(a_.sv64, 2);
+      a_and_b = __riscv_vand_vv_u32m1(a_.sv64, b_.sv64, 2);
+      not_a_and_c = __riscv_vand_vv_u32m1(not_a, c_.sv64, 2);
+      r_.sv64 = __riscv_vor_vv_u32m1(a_and_b, not_a_and_c, 2);
     #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = c_.values ^ ((b_.values ^ c_.values) & a_.values);
     #else
@@ -223,7 +259,13 @@ simde_vbsl_s64(simde_uint64x1_t a, simde_int64x1_t b, simde_int64x1_t c) {
       b_ = simde_uint64x1_to_private(simde_vreinterpret_u64_s64(b)),
       c_ = simde_uint64x1_to_private(simde_vreinterpret_u64_s64(c));
 
-    #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint64m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u64m1(a_.sv64, 1);
+      a_and_b = __riscv_vand_vv_u64m1(a_.sv64, b_.sv64, 1);
+      not_a_and_c = __riscv_vand_vv_u64m1(not_a, c_.sv64, 1);
+      r_.sv64 = __riscv_vor_vv_u64m1(a_and_b, not_a_and_c, 1);
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = c_.values ^ ((b_.values ^ c_.values) & a_.values);
     #else
       SIMDE_VECTORIZE
@@ -252,7 +294,13 @@ simde_vbsl_u8(simde_uint8x8_t a, simde_uint8x8_t b, simde_uint8x8_t c) {
       b_ = simde_uint8x8_to_private(b),
       c_ = simde_uint8x8_to_private(c);
 
-    #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint8m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u8m1(a_.sv64, 8);
+      a_and_b = __riscv_vand_vv_u8m1(a_.sv64, b_.sv64, 8);
+      not_a_and_c = __riscv_vand_vv_u8m1(not_a, c_.sv64, 8);
+      r_.sv64 = __riscv_vor_vv_u8m1(a_and_b, not_a_and_c, 8);
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = c_.values ^ ((b_.values ^ c_.values) & a_.values);
     #else
       SIMDE_VECTORIZE
@@ -281,7 +329,13 @@ simde_vbsl_u16(simde_uint16x4_t a, simde_uint16x4_t b, simde_uint16x4_t c) {
       b_ = simde_uint16x4_to_private(b),
       c_ = simde_uint16x4_to_private(c);
 
-    #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint16m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u16m1(a_.sv64, 4);
+      a_and_b = __riscv_vand_vv_u16m1(a_.sv64, b_.sv64, 4);
+      not_a_and_c = __riscv_vand_vv_u16m1(not_a, c_.sv64, 4);
+      r_.sv64 = __riscv_vor_vv_u16m1(a_and_b, not_a_and_c, 4);
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = c_.values ^ ((b_.values ^ c_.values) & a_.values);
     #else
       SIMDE_VECTORIZE
@@ -310,7 +364,13 @@ simde_vbsl_u32(simde_uint32x2_t a, simde_uint32x2_t b, simde_uint32x2_t c) {
       b_ = simde_uint32x2_to_private(b),
       c_ = simde_uint32x2_to_private(c);
 
-    #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint32m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u32m1(a_.sv64, 2);
+      a_and_b = __riscv_vand_vv_u32m1(a_.sv64, b_.sv64, 2);
+      not_a_and_c = __riscv_vand_vv_u32m1(not_a, c_.sv64, 2);
+      r_.sv64 = __riscv_vor_vv_u32m1(a_and_b, not_a_and_c, 2);
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = c_.values ^ ((b_.values ^ c_.values) & a_.values);
     #else
       SIMDE_VECTORIZE
@@ -339,7 +399,13 @@ simde_vbsl_u64(simde_uint64x1_t a, simde_uint64x1_t b, simde_uint64x1_t c) {
       b_ = simde_uint64x1_to_private(b),
       c_ = simde_uint64x1_to_private(c);
 
-    #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint64m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u64m1(a_.sv64, 1);
+      a_and_b = __riscv_vand_vv_u64m1(a_.sv64, b_.sv64, 1);
+      not_a_and_c = __riscv_vand_vv_u64m1(not_a, c_.sv64, 1);
+      r_.sv64 = __riscv_vor_vv_u64m1(a_and_b, not_a_and_c, 1);
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = c_.values ^ ((b_.values ^ c_.values) & a_.values);
     #else
       SIMDE_VECTORIZE
@@ -368,7 +434,13 @@ simde_vbslq_f16(simde_uint16x8_t a, simde_float16x8_t b, simde_float16x8_t c) {
       b_ = simde_uint16x8_to_private(simde_vreinterpretq_u16_f16(b)),
       c_ = simde_uint16x8_to_private(simde_vreinterpretq_u16_f16(c));
 
-    #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint16m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u16m1(a_.sv128, 8);
+      a_and_b = __riscv_vand_vv_u16m1(a_.sv128, b_.sv128, 8);
+      not_a_and_c = __riscv_vand_vv_u16m1(not_a, c_.sv128, 8);
+      r_.sv128 = __riscv_vor_vv_u16m1(a_and_b, not_a_and_c, 8);
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = c_.values ^ ((b_.values ^ c_.values) & a_.values);
     #else
       SIMDE_VECTORIZE
@@ -403,6 +475,12 @@ simde_vbslq_f32(simde_uint32x4_t a, simde_float32x4_t b, simde_float32x4_t c) {
       r_.v128 = wasm_v128_bitselect(b_.v128, c_.v128, a_.v128);
     #elif defined(SIMDE_X86_AVX512VL_NATIVE)
       r_.m128i = _mm_ternarylogic_epi32(a_.m128i, b_.m128i, c_.m128i, 0xca);
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      vuint32m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u32m1(a_.sv128, 4);
+      a_and_b = __riscv_vand_vv_u32m1(a_.sv128, b_.sv128, 4);
+      not_a_and_c = __riscv_vand_vv_u32m1(not_a, c_.sv128, 4);
+      r_.sv128 = __riscv_vor_vv_u32m1(a_and_b, not_a_and_c, 4);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = c_.values ^ ((b_.values ^ c_.values) & a_.values);
     #else
@@ -439,6 +517,12 @@ simde_vbslq_f64(simde_uint64x2_t a, simde_float64x2_t b, simde_float64x2_t c) {
       r_.v128 = wasm_v128_bitselect(b_.v128, c_.v128, a_.v128);
     #elif defined(SIMDE_X86_AVX512VL_NATIVE)
       r_.m128i = _mm_ternarylogic_epi64(a_.m128i, b_.m128i, c_.m128i, 0xca);
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      vuint64m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u64m1(a_.sv128, 2);
+      a_and_b = __riscv_vand_vv_u64m1(a_.sv128, b_.sv128, 2);
+      not_a_and_c = __riscv_vand_vv_u64m1(not_a, c_.sv128, 2);
+      r_.sv128 = __riscv_vor_vv_u64m1(a_and_b, not_a_and_c, 2);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = c_.values ^ ((b_.values ^ c_.values) & a_.values);
     #else
@@ -474,6 +558,12 @@ simde_vbslq_s8(simde_uint8x16_t a, simde_int8x16_t b, simde_int8x16_t c) {
       r_.v128 = wasm_v128_bitselect(b_.v128, c_.v128, a_.v128);
     #elif defined(SIMDE_X86_AVX512VL_NATIVE)
       r_.m128i = _mm_ternarylogic_epi32(a_.m128i, b_.m128i, c_.m128i, 0xca);
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      vuint8m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u8m1(a_.sv128, 16);
+      a_and_b = __riscv_vand_vv_u8m1(a_.sv128, b_.sv128, 16);
+      not_a_and_c = __riscv_vand_vv_u8m1(not_a, c_.sv128, 16);
+      r_.sv128 = __riscv_vor_vv_u8m1(a_and_b, not_a_and_c, 16);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = c_.values ^ ((b_.values ^ c_.values) & a_.values);
     #else
@@ -509,6 +599,12 @@ simde_vbslq_s16(simde_uint16x8_t a, simde_int16x8_t b, simde_int16x8_t c) {
       r_.v128 = wasm_v128_bitselect(b_.v128, c_.v128, a_.v128);
     #elif defined(SIMDE_X86_AVX512VL_NATIVE)
       r_.m128i = _mm_ternarylogic_epi32(a_.m128i, b_.m128i, c_.m128i, 0xca);
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      vuint16m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u16m1(a_.sv128, 8);
+      a_and_b = __riscv_vand_vv_u16m1(a_.sv128, b_.sv128, 8);
+      not_a_and_c = __riscv_vand_vv_u16m1(not_a, c_.sv128, 8);
+      r_.sv128 = __riscv_vor_vv_u16m1(a_and_b, not_a_and_c, 8);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = c_.values ^ ((b_.values ^ c_.values) & a_.values);
     #else
@@ -544,6 +640,12 @@ simde_vbslq_s32(simde_uint32x4_t a, simde_int32x4_t b, simde_int32x4_t c) {
       r_.v128 = wasm_v128_bitselect(b_.v128, c_.v128, a_.v128);
     #elif defined(SIMDE_X86_AVX512VL_NATIVE)
       r_.m128i = _mm_ternarylogic_epi32(a_.m128i, b_.m128i, c_.m128i, 0xca);
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      vuint32m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u32m1(a_.sv128, 4);
+      a_and_b = __riscv_vand_vv_u32m1(a_.sv128, b_.sv128, 4);
+      not_a_and_c = __riscv_vand_vv_u32m1(not_a, c_.sv128, 4);
+      r_.sv128 = __riscv_vor_vv_u32m1(a_and_b, not_a_and_c, 4);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = c_.values ^ ((b_.values ^ c_.values) & a_.values);
     #else
@@ -591,6 +693,12 @@ simde_vbslq_s64(simde_uint64x2_t a, simde_int64x2_t b, simde_int64x2_t c) {
       r_.v128 = wasm_v128_bitselect(b_.v128, c_.v128, a_.v128);
     #elif defined(SIMDE_X86_AVX512VL_NATIVE)
       r_.m128i = _mm_ternarylogic_epi32(a_.m128i, b_.m128i, c_.m128i, 0xca);
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      vuint64m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u64m1(a_.sv128, 2);
+      a_and_b = __riscv_vand_vv_u64m1(a_.sv128, b_.sv128, 2);
+      not_a_and_c = __riscv_vand_vv_u64m1(not_a, c_.sv128, 2);
+      r_.sv128 = __riscv_vor_vv_u64m1(a_and_b, not_a_and_c, 2);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = c_.values ^ ((b_.values ^ c_.values) & a_.values);
     #else
@@ -626,6 +734,12 @@ simde_vbslq_u8(simde_uint8x16_t a, simde_uint8x16_t b, simde_uint8x16_t c) {
       r_.v128 = wasm_v128_bitselect(b_.v128, c_.v128, a_.v128);
     #elif defined(SIMDE_X86_AVX512VL_NATIVE)
       r_.m128i = _mm_ternarylogic_epi32(a_.m128i, b_.m128i, c_.m128i, 0xca);
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      vuint8m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u8m1(a_.sv128, 16);
+      a_and_b = __riscv_vand_vv_u8m1(a_.sv128, b_.sv128, 16);
+      not_a_and_c = __riscv_vand_vv_u8m1(not_a, c_.sv128, 16);
+      r_.sv128 = __riscv_vor_vv_u8m1(a_and_b, not_a_and_c, 16);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = c_.values ^ ((b_.values ^ c_.values) & a_.values);
     #else
@@ -661,6 +775,12 @@ simde_vbslq_u16(simde_uint16x8_t a, simde_uint16x8_t b, simde_uint16x8_t c) {
       r_.v128 = wasm_v128_bitselect(b_.v128, c_.v128, a_.v128);
     #elif defined(SIMDE_X86_AVX512VL_NATIVE)
       r_.m128i = _mm_ternarylogic_epi32(a_.m128i, b_.m128i, c_.m128i, 0xca);
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      vuint16m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u16m1(a_.sv128, 8);
+      a_and_b = __riscv_vand_vv_u16m1(a_.sv128, b_.sv128, 8);
+      not_a_and_c = __riscv_vand_vv_u16m1(not_a, c_.sv128, 8);
+      r_.sv128 = __riscv_vor_vv_u16m1(a_and_b, not_a_and_c, 8);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = c_.values ^ ((b_.values ^ c_.values) & a_.values);
     #else
@@ -696,6 +816,12 @@ simde_vbslq_u32(simde_uint32x4_t a, simde_uint32x4_t b, simde_uint32x4_t c) {
       r_.v128 = wasm_v128_bitselect(b_.v128, c_.v128, a_.v128);
     #elif defined(SIMDE_X86_AVX512VL_NATIVE)
       r_.m128i = _mm_ternarylogic_epi32(a_.m128i, b_.m128i, c_.m128i, 0xca);
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      vuint32m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u32m1(a_.sv128, 4);
+      a_and_b = __riscv_vand_vv_u32m1(a_.sv128, b_.sv128, 4);
+      not_a_and_c = __riscv_vand_vv_u32m1(not_a, c_.sv128, 4);
+      r_.sv128 = __riscv_vor_vv_u32m1(a_and_b, not_a_and_c, 4);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = c_.values ^ ((b_.values ^ c_.values) & a_.values);
     #else
@@ -738,6 +864,12 @@ simde_vbslq_u64(simde_uint64x2_t a, simde_uint64x2_t b, simde_uint64x2_t c) {
       r_.v128 = wasm_v128_bitselect(b_.v128, c_.v128, a_.v128);
     #elif defined(SIMDE_X86_AVX512VL_NATIVE)
       r_.m128i = _mm_ternarylogic_epi32(a_.m128i, b_.m128i, c_.m128i, 0xca);
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      vuint64m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u64m1(a_.sv128, 2);
+      a_and_b = __riscv_vand_vv_u64m1(a_.sv128, b_.sv128, 2);
+      not_a_and_c = __riscv_vand_vv_u64m1(not_a, c_.sv128, 2);
+      r_.sv128 = __riscv_vor_vv_u64m1(a_and_b, not_a_and_c, 2);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = c_.values ^ ((b_.values ^ c_.values) & a_.values);
     #else

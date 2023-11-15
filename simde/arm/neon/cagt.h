@@ -96,8 +96,8 @@ simde_vcagt_f16(simde_float16x4_t a, simde_float16x4_t b) {
       vuint16m1_t
         vs_0 = __riscv_vmv_v_x_u16m1(UINT16_C(0), 4);
       vbool16_t mask = __riscv_vmfgt_vv_f16m1_b16(
-        __riscv_vfabs_v_f16m1(a_.sv64, 4), 
-        __riscv_vfabs_v_f16m1(b_.sv64, 4), 
+        __riscv_vfabs_v_f16m1(a_.sv64, 4),
+        __riscv_vfabs_v_f16m1(b_.sv64, 4),
         4);
       r_.sv64 = __riscv_vmerge_vxm_u16m1(vs_0, -1, mask, 4);
     #else

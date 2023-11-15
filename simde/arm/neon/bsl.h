@@ -230,7 +230,7 @@ simde_vbsl_s32(simde_uint32x2_t a, simde_int32x2_t b, simde_int32x2_t c) {
       a_and_b = __riscv_vand_vv_u32m1(a_.sv64, b_.sv64, 2);
       not_a_and_c = __riscv_vand_vv_u32m1(not_a, c_.sv64, 2);
       r_.sv64 = __riscv_vor_vv_u32m1(a_and_b, not_a_and_c, 2);
-    #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = c_.values ^ ((b_.values ^ c_.values) & a_.values);
     #else
       SIMDE_VECTORIZE

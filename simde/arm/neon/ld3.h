@@ -24,6 +24,7 @@
  *   2020      Evan Nemerson <evan@nemerson.com>
  *   2020      Sean Maher <seanptmaher@gmail.com>
  *   2023      Yi-Yen Chung <eric681@andestech.com> (Copyright owned by Andes Technology)
+ *   2023      Chi-Wei Chu <wewe5215@gapp.nthu.edu.tw>
  */
 
 #if !defined(SIMDE_ARM_NEON_LD3_H)
@@ -48,13 +49,18 @@ simde_vld3_f16(simde_float16_t const *ptr) {
     return vld3_f16(ptr);
   #else
     simde_float16x4_private r_[3];
-
-    for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
-      for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
-        r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+    #if defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+      vfloat16mf2x3_t dest = __riscv_vlseg3e16_v_f16mf2x3((_Float16 *)&ptr[0], 4);
+      r_[0].sv64 = __riscv_vget_v_f16mf2x3_f16mf2(dest, 0);
+      r_[1].sv64 = __riscv_vget_v_f16mf2x3_f16mf2(dest, 1);
+      r_[2].sv64 = __riscv_vget_v_f16mf2x3_f16mf2(dest, 2);
+    #else
+      for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
+        for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
+          r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+        }
       }
-    }
-
+    #endif
     simde_float16x4x3_t r = { {
       simde_float16x4_from_private(r_[0]),
       simde_float16x4_from_private(r_[1]),
@@ -76,13 +82,18 @@ simde_vld3_f32(simde_float32 const *ptr) {
     return vld3_f32(ptr);
   #else
     simde_float32x2_private r_[3];
-
-    for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
-      for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
-        r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+      vfloat32mf2x3_t dest = __riscv_vlseg3e32_v_f32mf2x3(&ptr[0], 2);
+      r_[0].sv64 = __riscv_vget_v_f32mf2x3_f32mf2(dest, 0);
+      r_[1].sv64 = __riscv_vget_v_f32mf2x3_f32mf2(dest, 1);
+      r_[2].sv64 = __riscv_vget_v_f32mf2x3_f32mf2(dest, 2);
+    #else
+      for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
+        for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
+          r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+        }
       }
-    }
-
+    #endif
     simde_float32x2x3_t r = { {
       simde_float32x2_from_private(r_[0]),
       simde_float32x2_from_private(r_[1]),
@@ -104,13 +115,18 @@ simde_vld3_f64(simde_float64 const *ptr) {
     return vld3_f64(ptr);
   #else
     simde_float64x1_private r_[3];
-
-    for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
-      for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
-        r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+      vfloat64mf2x3_t dest = __riscv_vlseg3e64_v_f64mf2x3(&ptr[0], 1);
+      r_[0].sv64 = __riscv_vget_v_f64mf2x3_f64mf2(dest, 0);
+      r_[1].sv64 = __riscv_vget_v_f64mf2x3_f64mf2(dest, 1);
+      r_[2].sv64 = __riscv_vget_v_f64mf2x3_f64mf2(dest, 2);
+    #else
+      for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
+        for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
+          r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+        }
       }
-    }
-
+    #endif
     simde_float64x1x3_t r = { {
       simde_float64x1_from_private(r_[0]),
       simde_float64x1_from_private(r_[1]),
@@ -132,13 +148,18 @@ simde_vld3_s8(int8_t const *ptr) {
     return vld3_s8(ptr);
   #else
     simde_int8x8_private r_[3];
-
-    for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
-      for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
-        r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+      vint8mf2x3_t dest = __riscv_vlseg3e8_v_i8mf2x3(&ptr[0], 8);
+      r_[0].sv64 = __riscv_vget_v_i8mf2x3_i8mf2(dest, 0);
+      r_[1].sv64 = __riscv_vget_v_i8mf2x3_i8mf2(dest, 1);
+      r_[2].sv64 = __riscv_vget_v_i8mf2x3_i8mf2(dest, 2);
+    #else
+      for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
+        for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
+          r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+        }
       }
-    }
-
+    #endif
     simde_int8x8x3_t r = { {
       simde_int8x8_from_private(r_[0]),
       simde_int8x8_from_private(r_[1]),
@@ -160,13 +181,18 @@ simde_vld3_s16(int16_t const *ptr) {
     return vld3_s16(ptr);
   #else
     simde_int16x4_private r_[3];
-
-    for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
-      for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
-        r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+      vint16mf2x3_t dest = __riscv_vlseg3e16_v_i16mf2x3(&ptr[0], 4);
+      r_[0].sv64 = __riscv_vget_v_i16mf2x3_i16mf2(dest, 0);
+      r_[1].sv64 = __riscv_vget_v_i16mf2x3_i16mf2(dest, 1);
+      r_[2].sv64 = __riscv_vget_v_i16mf2x3_i16mf2(dest, 2);
+    #else
+      for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
+        for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
+          r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+        }
       }
-    }
-
+    #endif
     simde_int16x4x3_t r = { {
       simde_int16x4_from_private(r_[0]),
       simde_int16x4_from_private(r_[1]),
@@ -188,13 +214,18 @@ simde_vld3_s32(int32_t const *ptr) {
     return vld3_s32(ptr);
   #else
     simde_int32x2_private r_[3];
-
-    for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
-      for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
-        r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+      vint32mf2x3_t dest = __riscv_vlseg3e32_v_i32mf2x3(&ptr[0], 2);
+      r_[0].sv64 = __riscv_vget_v_i32mf2x3_i32mf2(dest, 0);
+      r_[1].sv64 = __riscv_vget_v_i32mf2x3_i32mf2(dest, 1);
+      r_[2].sv64 = __riscv_vget_v_i32mf2x3_i32mf2(dest, 2);
+    #else
+      for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
+        for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
+          r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+        }
       }
-    }
-
+    #endif
     simde_int32x2x3_t r = { {
       simde_int32x2_from_private(r_[0]),
       simde_int32x2_from_private(r_[1]),
@@ -216,13 +247,18 @@ simde_vld3_s64(int64_t const *ptr) {
     return vld3_s64(ptr);
   #else
     simde_int64x1_private r_[3];
-
-    for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
-      for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
-        r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+      vint64mf2x3_t dest = __riscv_vlseg3e64_v_i64mf2x3(&ptr[0], 1);
+      r_[0].sv64 = __riscv_vget_v_i64mf2x3_i64mf2(dest, 0);
+      r_[1].sv64 = __riscv_vget_v_i64mf2x3_i64mf2(dest, 1);
+      r_[2].sv64 = __riscv_vget_v_i64mf2x3_i64mf2(dest, 2);
+    #else
+      for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
+        for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
+          r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+        }
       }
-    }
-
+    #endif
     simde_int64x1x3_t r = { {
       simde_int64x1_from_private(r_[0]),
       simde_int64x1_from_private(r_[1]),
@@ -244,13 +280,18 @@ simde_vld3_u8(uint8_t const *ptr) {
     return vld3_u8(ptr);
   #else
     simde_uint8x8_private r_[3];
-
-    for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
-      for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
-        r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+      vuint8mf2x3_t dest = __riscv_vlseg3e8_v_u8mf2x3(&ptr[0], 8);
+      r_[0].sv64 = __riscv_vget_v_u8mf2x3_u8mf2(dest, 0);
+      r_[1].sv64 = __riscv_vget_v_u8mf2x3_u8mf2(dest, 1);
+      r_[2].sv64 = __riscv_vget_v_u8mf2x3_u8mf2(dest, 2);
+    #else
+      for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
+        for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
+          r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+        }
       }
-    }
-
+    #endif
     simde_uint8x8x3_t r = { {
       simde_uint8x8_from_private(r_[0]),
       simde_uint8x8_from_private(r_[1]),
@@ -272,13 +313,18 @@ simde_vld3_u16(uint16_t const *ptr) {
     return vld3_u16(ptr);
   #else
     simde_uint16x4_private r_[3];
-
-    for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
-      for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
-        r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+      vuint16mf2x3_t dest = __riscv_vlseg3e16_v_u16mf2x3(&ptr[0], 4);
+      r_[0].sv64 = __riscv_vget_v_u16mf2x3_u16mf2(dest, 0);
+      r_[1].sv64 = __riscv_vget_v_u16mf2x3_u16mf2(dest, 1);
+      r_[2].sv64 = __riscv_vget_v_u16mf2x3_u16mf2(dest, 2);
+    #else
+      for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
+        for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
+          r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+        }
       }
-    }
-
+    #endif
     simde_uint16x4x3_t r = { {
       simde_uint16x4_from_private(r_[0]),
       simde_uint16x4_from_private(r_[1]),
@@ -300,13 +346,18 @@ simde_vld3_u32(uint32_t const *ptr) {
     return vld3_u32(ptr);
   #else
     simde_uint32x2_private r_[3];
-
-    for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
-      for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
-        r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+      vuint32mf2x3_t dest = __riscv_vlseg3e32_v_u32mf2x3(&ptr[0], 2);
+      r_[0].sv64 = __riscv_vget_v_u32mf2x3_u32mf2(dest, 0);
+      r_[1].sv64 = __riscv_vget_v_u32mf2x3_u32mf2(dest, 1);
+      r_[2].sv64 = __riscv_vget_v_u32mf2x3_u32mf2(dest, 2);
+    #else
+      for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
+        for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
+          r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+        }
       }
-    }
-
+    #endif
     simde_uint32x2x3_t r = { {
       simde_uint32x2_from_private(r_[0]),
       simde_uint32x2_from_private(r_[1]),
@@ -328,13 +379,18 @@ simde_vld3_u64(uint64_t const *ptr) {
     return vld3_u64(ptr);
   #else
     simde_uint64x1_private r_[3];
-
-    for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
-      for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
-        r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+      vuint64mf2x3_t dest = __riscv_vlseg3e64_v_u64mf2x3(&ptr[0], 1);
+      r_[0].sv64 = __riscv_vget_v_u64mf2x3_u64mf2(dest, 0);
+      r_[1].sv64 = __riscv_vget_v_u64mf2x3_u64mf2(dest, 1);
+      r_[2].sv64 = __riscv_vget_v_u64mf2x3_u64mf2(dest, 2);
+    #else
+      for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
+        for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
+          r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+        }
       }
-    }
-
+    #endif
     simde_uint64x1x3_t r = { {
       simde_uint64x1_from_private(r_[0]),
       simde_uint64x1_from_private(r_[1]),
@@ -356,13 +412,18 @@ simde_vld3q_f16(simde_float16_t const *ptr) {
     return vld3q_f16(ptr);
   #else
     simde_float16x8_private r_[3];
-
-    for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
-      for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
-        r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+    #if defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+      vfloat16m1x3_t dest = __riscv_vlseg3e16_v_f16m1x3((_Float16 *)&ptr[0], 8);
+      r_[0].sv128 = __riscv_vget_v_f16m1x3_f16m1(dest, 0);
+      r_[1].sv128 = __riscv_vget_v_f16m1x3_f16m1(dest, 1);
+      r_[2].sv128 = __riscv_vget_v_f16m1x3_f16m1(dest, 2);
+    #else
+      for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
+        for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
+          r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+        }
       }
-    }
-
+    #endif
     simde_float16x8x3_t r = { {
       simde_float16x8_from_private(r_[0]),
       simde_float16x8_from_private(r_[1]),
@@ -382,6 +443,18 @@ simde_float32x4x3_t
 simde_vld3q_f32(simde_float32 const *ptr) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vld3q_f32(ptr);
+  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    simde_float32x4_private r_[3];
+    vfloat32m1x3_t dest = __riscv_vlseg3e32_v_f32m1x3(&ptr[0], 4);
+    r_[0].sv128 = __riscv_vget_v_f32m1x3_f32m1(dest, 0);
+    r_[1].sv128 = __riscv_vget_v_f32m1x3_f32m1(dest, 1);
+    r_[2].sv128 = __riscv_vget_v_f32m1x3_f32m1(dest, 2);
+    simde_float32x4x3_t r = { {
+      simde_float32x4_from_private(r_[0]),
+      simde_float32x4_from_private(r_[1]),
+      simde_float32x4_from_private(r_[2])
+    } };
+    return r;
   #else
     simde_float32x4_private r_[3];
 
@@ -410,6 +483,18 @@ simde_float64x2x3_t
 simde_vld3q_f64(simde_float64 const *ptr) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
     return vld3q_f64(ptr);
+  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    simde_float64x2_private r_[3];
+    vfloat64m1x3_t dest = __riscv_vlseg3e64_v_f64m1x3(&ptr[0], 2);
+    r_[0].sv128 = __riscv_vget_v_f64m1x3_f64m1(dest, 0);
+    r_[1].sv128 = __riscv_vget_v_f64m1x3_f64m1(dest, 1);
+    r_[2].sv128 = __riscv_vget_v_f64m1x3_f64m1(dest, 2);
+    simde_float64x2x3_t r = { {
+      simde_float64x2_from_private(r_[0]),
+      simde_float64x2_from_private(r_[1]),
+      simde_float64x2_from_private(r_[2])
+    } };
+    return r;
   #else
     simde_float64x2_private r_[3];
 
@@ -438,6 +523,18 @@ simde_int8x16x3_t
 simde_vld3q_s8(int8_t const *ptr) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vld3q_s8(ptr);
+  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    simde_int8x16_private r_[3];
+    vint8m1x3_t dest = __riscv_vlseg3e8_v_i8m1x3(&ptr[0], 16);
+    r_[0].sv128 = __riscv_vget_v_i8m1x3_i8m1(dest, 0);
+    r_[1].sv128 = __riscv_vget_v_i8m1x3_i8m1(dest, 1);
+    r_[2].sv128 = __riscv_vget_v_i8m1x3_i8m1(dest, 2);
+    simde_int8x16x3_t r = { {
+      simde_int8x16_from_private(r_[0]),
+      simde_int8x16_from_private(r_[1]),
+      simde_int8x16_from_private(r_[2])
+    } };
+    return r;
   #else
     simde_int8x16_private r_[3];
 
@@ -466,6 +563,18 @@ simde_int16x8x3_t
 simde_vld3q_s16(int16_t const *ptr) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vld3q_s16(ptr);
+  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    simde_int16x8_private r_[3];
+    vint16m1x3_t dest = __riscv_vlseg3e16_v_i16m1x3(&ptr[0], 8);
+    r_[0].sv128 = __riscv_vget_v_i16m1x3_i16m1(dest, 0);
+    r_[1].sv128 = __riscv_vget_v_i16m1x3_i16m1(dest, 1);
+    r_[2].sv128 = __riscv_vget_v_i16m1x3_i16m1(dest, 2);
+    simde_int16x8x3_t r = { {
+      simde_int16x8_from_private(r_[0]),
+      simde_int16x8_from_private(r_[1]),
+      simde_int16x8_from_private(r_[2])
+    } };
+    return r;
   #else
     simde_int16x8_private r_[3];
 
@@ -494,6 +603,18 @@ simde_int32x4x3_t
 simde_vld3q_s32(int32_t const *ptr) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vld3q_s32(ptr);
+  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    simde_int32x4_private r_[3];
+    vint32m1x3_t dest = __riscv_vlseg3e32_v_i32m1x3(&ptr[0], 4);
+    r_[0].sv128 = __riscv_vget_v_i32m1x3_i32m1(dest, 0);
+    r_[1].sv128 = __riscv_vget_v_i32m1x3_i32m1(dest, 1);
+    r_[2].sv128 = __riscv_vget_v_i32m1x3_i32m1(dest, 2);
+    simde_int32x4x3_t r = { {
+      simde_int32x4_from_private(r_[0]),
+      simde_int32x4_from_private(r_[1]),
+      simde_int32x4_from_private(r_[2])
+    } };
+    return r;
   #else
     simde_int32x4_private r_[3];
 
@@ -522,6 +643,18 @@ simde_int64x2x3_t
 simde_vld3q_s64(int64_t const *ptr) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
     return vld3q_s64(ptr);
+  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    simde_int64x2_private r_[3];
+    vint64m1x3_t dest = __riscv_vlseg3e64_v_i64m1x3(&ptr[0], 2);
+    r_[0].sv128 = __riscv_vget_v_i64m1x3_i64m1(dest, 0);
+    r_[1].sv128 = __riscv_vget_v_i64m1x3_i64m1(dest, 1);
+    r_[2].sv128 = __riscv_vget_v_i64m1x3_i64m1(dest, 2);
+    simde_int64x2x3_t r = { {
+      simde_int64x2_from_private(r_[0]),
+      simde_int64x2_from_private(r_[1]),
+      simde_int64x2_from_private(r_[2])
+    } };
+    return r;
   #else
     simde_int64x2_private r_[3];
 
@@ -551,6 +684,18 @@ simde_uint8x16x3_t
 simde_vld3q_u8(uint8_t const *ptr) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vld3q_u8(ptr);
+  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    simde_uint8x16_private r_[3];
+    vuint8m1x3_t dest = __riscv_vlseg3e8_v_u8m1x3(&ptr[0], 16);
+    r_[0].sv128 = __riscv_vget_v_u8m1x3_u8m1(dest, 0);
+    r_[1].sv128 = __riscv_vget_v_u8m1x3_u8m1(dest, 1);
+    r_[2].sv128 = __riscv_vget_v_u8m1x3_u8m1(dest, 2);
+    simde_uint8x16x3_t r = { {
+      simde_uint8x16_from_private(r_[0]),
+      simde_uint8x16_from_private(r_[1]),
+      simde_uint8x16_from_private(r_[2])
+    } };
+    return r;
   #else
     simde_uint8x16_private r_[3];
 
@@ -579,6 +724,18 @@ simde_uint16x8x3_t
 simde_vld3q_u16(uint16_t const *ptr) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vld3q_u16(ptr);
+  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    simde_uint16x8_private r_[3];
+    vuint16m1x3_t dest = __riscv_vlseg3e16_v_u16m1x3(&ptr[0], 8);
+    r_[0].sv128 = __riscv_vget_v_u16m1x3_u16m1(dest, 0);
+    r_[1].sv128 = __riscv_vget_v_u16m1x3_u16m1(dest, 1);
+    r_[2].sv128 = __riscv_vget_v_u16m1x3_u16m1(dest, 2);
+    simde_uint16x8x3_t r = { {
+      simde_uint16x8_from_private(r_[0]),
+      simde_uint16x8_from_private(r_[1]),
+      simde_uint16x8_from_private(r_[2])
+    } };
+    return r;
   #else
     simde_uint16x8_private r_[3];
 
@@ -607,6 +764,18 @@ simde_uint32x4x3_t
 simde_vld3q_u32(uint32_t const *ptr) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vld3q_u32(ptr);
+  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    simde_uint32x4_private r_[3];
+    vuint32m1x3_t dest = __riscv_vlseg3e32_v_u32m1x3(&ptr[0], 4);
+    r_[0].sv128 = __riscv_vget_v_u32m1x3_u32m1(dest, 0);
+    r_[1].sv128 = __riscv_vget_v_u32m1x3_u32m1(dest, 1);
+    r_[2].sv128 = __riscv_vget_v_u32m1x3_u32m1(dest, 2);
+    simde_uint32x4x3_t r = { {
+      simde_uint32x4_from_private(r_[0]),
+      simde_uint32x4_from_private(r_[1]),
+      simde_uint32x4_from_private(r_[2])
+    } };
+    return r;
   #else
     simde_uint32x4_private r_[3];
 
@@ -635,6 +804,18 @@ simde_uint64x2x3_t
 simde_vld3q_u64(uint64_t const *ptr) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
     return vld3q_u64(ptr);
+  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    simde_uint64x2_private r_[3];
+    vuint64m1x3_t dest = __riscv_vlseg3e64_v_u64m1x3(&ptr[0], 2);
+    r_[0].sv128 = __riscv_vget_v_u64m1x3_u64m1(dest, 0);
+    r_[1].sv128 = __riscv_vget_v_u64m1x3_u64m1(dest, 1);
+    r_[2].sv128 = __riscv_vget_v_u64m1x3_u64m1(dest, 2);
+    simde_uint64x2x3_t r = { {
+      simde_uint64x2_from_private(r_[0]),
+      simde_uint64x2_from_private(r_[1]),
+      simde_uint64x2_from_private(r_[2])
+    } };
+    return r;
   #else
     simde_uint64x2_private r_[3];
 

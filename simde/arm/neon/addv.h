@@ -285,7 +285,7 @@ simde_vaddvq_f64(simde_float64x2_t a) {
 
     #if defined(SIMDE_RISCV_V_NATIVE)
       vfloat64m1_t zero = __riscv_vfmv_v_f_f64m1(0 , 1);
-      vfloat64m1_t sum = __riscv_vfredosum_vs_f64m1_f64m1(a_.sv128 , zero , 4);
+      vfloat64m1_t sum = __riscv_vfredosum_vs_f64m1_f64m1(a_.sv128 , zero , 2);
       r = __riscv_vfmv_f_s_f64m1_f64 (sum);
     #else
       r = 0;

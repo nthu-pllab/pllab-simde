@@ -70,7 +70,7 @@ int32_t
 simde_vaddlv_s16(simde_int16x4_t a) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
     return vaddlv_s16(a);
-  #elif SIMDE_NATURAL_VECTOR_SIZE_GE(128) && !defined(SIMDE_RISCV_V_NATIVE) 
+  #elif SIMDE_NATURAL_VECTOR_SIZE_GE(128) && !defined(SIMDE_RISCV_V_NATIVE)
     return simde_vaddvq_s32(simde_vmovl_s16(a));
   #else
     simde_int16x4_private a_ = simde_int16x4_to_private(a);
@@ -100,7 +100,7 @@ int64_t
 simde_vaddlv_s32(simde_int32x2_t a) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
     return vaddlv_s32(a);
-  #elif SIMDE_NATURAL_VECTOR_SIZE_GE(128) && !defined(SIMDE_RISCV_V_NATIVE) 
+  #elif SIMDE_NATURAL_VECTOR_SIZE_GE(128) && !defined(SIMDE_RISCV_V_NATIVE)
     return simde_vaddvq_s64(simde_vmovl_s32(a));
   #else
     simde_int32x2_private a_ = simde_int32x2_to_private(a);
@@ -130,7 +130,7 @@ uint16_t
 simde_vaddlv_u8(simde_uint8x8_t a) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
     return vaddlv_u8(a);
-  #elif SIMDE_NATURAL_VECTOR_SIZE_GE(128) && !defined(SIMDE_RISCV_V_NATIVE) 
+  #elif SIMDE_NATURAL_VECTOR_SIZE_GE(128) && !defined(SIMDE_RISCV_V_NATIVE)
     return simde_vaddvq_u16(simde_vmovl_u8(a));
   #else
     simde_uint8x8_private a_ = simde_uint8x8_to_private(a);
@@ -160,7 +160,7 @@ uint32_t
 simde_vaddlv_u16(simde_uint16x4_t a) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
     return vaddlv_u16(a);
-  #elif SIMDE_NATURAL_VECTOR_SIZE_GE(128) && !defined(SIMDE_RISCV_V_NATIVE) 
+  #elif SIMDE_NATURAL_VECTOR_SIZE_GE(128) && !defined(SIMDE_RISCV_V_NATIVE)
     return simde_vaddvq_u32(simde_vmovl_u16(a));
   #else
     simde_uint16x4_private a_ = simde_uint16x4_to_private(a);
@@ -190,7 +190,7 @@ uint64_t
 simde_vaddlv_u32(simde_uint32x2_t a) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
     return vaddlv_u32(a);
-  #elif SIMDE_NATURAL_VECTOR_SIZE_GE(128) && !defined(SIMDE_RISCV_V_NATIVE) 
+  #elif SIMDE_NATURAL_VECTOR_SIZE_GE(128) && !defined(SIMDE_RISCV_V_NATIVE)
     return simde_vaddvq_u64(simde_vmovl_u32(a));
   #else
     simde_uint32x2_private a_ = simde_uint32x2_to_private(a);

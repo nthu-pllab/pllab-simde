@@ -22,6 +22,7 @@
  *
  * Copyright:
  *   2020      Evan Nemerson <evan@nemerson.com>
+ *   2023      Chi-Wei Chu <wewe5215@gapp.nthu.edu.tw>
  */
 
 #if !defined(SIMDE_ARM_NEON_ADDW_HIGH_H)

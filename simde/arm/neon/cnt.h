@@ -68,7 +68,7 @@ simde_vcnt_s8(simde_int8x8_t a) {
     #else
       SIMDE_VECTORIZE
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-        r_.values[i] = simde_x_arm_neon_cntb(a_.values[i]);
+        r_.values[i] = HEDLEY_STATIC_CAST(int8_t, simde_x_arm_neon_cntb(HEDLEY_STATIC_CAST(uint8_t, a_.values[i])));
       }
     #endif
 

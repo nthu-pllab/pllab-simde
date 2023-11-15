@@ -456,9 +456,9 @@ simde_vst3q_f16(simde_float16_t ptr[HEDLEY_ARRAY_PARAM(24)], simde_float16x8x3_t
                                       simde_float16x8_to_private(val.val[2]) };
     #if defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
       vfloat16m1x3_t dest = __riscv_vlseg3e16_v_f16m1x3((_Float16 *)ptr, 8);
-      dest = __riscv_vset_v_f16m1_f16m1x3 (dest, 0, a[0].sv128);
-      dest = __riscv_vset_v_f16m1_f16m1x3 (dest, 1, a[1].sv128);
-      dest = __riscv_vset_v_f16m1_f16m1x3 (dest, 2, a[2].sv128);
+      dest = __riscv_vset_v_f16m1_f16m1x3 (dest, 0, a_[0].sv128);
+      dest = __riscv_vset_v_f16m1_f16m1x3 (dest, 1, a_[1].sv128);
+      dest = __riscv_vset_v_f16m1_f16m1x3 (dest, 2, a_[2].sv128);
       __riscv_vsseg3e16_v_f16m1x3 ((_Float16 *)ptr, dest, 8);
     #else
       simde_float16_t buf[24];

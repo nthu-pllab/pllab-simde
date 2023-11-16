@@ -291,7 +291,7 @@ simde_vrecpe_u32(simde_uint32x2_t a){
 
     SIMDE_VECTORIZE
     for(size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      if(a_.values[i] <= 0x7FFFFFFF){
+      if (a_.values[i] <= 0x7FFFFFFF){
         r_.values[i] = UINT32_MAX;
       } else {
         uint32_t a_temp = (a_.values[i] >> 23) & 511;
@@ -322,7 +322,7 @@ simde_vrecpeq_u32(simde_uint32x4_t a){
 
     SIMDE_VECTORIZE
     for(size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      if(a_.values[i] <= 0x7FFFFFFF){
+      if (a_.values[i] <= 0x7FFFFFFF){
         r_.values[i] = UINT32_MAX;
       } else {
         uint32_t a_temp = (a_.values[i] >> 23) & 511;

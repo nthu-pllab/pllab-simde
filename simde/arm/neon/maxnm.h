@@ -22,6 +22,7 @@
  *
  * Copyright:
  *   2020      Evan Nemerson <evan@nemerson.com>
+ *   2023      Yung-Cheng Su <eric20607@gapp.nthu.edu.tw>
  */
 
 #if !defined(SIMDE_ARM_NEON_MAXNM_H)
@@ -46,22 +47,26 @@ simde_vmaxnm_f32(simde_float32x2_t a, simde_float32x2_t b) {
       a_ = simde_float32x2_to_private(a),
       b_ = simde_float32x2_to_private(b);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      #if defined(simde_math_fmaxf)
-        r_.values[i] = simde_math_fmaxf(a_.values[i], b_.values[i]);
-      #else
-        if (a_.values[i] > b_.values[i]) {
-          r_.values[i] = a_.values[i];
-        } else if (a_.values[i] < b_.values[i]) {
-          r_.values[i] = b_.values[i];
-        } else if (a_.values[i] == a_.values[i]) {
-          r_.values[i] = a_.values[i];
-        } else {
-          r_.values[i] = b_.values[i];
-        }
-      #endif
-    }
+    #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS) && HEDLEY_HAS_BUILTIN(__builtin_elementwise_max)
+      r_.values = __builtin_elementwise_max(a_.values, b_.values);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        #if defined(simde_math_fmaxf)
+          r_.values[i] = simde_math_fmaxf(a_.values[i], b_.values[i]);
+        #else
+          if (a_.values[i] > b_.values[i]) {
+            r_.values[i] = a_.values[i];
+          } else if (a_.values[i] < b_.values[i]) {
+            r_.values[i] = b_.values[i];
+          } else if (a_.values[i] == a_.values[i]) {
+            r_.values[i] = a_.values[i];
+          } else {
+            r_.values[i] = b_.values[i];
+          }
+        #endif
+      }
+    #endif
 
     return simde_float32x2_from_private(r_);
   #endif
@@ -82,22 +87,26 @@ simde_vmaxnm_f64(simde_float64x1_t a, simde_float64x1_t b) {
       a_ = simde_float64x1_to_private(a),
       b_ = simde_float64x1_to_private(b);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      #if defined(simde_math_fmax)
-        r_.values[i] = simde_math_fmax(a_.values[i], b_.values[i]);
-      #else
-        if (a_.values[i] > b_.values[i]) {
-          r_.values[i] = a_.values[i];
-        } else if (a_.values[i] < b_.values[i]) {
-          r_.values[i] = b_.values[i];
-        } else if (a_.values[i] == a_.values[i]) {
-          r_.values[i] = a_.values[i];
-        } else {
-          r_.values[i] = b_.values[i];
-        }
-      #endif
-    }
+    #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS) && HEDLEY_HAS_BUILTIN(__builtin_elementwise_max)
+      r_.values = __builtin_elementwise_max(a_.values, b_.values);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        #if defined(simde_math_fmax)
+          r_.values[i] = simde_math_fmax(a_.values[i], b_.values[i]);
+        #else
+          if (a_.values[i] > b_.values[i]) {
+            r_.values[i] = a_.values[i];
+          } else if (a_.values[i] < b_.values[i]) {
+            r_.values[i] = b_.values[i];
+          } else if (a_.values[i] == a_.values[i]) {
+            r_.values[i] = a_.values[i];
+          } else {
+            r_.values[i] = b_.values[i];
+          }
+        #endif
+      }
+    #endif
 
     return simde_float64x1_from_private(r_);
   #endif
@@ -132,6 +141,8 @@ simde_vmaxnmq_f32(simde_float32x4_t a, simde_float32x4_t b) {
       #endif
     #elif defined(SIMDE_WASM_SIMD128_NATIVE) && defined(SIMDE_FAST_NANS)
       r_.v128 = wasm_f32x4_max(a_.v128, b_.v128);
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS) && HEDLEY_HAS_BUILTIN(__builtin_elementwise_max)
+      r_.values = __builtin_elementwise_max(a_.values, b_.values);
     #else
       SIMDE_VECTORIZE
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
@@ -184,6 +195,8 @@ simde_vmaxnmq_f64(simde_float64x2_t a, simde_float64x2_t b) {
       #endif
     #elif defined(SIMDE_WASM_SIMD128_NATIVE) && defined(SIMDE_FAST_NANS)
       r_.v128 = wasm_f64x2_max(a_.v128, b_.v128);
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS) && HEDLEY_HAS_BUILTIN(__builtin_elementwise_max)
+      r_.values = __builtin_elementwise_max(a_.values, b_.values);
     #else
       SIMDE_VECTORIZE
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {

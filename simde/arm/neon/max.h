@@ -478,7 +478,7 @@ simde_vmaxq_f32(simde_float32x4_t a, simde_float32x4_t b) {
         r_.sv128 = __riscv_vfmax_vv_f32m1_m(vab_mask , a_.sv128 , b_.sv128 , 4);
         r_.sv128 = __riscv_vmerge_vvm_f32m1(vnan , r_.sv128 , vab_mask , 4);
       #else
-        r_.sv128 = __riscv_vfmax_vv_f32m1(a_.sv128, b_.sv128, 4);      
+        r_.sv128 = __riscv_vfmax_vv_f32m1(a_.sv128, b_.sv128, 4);
       #endif
     #else
       SIMDE_VECTORIZE

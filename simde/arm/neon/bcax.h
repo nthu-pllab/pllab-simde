@@ -22,6 +22,7 @@
  *
  * Copyright:
  *   2021      Atharva Nimbalkar <atharvakn@gmail.com>
+ *   2023      Chi-Wei Chu <wewe5215@gapp.nthu.edu.tw>
  */
 
 #if !defined(SIMDE_ARM_NEON_BCAX_H)

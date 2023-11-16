@@ -23,6 +23,7 @@
  * Copyright:
  *   2021      Evan Nemerson <evan@nemerson.com>
  *   2021      Atharva Nimbalkar <atharvakn@gmail.com>
+ *   2023      Yung-Cheng Su <eric20607@gapp.nthu.edu.tw>
  */
 
 #if !defined(SIMDE_ARM_NEON_CAGE_H)

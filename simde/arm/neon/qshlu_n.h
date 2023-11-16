@@ -318,7 +318,7 @@ simde_vqshluq_n_s8(simde_int8x16_t a, const int n)
     const v128_t overflow = wasm_i8x16_ne(a_.v128, wasm_u8x16_shr(r_.v128, HEDLEY_STATIC_CAST(uint32_t, n)));
     r_.v128 = wasm_v128_or(r_.v128, overflow);
     r_.v128 = wasm_v128_andnot(r_.v128, wasm_i8x16_shr(a_.v128, 7));
-  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE == 128)
+  #elif defined(SIMDE_RISCV_V_NATIVE)
       vuint8m1_t shift = __riscv_vsll_vx_u8m1(__riscv_vreinterpret_v_i8m1_u8m1(a_.sv128), n, 16);
       r_.sv128 = __riscv_vmerge_vxm_u8m1(shift, UINT8_MAX, __riscv_vmsne_vv_u8m1_b8(__riscv_vsrl_vx_u8m1(shift, n, 16), a_.sv128, 16), 16);
       r_.sv128 = __riscv_vmerge_vxm_u8m1(r_.sv128, 0, __riscv_vmslt_vx_i8m1_b8(a_.sv128, 0, 16), 16);
@@ -361,7 +361,7 @@ simde_vqshluq_n_s16(simde_int16x8_t a, const int n)
     const v128_t overflow = wasm_i16x8_ne(a_.v128, wasm_u16x8_shr(r_.v128, HEDLEY_STATIC_CAST(uint32_t, n)));
     r_.v128 = wasm_v128_or(r_.v128, overflow);
     r_.v128 = wasm_v128_andnot(r_.v128, wasm_i16x8_shr(a_.v128, 15));
-  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE == 128)
+  #elif defined(SIMDE_RISCV_V_NATIVE)
       vuint16m1_t shift = __riscv_vsll_vx_u16m1(__riscv_vreinterpret_v_i16m1_u16m1(a_.sv128), n, 8);
       r_.sv128 = __riscv_vmerge_vxm_u16m1(shift, UINT16_MAX, __riscv_vmsne_vv_u16m1_b16(__riscv_vsrl_vx_u16m1(shift, n, 8), a_.sv128, 8), 8);
       r_.sv128 = __riscv_vmerge_vxm_u16m1(r_.sv128, 0, __riscv_vmslt_vx_i16m1_b16(a_.sv128, 0, 8), 8);
@@ -404,7 +404,7 @@ simde_vqshluq_n_s32(simde_int32x4_t a, const int n)
     const v128_t overflow = wasm_i32x4_ne(a_.v128, wasm_u32x4_shr(r_.v128, HEDLEY_STATIC_CAST(uint32_t, n)));
     r_.v128 = wasm_v128_or(r_.v128, overflow);
     r_.v128 = wasm_v128_andnot(r_.v128, wasm_i32x4_shr(a_.v128, 31));
-  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE == 128)
+  #elif defined(SIMDE_RISCV_V_NATIVE)
       vuint32m1_t shift = __riscv_vsll_vx_u32m1(__riscv_vreinterpret_v_i32m1_u32m1(a_.sv128), n, 4);
       r_.sv128 = __riscv_vmerge_vxm_u32m1(shift, UINT32_MAX, __riscv_vmsne_vv_u32m1_b32(__riscv_vsrl_vx_u32m1(shift, n, 4), a_.sv128, 4), 4);
       r_.sv128 = __riscv_vmerge_vxm_u32m1(r_.sv128, 0, __riscv_vmslt_vx_i32m1_b32(a_.sv128, 0, 4), 4);
@@ -447,7 +447,7 @@ simde_vqshluq_n_s64(simde_int64x2_t a, const int n)
     const v128_t overflow = wasm_i64x2_ne(a_.v128, wasm_u64x2_shr(r_.v128, HEDLEY_STATIC_CAST(uint32_t, n)));
     r_.v128 = wasm_v128_or(r_.v128, overflow);
     r_.v128 = wasm_v128_andnot(r_.v128, wasm_i64x2_shr(a_.v128, 63));
-  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE == 128)
+  #elif defined(SIMDE_RISCV_V_NATIVE)
       vuint64m1_t shift = __riscv_vsll_vx_u64m1(__riscv_vreinterpret_v_i64m1_u64m1(a_.sv128), n, 2);
       r_.sv128 = __riscv_vmerge_vxm_u64m1(shift, UINT64_MAX, __riscv_vmsne_vv_u64m1_b64(__riscv_vsrl_vx_u64m1(shift, n, 2), a_.sv128, 2), 2);
       r_.sv128 = __riscv_vmerge_vxm_u64m1(r_.sv128, 0, __riscv_vmslt_vx_i64m1_b64(a_.sv128, 0, 2), 2);

@@ -58,6 +58,10 @@ simde_vqtbx1_u8(simde_uint8x8_t a, simde_uint8x16_t t, simde_uint8x8_t idx) {
       __m128i r128 = _mm_shuffle_epi8(t_.m128i, idx128);
       r128 =  _mm_blendv_epi8(r128, _mm_set1_epi64(a_.m64), idx128);
       r_.m64 = _mm_movepi64_pi64(r128);
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      vbool8_t mask = __riscv_vmsgeu_vx_u8m1_b8 (idx_.sv64, 16, 8);
+      r_.sv64 = __riscv_vrgather_vv_u8m1(t_.sv128 , idx_.sv64 , 8);
+      r_.sv64 = __riscv_vmerge_vvm_u8m1(r_.sv64, a_.sv64, mask, 8);
     #else
       SIMDE_VECTORIZE
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
@@ -299,6 +303,10 @@ simde_vqtbx1q_u8(simde_uint8x16_t a, simde_uint8x16_t t, simde_uint8x16_t idx) {
     #elif defined(SIMDE_WASM_SIMD128_NATIVE)
       r_.v128 = wasm_v128_or(wasm_i8x16_swizzle(t_.v128, idx_.v128),
                              wasm_v128_and(a_.v128, wasm_u8x16_gt(idx_.v128, wasm_i8x16_splat(15))));
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      vbool8_t mask = __riscv_vmsgeu_vx_u8m1_b8 (idx_.sv128, 16, 16);
+      r_.sv128 = __riscv_vrgather_vv_u8m1(t_.sv128 , idx_.sv128 , 16);
+      r_.sv128 = __riscv_vmerge_vvm_u8m1(r_.sv128, a_.sv128, mask, 16);
     #else
       SIMDE_VECTORIZE
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {

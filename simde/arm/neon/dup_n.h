@@ -23,6 +23,7 @@
  * Copyright:
  *   2020      Sean Maher <seanptmaher@gmail.com> (Copyright owned by Google, LLC)
  *   2020      Evan Nemerson <evan@nemerson.com>
+ *   2023      Chi-Wei Chu <wewe5215@gapp.nthu.edu.tw>
  */
 
 #if !defined(SIMDE_ARM_NEON_DUP_N_H)

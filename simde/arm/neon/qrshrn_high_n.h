@@ -58,7 +58,7 @@ simde_vqrshrn_high_n_s16(simde_int8x8_t r, simde_int16x8_t a, const int n)
 #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
   #define simde_vqrshrn_high_n_s16(r, a, n) vqrshrn_high_n_s16((r), (a), (n))
 #else
-  #define simde_vqrshrn_high_n_s16(r, a, n) simde_vcombine_u8(r, simde_vreinterpret_u8_s8(simde_vqrshrn_n_s16(a, n)))
+  #define simde_vqrshrn_high_n_s16(r, a, n) simde_vcombine_s8(r, simde_vqrshrn_n_s16(a, n))
 #endif
 #if defined(SIMDE_ARM_NEON_A64V8_ENABLE_NATIVE_ALIASES)
   #undef vqrshrn_high_n_s16
@@ -85,7 +85,7 @@ simde_vqrshrn_high_n_s32(simde_int16x4_t r, simde_int32x4_t a, const int n)
 #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
   #define simde_vqrshrn_high_n_s32(r, a, n) vqrshrn_high_n_s32((r), (a), (n))
 #else
-  #define simde_vqrshrn_high_n_s32(r, a, n) simde_vcombine_u16(r, simde_vreinterpret_u16_s16(simde_vqrshrn_n_s32(a, n)))
+  #define simde_vqrshrn_high_n_s32(r, a, n) simde_vcombine_s16(r, simde_vqrshrn_n_s32(a, n))
 #endif
 #if defined(SIMDE_ARM_NEON_A64V8_ENABLE_NATIVE_ALIASES)
   #undef vqrshrn_high_n_s32
@@ -112,7 +112,7 @@ simde_vqrshrn_high_n_s64(simde_int32x2_t r, simde_int64x2_t a, const int n)
 #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
   #define simde_vqrshrn_high_n_s64(r, a, n) vqrshrn_high_n_s64((r), (a), (n))
 #else
-  #define simde_vqrshrn_high_n_s64(r, a, n) simde_vcombine_u32(r, simde_vreinterpret_u32_s32(simde_vqrshrn_n_s64(a, n)))
+  #define simde_vqrshrn_high_n_s64(r, a, n) simde_vcombine_s32(r, simde_vqrshrn_n_s64(a, n))
 #endif
 #if defined(SIMDE_ARM_NEON_A64V8_ENABLE_NATIVE_ALIASES)
   #undef vqrshrn_high_n_s64

@@ -33,6 +33,7 @@
 #include "types.h"
 #include "rshr_n.h"
 #include "qrshrn_n.h"
+#include "reinterpret.h"
 HEDLEY_DIAGNOSTIC_PUSH
 SIMDE_DISABLE_UNWANTED_DIAGNOSTICS
 SIMDE_BEGIN_DECLS_

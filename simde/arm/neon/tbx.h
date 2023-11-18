@@ -55,6 +55,10 @@ simde_vtbx1_u8(simde_uint8x8_t a, simde_uint8x8_t b, simde_uint8x8_t c) {
       __m128i r128 = _mm_shuffle_epi8(b128, c128);
       r128 =  _mm_blendv_epi8(r128, a128, c128);
       r_.m64 = _mm_movepi64_pi64(r128);
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      vbool8_t mask = __riscv_vmsgeu_vx_u8m1_b8 (c_.sv64, 8, 16);
+      r_.sv64 = __riscv_vrgather_vv_u8m1(b_.sv64 , c_.sv64 , 16);
+      r_.sv64 = __riscv_vmerge_vvm_u8m1(r_.sv64, a_.sv64, mask, 16);
     #else
       SIMDE_VECTORIZE
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {

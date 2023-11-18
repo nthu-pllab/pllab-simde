@@ -229,6 +229,7 @@ simde_vqmovn_u16(simde_uint16x8_t a) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vqmovn_u16(a);
   #elif defined(SIMDE_RISCV_V_NATIVE)
+    simde_uint8x8_t r;
     vuint8mf2_t r_;
     simde_uint16x8_private a_ = simde_uint16x8_to_private(a);
 
@@ -293,13 +294,13 @@ simde_uint32x2_t
 simde_vqmovn_u64(simde_uint64x2_t a) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vqmovn_u64(a);
-  #elif defined(SIMDE_RISCV_V_NATIVE) 
+  #elif defined(SIMDE_RISCV_V_NATIVE)
     simde_uint32x2_t r;
     vuint32mf2_t r_;
     simde_uint64x2_private a_ = simde_uint64x2_to_private(a);
 
     r_ = __riscv_vnclipu_wx_u32mf2(a_.sv128, 0, 0, 2);
-    simde_memcpy(&r, &r_, sizeof(simde_uint32x2_t)); 
+    simde_memcpy(&r, &r_, sizeof(simde_uint32x2_t));
 
     return r;
   #elif SIMDE_NATURAL_VECTOR_SIZE > 0

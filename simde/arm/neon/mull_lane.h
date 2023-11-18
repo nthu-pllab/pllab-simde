@@ -153,6 +153,7 @@ simde_vmull_lane_u32(simde_uint32x2_t a, simde_uint32x2_t b, const int lane) {
   #define vmull_lane_u32(a, v, lane) simde_vmull_lane_u32((a), (v), (lane))
 #endif
 
+SIMDE_FUNCTION_ATTRIBUTES
 simde_int32x4_t
 simde_vmull_laneq_s16(simde_int16x4_t a, simde_int16x8_t b, const int lane) {
   simde_int16x4_private

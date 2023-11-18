@@ -39,7 +39,7 @@ simde_int32x4_t
 simde_vmlsl_n_s16(simde_int32x4_t a, simde_int16x4_t b, int16_t c) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vmlsl_n_s16(a, b, c);
-  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE == 128)
+  #elif defined(SIMDE_RISCV_V_NATIVE)
     simde_int32x4_private r_;
     simde_int32x4_private a_ = simde_int32x4_to_private(a);
     simde_int16x4_private b_ = simde_int16x4_to_private(b);
@@ -60,7 +60,7 @@ simde_int64x2_t
 simde_vmlsl_n_s32(simde_int64x2_t a, simde_int32x2_t b, int32_t c) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vmlsl_n_s32(a, b, c);
-  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE == 128)
+  #elif defined(SIMDE_RISCV_V_NATIVE)
     simde_int64x2_private r_;
     simde_int64x2_private a_ = simde_int64x2_to_private(a);
     simde_int32x2_private b_ = simde_int32x2_to_private(b);
@@ -81,7 +81,7 @@ simde_uint32x4_t
 simde_vmlsl_n_u16(simde_uint32x4_t a, simde_uint16x4_t b, uint16_t c) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vmlsl_n_u16(a, b, c);
-  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE == 128)
+  #elif defined(SIMDE_RISCV_V_NATIVE)
     simde_uint32x4_private r_;
     simde_uint32x4_private a_ = simde_uint32x4_to_private(a);
     simde_uint16x4_private b_ = simde_uint16x4_to_private(b);
@@ -102,7 +102,7 @@ simde_uint64x2_t
 simde_vmlsl_n_u32(simde_uint64x2_t a, simde_uint32x2_t b, uint32_t c) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vmlsl_n_u32(a, b, c);
-  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE == 128)
+  #elif defined(SIMDE_RISCV_V_NATIVE)
     simde_uint64x2_private r_;
     simde_uint64x2_private a_ = simde_uint64x2_to_private(a);
     simde_uint32x2_private b_ = simde_uint32x2_to_private(b);

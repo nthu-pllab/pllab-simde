@@ -483,7 +483,7 @@ simde_vminq_f32(simde_float32x4_t a, simde_float32x4_t b) {
       #if !defined(SIMDE_FAST_NANS)
         vbool32_t va_mask = __riscv_vmseq_vx_u32m1_b32(__riscv_vfclass_v_u32m1(a_.sv128, 4) , 512 , 4);
         vbool32_t vb_mask = __riscv_vmseq_vx_u32m1_b32(__riscv_vfclass_v_u32m1(b_.sv128, 4) , 512 , 4);
-        vbool32_t vab_mask = __riscv_vmnor_mm_b32(va_mask, vb_mask  4);
+        vbool32_t vab_mask = __riscv_vmnor_mm_b32(va_mask, vb_mask,  4);
         vfloat32m1_t vnan = __riscv_vfmv_v_f_f32m1(SIMDE_MATH_NANF, 4);
         r_.sv128 = __riscv_vfmin_vv_f32m1_m(vab_mask , a_.sv128 , b_.sv128 , 4);
         r_.sv128 = __riscv_vmerge_vvm_f32m1(vnan, r_.sv128, vab_mask, 4);

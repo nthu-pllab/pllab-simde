@@ -77,7 +77,7 @@ simde_float16x8_t simde_vcaddq_rot90_f16(simde_float16x8_t a, simde_float16x8_t 
     return vcaddq_rot90_f16(a, b);
   #else
     simde_float16x8_private r_, a_ = simde_float16x8_to_private(a), b_ = simde_float16x8_to_private(b);
-    #if defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH
+    #if defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH && (SIMDE_NATURAL_VECTOR_SIZE > 128)
       uint16_t idx1[8] = {1, 8, 3, 10, 5, 12, 7, 14};
       vfloat16m1_t op1 = __riscv_vrgather_vv_f16m1(__riscv_vslideup_vx_f16m1( \
         __riscv_vfneg_v_f16m1(b_.sv128, 8), b_.sv128, 8, 16), __riscv_vle16_v_u16m1(idx1, 8), 8);
@@ -145,7 +145,7 @@ simde_float32x4_t simde_vcaddq_rot90_f32(simde_float32x4_t a, simde_float32x4_t 
     return vcaddq_rot90_f32(a, b);
   #else
     simde_float32x4_private r_, a_ = simde_float32x4_to_private(a), b_ = simde_float32x4_to_private(b);
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE > 128)
       uint32_t idx1[4] = {1, 4, 3, 6};
       vfloat32m1_t op1 = __riscv_vrgather_vv_f32m1(__riscv_vslideup_vx_f32m1( \
         __riscv_vfneg_v_f32m1(b_.sv128, 4), b_.sv128, 4, 8), __riscv_vle32_v_u32m1(idx1, 4), 4);
@@ -178,7 +178,7 @@ simde_float64x2_t simde_vcaddq_rot90_f64(simde_float64x2_t a, simde_float64x2_t 
     return vcaddq_rot90_f64(a, b);
   #else
     simde_float64x2_private r_, a_ = simde_float64x2_to_private(a), b_ = simde_float64x2_to_private(b);
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE > 128)
       uint64_t idx1[2] = {1, 2};
       vfloat64m1_t op1 = __riscv_vrgather_vv_f64m1(__riscv_vslideup_vx_f64m1( \
         __riscv_vfneg_v_f64m1(b_.sv128, 2), b_.sv128, 2, 4), __riscv_vle64_v_u64m1(idx1, 2), 2);

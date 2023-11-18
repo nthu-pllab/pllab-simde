@@ -45,15 +45,11 @@ simde_vmaxv_f32(simde_float32x2_t a) {
   #else
     simde_float32x2_private a_ = simde_float32x2_to_private(a);
 
-    #if defined(SIMDE_VECTOR_SUBSCRIPT_SCALAR) && HEDLEY_HAS_BUILTIN(__builtin_reduce_max)
-      r = __builtin_reduce_max(a_.values);
-    #else
-      r = -SIMDE_MATH_INFINITYF;
-      SIMDE_VECTORIZE_REDUCTION(max:r)
-      for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
-        r = a_.values[i] > r ? a_.values[i] : r;
-      }
-    #endif
+    r = -SIMDE_MATH_INFINITYF;
+    SIMDE_VECTORIZE_REDUCTION(max:r)
+    for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
+      r = a_.values[i] > r ? a_.values[i] : r;
+    }
 
   #endif
 
@@ -248,16 +244,11 @@ simde_vmaxvq_f32(simde_float32x4_t a) {
   #else
     simde_float32x4_private a_ = simde_float32x4_to_private(a);
 
-    #if defined(SIMDE_VECTOR_SUBSCRIPT_SCALAR) && HEDLEY_HAS_BUILTIN(__builtin_reduce_max)
-      r = __builtin_reduce_max(a_.values);
-    #else
-      r = -SIMDE_MATH_INFINITYF;
-      SIMDE_VECTORIZE_REDUCTION(max:r)
-      for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
-        r = a_.values[i] > r ? a_.values[i] : r;
-      }
-    #endif
-
+    r = -SIMDE_MATH_INFINITYF;
+    SIMDE_VECTORIZE_REDUCTION(max:r)
+    for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
+      r = a_.values[i] > r ? a_.values[i] : r;
+    }
   #endif
 
   return r;
@@ -277,16 +268,11 @@ simde_vmaxvq_f64(simde_float64x2_t a) {
   #else
     simde_float64x2_private a_ = simde_float64x2_to_private(a);
 
-    #if defined(SIMDE_VECTOR_SUBSCRIPT_SCALAR) && HEDLEY_HAS_BUILTIN(__builtin_reduce_max)
-      r = __builtin_reduce_max(a_.values);
-    #else
-      r = -SIMDE_MATH_INFINITY;
-      SIMDE_VECTORIZE_REDUCTION(max:r)
-      for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
-        r = a_.values[i] > r ? a_.values[i] : r;
-      }
-    #endif
-
+    r = -SIMDE_MATH_INFINITY;
+    SIMDE_VECTORIZE_REDUCTION(max:r)
+    for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
+      r = a_.values[i] > r ? a_.values[i] : r;
+    }
   #endif
 
   return r;

@@ -241,7 +241,7 @@ simde_vorr_u32(simde_uint32x2_t a, simde_uint32x2_t b) {
     #if defined(SIMDE_X86_MMX_NATIVE)
       r_.m64 = _mm_or_si64(a_.m64, b_.m64);
     #elif defined(SIMDE_RISCV_V_NATIVE)
-      r_.sv128 = __riscv_vor_vv_u32m1(a_.sv128, b_.sv128, 2);
+      r_.sv64 = __riscv_vor_vv_u32m1(a_.sv64, b_.sv64, 2);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = a_.values | b_.values;
     #else

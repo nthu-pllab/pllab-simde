@@ -84,7 +84,7 @@ simde_vmull_lane_s32(simde_int32x2_t a, simde_int32x2_t b, const int lane) {
 #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
   #define simde_vmull_lane_s32(a, v, lane) vmull_lane_s32((a), (v), (lane))
 #elif !defined(SIMDE_RISCV_V_NATIVE)
-  #define simde_vmull_lane_s32(a, v, lane) 
+  #define simde_vmull_lane_s32(a, v, lane)
 #endif
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
   #undef vmull_lane_s32
@@ -93,8 +93,8 @@ simde_vmull_lane_s32(simde_int32x2_t a, simde_int32x2_t b, const int lane) {
 
 SIMDE_FUNCTION_ATTRIBUTES
 simde_uint32x4_t
-simde_vmull_lane_u16(simde_uint16x4_t a, simde_uint16x4_t b, const int lane) { 
-  
+simde_vmull_lane_u16(simde_uint16x4_t a, simde_uint16x4_t b, const int lane) {
+
   simde_uint16x4_private
     a_ = simde_uint16x4_to_private(a),
     b_ = simde_uint16x4_to_private(b);
@@ -112,7 +112,7 @@ simde_vmull_lane_u16(simde_uint16x4_t a, simde_uint16x4_t b, const int lane) {
 }
 #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
   #define simde_vmull_lane_u16(a, v, lane) vmull_lane_u16((a), (v), (lane))
-#elif !(defined(SIMDE_RISCV_V_NATIVE)
+#elif !defined(SIMDE_RISCV_V_NATIVE)
   #define simde_vmull_lane_u16(a, v, lane) simde_vmull_u16((a), simde_vdup_lane_u16((v), (lane)))
 #endif
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -123,7 +123,7 @@ simde_vmull_lane_u16(simde_uint16x4_t a, simde_uint16x4_t b, const int lane) {
 SIMDE_FUNCTION_ATTRIBUTES
 simde_uint64x2_t
 simde_vmull_lane_u32(simde_uint32x2_t a, simde_uint32x2_t b, const int lane) {
-  
+
   simde_uint32x2_private
     a_ = simde_uint32x2_to_private(a),
     b_ = simde_uint32x2_to_private(b);
@@ -180,7 +180,7 @@ simde_vmull_laneq_s16(simde_int16x4_t a, simde_int16x8_t b, const int lane) {
 SIMDE_FUNCTION_ATTRIBUTES
 simde_int64x2_t
 simde_vmull_laneq_s32(simde_int32x2_t a, simde_int32x4_t b, const int lane) {
-  
+
   simde_int32x2_private
     a_ = simde_int32x2_to_private(a);
   simde_int32x4_private
@@ -195,7 +195,7 @@ simde_vmull_laneq_s32(simde_int32x2_t a, simde_int32x4_t b, const int lane) {
       r_.values[i] = HEDLEY_STATIC_CAST(int64_t, a_.values[i]) * HEDLEY_STATIC_CAST(int64_t, b_.values[lane]);
     }
   #endif
-  return simde_int64x2_from_private(r_); 
+  return simde_int64x2_from_private(r_);
 }
 #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
   #define simde_vmull_laneq_s32(a, v, lane) vmull_laneq_s32((a), (v), (lane))
@@ -210,7 +210,7 @@ simde_vmull_laneq_s32(simde_int32x2_t a, simde_int32x4_t b, const int lane) {
 SIMDE_FUNCTION_ATTRIBUTES
 simde_uint32x4_t
 simde_vmull_laneq_u16(simde_uint16x4_t a, simde_uint16x8_t b, const int lane) {
-  
+
   simde_uint16x4_private
     a_ = simde_uint16x4_to_private(a);
   simde_uint16x8_private

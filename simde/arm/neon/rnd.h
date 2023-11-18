@@ -43,10 +43,14 @@ simde_vrnd_f32(simde_float32x2_t a) {
       r_,
       a_ = simde_float32x2_to_private(a);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      r_.values[i] = simde_math_truncf(a_.values[i]);
-    }
+    #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS) && HEDLEY_HAS_BUILTIN(__builtin_elementwise_trunc)
+      r_.values = __builtin_elementwise_trunc(a_.values);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        r_.values[i] = simde_math_truncf(a_.values[i]);
+      }
+    #endif
 
     return simde_float32x2_from_private(r_);
   #endif
@@ -66,10 +70,14 @@ simde_vrnd_f64(simde_float64x1_t a) {
       r_,
       a_ = simde_float64x1_to_private(a);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      r_.values[i] = simde_math_trunc(a_.values[i]);
-    }
+    #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS) && HEDLEY_HAS_BUILTIN(__builtin_elementwise_trunc)
+      r_.values = __builtin_elementwise_trunc(a_.values);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        r_.values[i] = simde_math_trunc(a_.values[i]);
+      }
+    #endif
 
     return simde_float64x1_from_private(r_);
   #endif
@@ -95,6 +103,8 @@ simde_vrndq_f32(simde_float32x4_t a) {
       r_.m128 = _mm_round_ps(a_.m128, _MM_FROUND_TO_ZERO);
     #elif defined(SIMDE_X86_SVML_NATIVE) && defined(SIMDE_X86_SSE_NATIVE)
       r_.m128 = _mm_trunc_ps(a_.m128);
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS) && HEDLEY_HAS_BUILTIN(__builtin_elementwise_trunc)
+      r_.values = __builtin_elementwise_trunc(a_.values);
     #else
       SIMDE_VECTORIZE
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
@@ -126,6 +136,8 @@ simde_vrndq_f64(simde_float64x2_t a) {
       r_.m128d = _mm_round_pd(a_.m128d, _MM_FROUND_TO_ZERO);
     #elif defined(SIMDE_X86_SVML_NATIVE) && defined(SIMDE_X86_SSE_NATIVE)
       r_.m128d = _mm_trunc_pd(a_.m128d);
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS) && HEDLEY_HAS_BUILTIN(__builtin_elementwise_trunc)
+      r_.values = __builtin_elementwise_trunc(a_.values);
     #else
       SIMDE_VECTORIZE
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {

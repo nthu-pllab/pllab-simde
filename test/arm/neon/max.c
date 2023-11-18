@@ -4,67 +4,7 @@
 #include "../../../simde/arm/neon/max.h"
 
 static int
-test_simde_vmaxh_f16 (SIMDE_MUNIT_TEST_ARGS) {
-#if 1
-  struct {
-    simde_float16 a;
-    simde_float16 b;
-    simde_float16 r;
-  } test_vec[] = {
-    {    SIMDE_FLOAT16_VALUE(    27.944),
-         SIMDE_FLOAT16_VALUE(     4.766),
-         SIMDE_FLOAT16_VALUE(    27.944) },
-    {    SIMDE_FLOAT16_VALUE(    -6.101),
-         SIMDE_FLOAT16_VALUE(     6.573),
-         SIMDE_FLOAT16_VALUE(     6.573) },
-    {    SIMDE_FLOAT16_VALUE(    16.846),
-         SIMDE_FLOAT16_VALUE(     3.658),
-         SIMDE_FLOAT16_VALUE(    16.846) },
-    {    SIMDE_FLOAT16_VALUE(    -4.194),
-         SIMDE_FLOAT16_VALUE(   -13.220),
-         SIMDE_FLOAT16_VALUE(    -4.194) },
-    {    SIMDE_FLOAT16_VALUE(    12.582),
-         SIMDE_FLOAT16_VALUE(     4.663),
-         SIMDE_FLOAT16_VALUE(    12.582) },
-    {    SIMDE_FLOAT16_VALUE(    14.203),
-         SIMDE_FLOAT16_VALUE(   -15.993),
-         SIMDE_FLOAT16_VALUE(    14.203) },
-    {    SIMDE_FLOAT16_VALUE(    13.812),
-         SIMDE_FLOAT16_VALUE(     1.543),
-         SIMDE_FLOAT16_VALUE(    13.812) },
-    {    SIMDE_FLOAT16_VALUE(    25.248),
-         SIMDE_FLOAT16_VALUE(     4.234),
-         SIMDE_FLOAT16_VALUE(    25.248) },
-  };
-
-  for (size_t i = 0 ; i < (sizeof(test_vec) / sizeof(test_vec[0])) ; i++) {
-    simde_float16_t a = test_vec[i].a;
-    simde_float16_t b = test_vec[i].b;
-    simde_float16_t r = simde_vmaxh_f16(a, b);
-
-    simde_assert_equal_f16(r, test_vec[i].r, 1);
-  }
-
-  return 0;
-
-#else
-  fputc('\n', stdout);
-  for (int i = 0 ; i < 8 ; i++) {
-    simde_float16_t a = simde_test_codegen_random_f16(-100.0f, 100.0f);
-    simde_float16_t b = simde_test_codegen_random_f16(-100.0f, 100.0f);
-    simde_float16_t r = simde_vmaxh_f16(a, b);
-
-    simde_test_codegen_write_f16(2, a, SIMDE_TEST_VEC_POS_FIRST);
-    simde_test_codegen_write_f16(2, b, SIMDE_TEST_VEC_POS_MIDDLE);
-    simde_test_codegen_write_f16(2, r, SIMDE_TEST_VEC_POS_LAST);
-  }
-  return 1;
-#endif
-}
-
-static int
 test_simde_vmax_f16 (SIMDE_MUNIT_TEST_ARGS) {
-#if 1
   struct {
     simde_float16_t a[4];
     simde_float16_t b[4];
@@ -93,20 +33,6 @@ test_simde_vmax_f16 (SIMDE_MUNIT_TEST_ARGS) {
   }
 
   return 0;
-
-#else
-  fputc('\n', stdout);
-  for (int i = 0 ; i < 8 ; i++) {
-    simde_float16x4_t a = simde_test_arm_neon_random_f16x4(-100.0f, 100.0f);
-    simde_float16x4_t b = simde_test_arm_neon_random_f16x4(-100.0f, 100.0f);
-    simde_float16x4_t r = simde_vmax_f16(a, b);
-
-    simde_test_arm_neon_write_f16x4(2, a, SIMDE_TEST_VEC_POS_FIRST);
-    simde_test_arm_neon_write_f16x4(2, b, SIMDE_TEST_VEC_POS_MIDDLE);
-    simde_test_arm_neon_write_f16x4(2, r, SIMDE_TEST_VEC_POS_LAST);
-  }
-  return 1;
-#endif
 }
 
 static int
@@ -237,7 +163,6 @@ test_simde_vmax_f64 (SIMDE_MUNIT_TEST_ARGS) {
 
 static int
 test_simde_vmax_s8 (SIMDE_MUNIT_TEST_ARGS) {
-#if 1
   struct {
     int8_t a[8];
     int8_t b[8];
@@ -278,25 +203,10 @@ test_simde_vmax_s8 (SIMDE_MUNIT_TEST_ARGS) {
   }
 
   return 0;
-
-#else
-  fputc('\n', stdout);
-  for (int i = 0 ; i < 8 ; i++) {
-    simde_int8x8_t a = simde_test_arm_neon_random_i8x8();
-    simde_int8x8_t b = simde_test_arm_neon_random_i8x8();
-    simde_int8x8_t r = simde_vmax_s8(a, b);
-
-    simde_test_arm_neon_write_i8x8(2, a, SIMDE_TEST_VEC_POS_FIRST);
-    simde_test_arm_neon_write_i8x8(2, b, SIMDE_TEST_VEC_POS_MIDDLE);
-    simde_test_arm_neon_write_i8x8(2, r, SIMDE_TEST_VEC_POS_LAST);
-  }
-  return 1;
-#endif
 }
 
 static int
 test_simde_vmax_s16 (SIMDE_MUNIT_TEST_ARGS) {
-#if 1
   struct {
     int16_t a[4];
     int16_t b[4];
@@ -337,25 +247,10 @@ test_simde_vmax_s16 (SIMDE_MUNIT_TEST_ARGS) {
   }
 
   return 0;
-
-#else
-  fputc('\n', stdout);
-  for (int i = 0 ; i < 8 ; i++) {
-    simde_int16x4_t a = simde_test_arm_neon_random_i16x4();
-    simde_int16x4_t b = simde_test_arm_neon_random_i16x4();
-    simde_int16x4_t r = simde_vmax_s16(a, b);
-
-    simde_test_arm_neon_write_i16x4(2, a, SIMDE_TEST_VEC_POS_FIRST);
-    simde_test_arm_neon_write_i16x4(2, b, SIMDE_TEST_VEC_POS_MIDDLE);
-    simde_test_arm_neon_write_i16x4(2, r, SIMDE_TEST_VEC_POS_LAST);
-  }
-  return 1;
-#endif
 }
 
 static int
 test_simde_vmax_s32 (SIMDE_MUNIT_TEST_ARGS) {
-#if 1
   struct {
     int32_t a[2];
     int32_t b[2];
@@ -396,20 +291,6 @@ test_simde_vmax_s32 (SIMDE_MUNIT_TEST_ARGS) {
   }
 
   return 0;
-
-#else
-  fputc('\n', stdout);
-  for (int i = 0 ; i < 8 ; i++) {
-    simde_int32x2_t a = simde_test_arm_neon_random_i32x2();
-    simde_int32x2_t b = simde_test_arm_neon_random_i32x2();
-    simde_int32x2_t r = simde_vmax_s32(a, b);
-
-    simde_test_arm_neon_write_i32x2(2, a, SIMDE_TEST_VEC_POS_FIRST);
-    simde_test_arm_neon_write_i32x2(2, b, SIMDE_TEST_VEC_POS_MIDDLE);
-    simde_test_arm_neon_write_i32x2(2, r, SIMDE_TEST_VEC_POS_LAST);
-  }
-  return 1;
-#endif
 }
 
 static int
@@ -472,7 +353,6 @@ test_simde_x_vmax_s64 (SIMDE_MUNIT_TEST_ARGS) {
 
 static int
 test_simde_vmax_u8 (SIMDE_MUNIT_TEST_ARGS) {
-#if 1
   struct {
     uint8_t a[8];
     uint8_t b[8];
@@ -513,25 +393,10 @@ test_simde_vmax_u8 (SIMDE_MUNIT_TEST_ARGS) {
   }
 
   return 0;
-
-#else
-  fputc('\n', stdout);
-  for (int i = 0 ; i < 8 ; i++) {
-    simde_uint8x8_t a = simde_test_arm_neon_random_u8x8();
-    simde_uint8x8_t b = simde_test_arm_neon_random_u8x8();
-    simde_uint8x8_t r = simde_vmax_u8(a, b);
-
-    simde_test_arm_neon_write_u8x8(2, a, SIMDE_TEST_VEC_POS_FIRST);
-    simde_test_arm_neon_write_u8x8(2, b, SIMDE_TEST_VEC_POS_MIDDLE);
-    simde_test_arm_neon_write_u8x8(2, r, SIMDE_TEST_VEC_POS_LAST);
-  }
-  return 1;
-#endif
 }
 
 static int
 test_simde_vmax_u16 (SIMDE_MUNIT_TEST_ARGS) {
-#if 1
   struct {
     uint16_t a[4];
     uint16_t b[4];
@@ -571,25 +436,10 @@ test_simde_vmax_u16 (SIMDE_MUNIT_TEST_ARGS) {
   }
 
   return 0;
-
-#else
-  fputc('\n', stdout);
-  for (int i = 0 ; i < 8 ; i++) {
-    simde_uint16x4_t a = simde_test_arm_neon_random_u16x4();
-    simde_uint16x4_t b = simde_test_arm_neon_random_u16x4();
-    simde_uint16x4_t r = simde_vmax_u16(a, b);
-
-    simde_test_arm_neon_write_u16x4(2, a, SIMDE_TEST_VEC_POS_FIRST);
-    simde_test_arm_neon_write_u16x4(2, b, SIMDE_TEST_VEC_POS_MIDDLE);
-    simde_test_arm_neon_write_u16x4(2, r, SIMDE_TEST_VEC_POS_LAST);
-  }
-  return 1;
-#endif
 }
 
 static int
 test_simde_vmax_u32 (SIMDE_MUNIT_TEST_ARGS) {
-#if 1
   struct {
     uint32_t a[2];
     uint32_t b[2];
@@ -629,20 +479,6 @@ test_simde_vmax_u32 (SIMDE_MUNIT_TEST_ARGS) {
   }
 
   return 0;
-
-#else
-  fputc('\n', stdout);
-  for (int i = 0 ; i < 8 ; i++) {
-    simde_uint32x2_t a = simde_test_arm_neon_random_u32x2();
-    simde_uint32x2_t b = simde_test_arm_neon_random_u32x2();
-    simde_uint32x2_t r = simde_vmax_u32(a, b);
-
-    simde_test_arm_neon_write_u32x2(2, a, SIMDE_TEST_VEC_POS_FIRST);
-    simde_test_arm_neon_write_u32x2(2, b, SIMDE_TEST_VEC_POS_MIDDLE);
-    simde_test_arm_neon_write_u32x2(2, r, SIMDE_TEST_VEC_POS_LAST);
-  }
-  return 1;
-#endif
 }
 
 static int
@@ -704,7 +540,6 @@ test_simde_x_vmax_u64 (SIMDE_MUNIT_TEST_ARGS) {
 
 static int
 test_simde_vmaxq_f16 (SIMDE_MUNIT_TEST_ARGS) {
-#if 1
   struct {
     simde_float16_t a[8];
     simde_float16_t b[8];
@@ -745,20 +580,6 @@ test_simde_vmaxq_f16 (SIMDE_MUNIT_TEST_ARGS) {
   }
 
   return 0;
-
-#else
-  fputc('\n', stdout);
-  for (int i = 0 ; i < 8 ; i++) {
-    simde_float16x8_t a = simde_test_arm_neon_random_f16x8(-100.0f, 100.0f);
-    simde_float16x8_t b = simde_test_arm_neon_random_f16x8(-100.0f, 100.0f);
-    simde_float16x8_t r = simde_vmaxq_f16(a, b);
-
-    simde_test_arm_neon_write_f16x8(2, a, SIMDE_TEST_VEC_POS_FIRST);
-    simde_test_arm_neon_write_f16x8(2, b, SIMDE_TEST_VEC_POS_MIDDLE);
-    simde_test_arm_neon_write_f16x8(2, r, SIMDE_TEST_VEC_POS_LAST);
-  }
-  return 1;
-#endif
 }
 
 static int
@@ -889,7 +710,6 @@ test_simde_vmaxq_f64 (SIMDE_MUNIT_TEST_ARGS) {
 
 static int
 test_simde_vmaxq_s8 (SIMDE_MUNIT_TEST_ARGS) {
-#if 1
   struct {
     int8_t a[16];
     int8_t b[16];
@@ -954,25 +774,10 @@ test_simde_vmaxq_s8 (SIMDE_MUNIT_TEST_ARGS) {
   }
 
   return 0;
-
-#else
-  fputc('\n', stdout);
-  for (int i = 0 ; i < 8 ; i++) {
-    simde_int8x16_t a = simde_test_arm_neon_random_i8x16();
-    simde_int8x16_t b = simde_test_arm_neon_random_i8x16();
-    simde_int8x16_t r = simde_vmaxq_s8(a, b);
-
-    simde_test_arm_neon_write_i8x16(2, a, SIMDE_TEST_VEC_POS_FIRST);
-    simde_test_arm_neon_write_i8x16(2, b, SIMDE_TEST_VEC_POS_MIDDLE);
-    simde_test_arm_neon_write_i8x16(2, r, SIMDE_TEST_VEC_POS_LAST);
-  }
-  return 1;
-#endif
 }
 
 static int
 test_simde_vmaxq_s16 (SIMDE_MUNIT_TEST_ARGS) {
-#if 1
   struct {
     int16_t a[8];
     int16_t b[8];
@@ -1013,25 +818,10 @@ test_simde_vmaxq_s16 (SIMDE_MUNIT_TEST_ARGS) {
   }
 
   return 0;
-
-#else
-  fputc('\n', stdout);
-  for (int i = 0 ; i < 8 ; i++) {
-    simde_int16x8_t a = simde_test_arm_neon_random_i16x8();
-    simde_int16x8_t b = simde_test_arm_neon_random_i16x8();
-    simde_int16x8_t r = simde_vmaxq_s16(a, b);
-
-    simde_test_arm_neon_write_i16x8(2, a, SIMDE_TEST_VEC_POS_FIRST);
-    simde_test_arm_neon_write_i16x8(2, b, SIMDE_TEST_VEC_POS_MIDDLE);
-    simde_test_arm_neon_write_i16x8(2, r, SIMDE_TEST_VEC_POS_LAST);
-  }
-  return 1;
-#endif
 }
 
 static int
 test_simde_vmaxq_s32 (SIMDE_MUNIT_TEST_ARGS) {
-#if 1
   struct {
     int32_t a[4];
     int32_t b[4];
@@ -1071,20 +861,6 @@ test_simde_vmaxq_s32 (SIMDE_MUNIT_TEST_ARGS) {
   }
 
   return 0;
-
-#else
-  fputc('\n', stdout);
-  for (int i = 0 ; i < 8 ; i++) {
-    simde_int32x4_t a = simde_test_arm_neon_random_i32x4();
-    simde_int32x4_t b = simde_test_arm_neon_random_i32x4();
-    simde_int32x4_t r = simde_vmaxq_s32(a, b);
-
-    simde_test_arm_neon_write_i32x4(2, a, SIMDE_TEST_VEC_POS_FIRST);
-    simde_test_arm_neon_write_i32x4(2, b, SIMDE_TEST_VEC_POS_MIDDLE);
-    simde_test_arm_neon_write_i32x4(2, r, SIMDE_TEST_VEC_POS_LAST);
-  }
-  return 1;
-#endif
 }
 
 static int
@@ -1146,7 +922,6 @@ test_simde_x_vmaxq_s64 (SIMDE_MUNIT_TEST_ARGS) {
 
 static int
 test_simde_vmaxq_u8 (SIMDE_MUNIT_TEST_ARGS) {
-#if 1
   struct {
     uint8_t a[16];
     uint8_t b[16];
@@ -1211,25 +986,10 @@ test_simde_vmaxq_u8 (SIMDE_MUNIT_TEST_ARGS) {
   }
 
   return 0;
-
-#else
-  fputc('\n', stdout);
-  for (int i = 0 ; i < 8 ; i++) {
-    simde_uint8x16_t a = simde_test_arm_neon_random_u8x16();
-    simde_uint8x16_t b = simde_test_arm_neon_random_u8x16();
-    simde_uint8x16_t r = simde_vmaxq_u8(a, b);
-
-    simde_test_arm_neon_write_u8x16(2, a, SIMDE_TEST_VEC_POS_FIRST);
-    simde_test_arm_neon_write_u8x16(2, b, SIMDE_TEST_VEC_POS_MIDDLE);
-    simde_test_arm_neon_write_u8x16(2, r, SIMDE_TEST_VEC_POS_LAST);
-  }
-  return 1;
-#endif
 }
 
 static int
 test_simde_vmaxq_u16 (SIMDE_MUNIT_TEST_ARGS) {
-#if 1
   struct {
     uint16_t a[8];
     uint16_t b[8];
@@ -1269,25 +1029,10 @@ test_simde_vmaxq_u16 (SIMDE_MUNIT_TEST_ARGS) {
   }
 
   return 0;
-
-#else
-  fputc('\n', stdout);
-  for (int i = 0 ; i < 8 ; i++) {
-    simde_uint16x8_t a = simde_test_arm_neon_random_u16x8();
-    simde_uint16x8_t b = simde_test_arm_neon_random_u16x8();
-    simde_uint16x8_t r = simde_vmaxq_u16(a, b);
-
-    simde_test_arm_neon_write_u16x8(2, a, SIMDE_TEST_VEC_POS_FIRST);
-    simde_test_arm_neon_write_u16x8(2, b, SIMDE_TEST_VEC_POS_MIDDLE);
-    simde_test_arm_neon_write_u16x8(2, r, SIMDE_TEST_VEC_POS_LAST);
-  }
-  return 1;
-#endif
 }
 
 static int
 test_simde_vmaxq_u32 (SIMDE_MUNIT_TEST_ARGS) {
-#if 1
   struct {
     uint32_t a[4];
     uint32_t b[4];
@@ -1328,20 +1073,6 @@ test_simde_vmaxq_u32 (SIMDE_MUNIT_TEST_ARGS) {
   }
 
   return 0;
-
-#else
-  fputc('\n', stdout);
-  for (int i = 0 ; i < 8 ; i++) {
-    simde_uint32x4_t a = simde_test_arm_neon_random_u32x4();
-    simde_uint32x4_t b = simde_test_arm_neon_random_u32x4();
-    simde_uint32x4_t r = simde_vmaxq_u32(a, b);
-
-    simde_test_arm_neon_write_u32x4(2, a, SIMDE_TEST_VEC_POS_FIRST);
-    simde_test_arm_neon_write_u32x4(2, b, SIMDE_TEST_VEC_POS_MIDDLE);
-    simde_test_arm_neon_write_u32x4(2, r, SIMDE_TEST_VEC_POS_LAST);
-  }
-  return 1;
-#endif
 }
 
 static int
@@ -1402,7 +1133,6 @@ test_simde_x_vmaxq_u64 (SIMDE_MUNIT_TEST_ARGS) {
 }
 
 SIMDE_TEST_FUNC_LIST_BEGIN
-SIMDE_TEST_FUNC_LIST_ENTRY(vmaxh_f16)
 SIMDE_TEST_FUNC_LIST_ENTRY(vmax_f16)
 SIMDE_TEST_FUNC_LIST_ENTRY(vmax_f32)
 SIMDE_TEST_FUNC_LIST_ENTRY(vmax_f64)

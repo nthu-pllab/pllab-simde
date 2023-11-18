@@ -37,11 +37,7 @@ SIMDE_DISABLE_UNWANTED_DIAGNOSTICS
 SIMDE_BEGIN_DECLS_
 
 #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
-  #if defined(SIMDE_BUG_CLANG_71751)
-    #define simde_vqrshruns_n_s32(a, n) HEDLEY_STATIC_CAST(uint16_t, vqrshruns_n_s32((a), (n)))
-  #else
-    #define simde_vqrshruns_n_s32(a, n) vqrshruns_n_s32((a), (n))
-  #endif
+  #define simde_vqrshruns_n_s32(a, n) vqrshruns_n_s32(a, n)
 #else
   #define simde_vqrshruns_n_s32(a, n) simde_vqmovuns_s32(simde_x_vrshrs_n_s32(a, n))
 #endif
@@ -51,13 +47,9 @@ SIMDE_BEGIN_DECLS_
 #endif
 
 #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
-  #if defined(SIMDE_BUG_CLANG_71751)
-    #define simde_vqrshrund_n_s64(a, n) HEDLEY_STATIC_CAST(uint32_t, vqrshrund_n_s64((a), (n)))
-  #else
-    #define simde_vqrshrund_n_s64(a, n) vqrshrund_n_s64((a), (n))
-  #endif
+  #define simde_vqrshrund_n_s64(a, n) vqrshrund_n_s64(a, n)
 #else
-  #define simde_vqrshrund_n_s64(a, n) simde_vqmovund_s64(simde_vrshrd_n_s64((a), (n)))
+  #define simde_vqrshrund_n_s64(a, n) simde_vqmovund_s64(simde_vrshrd_n_s64(a, n))
 #endif
 #if defined(SIMDE_ARM_NEON_A64V8_ENABLE_NATIVE_ALIASES)
   #undef vqrshrund_n_s64
@@ -65,11 +57,7 @@ SIMDE_BEGIN_DECLS_
 #endif
 
 #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
-  #if defined(SIMDE_BUG_CLANG_71751)
-    #define simde_vqrshrunh_n_s16(a, n) HEDLEY_STATIC_CAST(uint8_t, vqrshrunh_n_s16((a), (n)))
-  #else
-    #define simde_vqrshrunh_n_s16(a, n) vqrshrunh_n_s16((a), (n))
-  #endif
+  #define simde_vqrshrunh_n_s16(a, n) HEDLEY_STATIC_CAST(uint8_t, vqrshrunh_n_s16((a), (n)))
 #else
   #define simde_vqrshrunh_n_s16(a, n) simde_vqmovunh_s16(simde_x_vrshrh_n_s16(a, n))
 #endif

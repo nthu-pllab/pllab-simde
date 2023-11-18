@@ -60,6 +60,10 @@ simde_vtbl1_u8(simde_uint8x8_t a, simde_uint8x8_t b) {
 
     #if defined(SIMDE_X86_SSSE3_NATIVE) && defined(SIMDE_X86_MMX_NATIVE)
       r_.m64 = _mm_shuffle_pi8(a_.m64, _mm_or_si64(b_.m64, _mm_cmpgt_pi8(b_.m64, _mm_set1_pi8(7))));
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      vbool8_t mask = __riscv_vmsgeu_vx_u8m1_b8 (b_.sv64, 8, 8);
+      r_.sv64 = __riscv_vrgather_vv_u8m1(a_.sv64 , b_.sv64 , 8);
+      r_.sv64 = __riscv_vmerge_vxm_u8m1(r_.sv64, 0, mask, 8);
     #else
       SIMDE_VECTORIZE
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {

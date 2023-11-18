@@ -84,7 +84,7 @@ simde_vmull_lane_s32(simde_int32x2_t a, simde_int32x2_t b, const int lane) {
 #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
   #define simde_vmull_lane_s32(a, v, lane) vmull_lane_s32((a), (v), (lane))
 #elif !defined(SIMDE_RISCV_V_NATIVE)
-  #define simde_vmull_lane_s32(a, v, lane)
+  #define simde_vmull_lane_s32(a, v, lane) simde_vmull_s32((a), simde_vdup_lane_s32((v), (lane)))
 #endif
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
   #undef vmull_lane_s32

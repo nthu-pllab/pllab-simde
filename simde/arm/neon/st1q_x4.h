@@ -238,7 +238,14 @@ simde_vst1q_p8_x4(simde_poly8_t ptr[HEDLEY_ARRAY_PARAM(64)], simde_poly8x16x4_t 
     for (size_t i = 0; i < 4; i++) {
       val_[i] = simde_poly8x16_to_private(val.val[i]);
     }
-    simde_memcpy(ptr, &val_, sizeof(val_));
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      __riscv_vse8_v_u8m1(ptr , val_[0].sv128 , 16);
+      __riscv_vse8_v_u8m1(ptr+16 , val_[1].sv128 , 16);
+      __riscv_vse8_v_u8m1(ptr+32 , val_[2].sv128 , 16);
+      __riscv_vse8_v_u8m1(ptr+48 , val_[3].sv128 , 16);
+    #else
+      simde_memcpy(ptr, &val_, sizeof(val_));
+    #endif
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -257,7 +264,14 @@ simde_vst1q_p16_x4(simde_poly16_t ptr[HEDLEY_ARRAY_PARAM(32)], simde_poly16x8x4_
     for (size_t i = 0; i < 4; i++) {
       val_[i] = simde_poly16x8_to_private(val.val[i]);
     }
-    simde_memcpy(ptr, &val_, sizeof(val_));
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      __riscv_vse16_v_u16m1(ptr , val_[0].sv128 , 8);
+      __riscv_vse16_v_u16m1(ptr+8 , val_[1].sv128 , 8);
+      __riscv_vse16_v_u16m1(ptr+16 , val_[2].sv128 , 8);
+      __riscv_vse16_v_u16m1(ptr+24 , val_[3].sv128 , 8);
+    #else
+      simde_memcpy(ptr, &val_, sizeof(val_));
+    #endif
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)
@@ -276,7 +290,14 @@ simde_vst1q_p64_x4(simde_poly64_t ptr[HEDLEY_ARRAY_PARAM(8)], simde_poly64x2x4_t
     for (size_t i = 0; i < 4; i++) {
       val_[i] = simde_poly64x2_to_private(val.val[i]);
     }
-    simde_memcpy(ptr, &val_, sizeof(val_));
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      __riscv_vse64_v_u64m1(ptr , val_[0].sv128 , 2);
+      __riscv_vse64_v_u64m1(ptr+2 , val_[1].sv128 , 2);
+      __riscv_vse64_v_u64m1(ptr+4 , val_[2].sv128 , 2);
+      __riscv_vse64_v_u64m1(ptr+6 , val_[3].sv128 , 2);
+    #else
+      simde_memcpy(ptr, &val_, sizeof(val_));
+    #endif
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V8_ENABLE_NATIVE_ALIASES)

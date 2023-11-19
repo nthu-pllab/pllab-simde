@@ -293,7 +293,7 @@
 #endif
 
 #if !defined(SIMDE_X86_SVML_NATIVE) && !defined(SIMDE_X86_SVML_NO_NATIVE) && !defined(SIMDE_NO_NATIVE)
-  #if defined(SIMDE_ARCH_X86) && (defined(__INTEL_COMPILER) || HEDLEY_MSVC_VERSION_CHECK(14, 20, 0))
+  #if defined(SIMDE_ARCH_X86) && (defined(__INTEL_COMPILER) || (HEDLEY_MSVC_VERSION_CHECK(14, 20, 0) && !defined(__clang__)))
     #define SIMDE_X86_SVML_NATIVE
   #endif
 #endif
@@ -351,6 +351,9 @@
   #if defined(SIMDE_ARCH_ARM_NEON) && SIMDE_ARCH_ARM_CHECK(8,0) && (__ARM_NEON_FP & 0x02)
     #define SIMDE_ARM_NEON_A32V8_NATIVE
   #endif
+#endif
+#if defined(__ARM_ACLE)
+  #include <arm_acle.h>
 #endif
 #if defined(SIMDE_ARM_NEON_A32V8_NATIVE) && !defined(SIMDE_ARM_NEON_A32V7_NATIVE)
   #define SIMDE_ARM_NEON_A32V7_NATIVE

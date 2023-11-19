@@ -49,9 +49,9 @@ simde_vfmlal_low_f16(simde_float32x2_t r, simde_float16x4_t a, simde_float16x4_t
       b_ = simde_float16x4_to_private(b);
 
     #if defined(SIMDE_RISCV_V_NATIVE)
-      vfloat16mf2_t b_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(b_.sv128);
-      vfloat16mf2_t c_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(c_.sv128);
-      ret_.sv128 = __riscv_vfwmacc_vv_f32m1(a_.sv128, b_mf2, c_mf2, 4);
+      vfloat16mf2_t a_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(a_.sv64);
+      vfloat16mf2_t b_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(b_.sv64);
+      ret_.sv128 = __riscv_vfwmacc_vv_f32m1(r_.sv64, b_mf2, a_mf2, 4);
     #else
       SIMDE_VECTORIZE
       for (size_t i = 0 ; i < (sizeof(ret_.values) / sizeof(ret_.values[0])) ; i++) {
@@ -82,10 +82,10 @@ simde_vfmlalq_low_f16(simde_float32x4_t r, simde_float16x8_t a, simde_float16x8_
       a_ = simde_float16x8_to_private(a),
       b_ = simde_float16x8_to_private(b);
 
-    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE == 128)
+    #if defined(SIMDE_RISCV_V_NATIVE)
       vfloat16mf2_t b_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(b_.sv128);
-      vfloat16mf2_t c_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(c_.sv128);
-      ret_.sv128 = __riscv_vfwmacc_vv_f32m1(a_.sv128, b_mf2, c_mf2, 4);
+      vfloat16mf2_t a_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(a_.sv128);
+      ret_.sv128 = __riscv_vfwmacc_vv_f32m1(r_.sv128, b_mf2, a_mf2, 4);
     #else
       SIMDE_VECTORIZE
       for (size_t i = 0 ; i < (sizeof(ret_.values) / sizeof(ret_.values[0])) ; i++) {
@@ -120,9 +120,9 @@ simde_vfmlal_high_f16(simde_float32x2_t r, simde_float16x4_t a, simde_float16x4_
     #if defined(SIMDE_RISCV_V_NATIVE)
       vfloat16mf2_t b_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(
                       __riscv_vslidedown_vx_f16m1(b_.sv64, 2, 2));
-      vfloat16mf2_t c_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(
-                      __riscv_vslidedown_vx_f16m1(c_.sv64, 2, 2));
-      ret_.sv64 = __riscv_vfwmacc_vv_f32m1(a_.sv64, b_mf2, c_mf2, 2);
+      vfloat16mf2_t a_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(
+                      __riscv_vslidedown_vx_f16m1(a_.sv64, 2, 2));
+      ret_.sv64 = __riscv_vfwmacc_vv_f32m1(r_.sv64, b_mf2, a_mf2, 2);
     #else
       SIMDE_VECTORIZE
       for (size_t i = 0 ; i < (sizeof(ret_.values) / sizeof(ret_.values[0])) ; i++) {
@@ -157,9 +157,9 @@ simde_vfmlalq_high_f16(simde_float32x4_t r, simde_float16x8_t a, simde_float16x8
     #if defined(SIMDE_RISCV_V_NATIVE)
       vfloat16mf2_t b_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(
                       __riscv_vslidedown_vx_f16m1(b_.sv128, 4, 4));
-      vfloat16mf2_t c_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(
-                      __riscv_vslidedown_vx_f16m1(c_.sv128, 4, 4));
-      ret_.sv128 = __riscv_vfwmacc_vv_f32m1(a_.sv128, b_mf2, c_mf2, 4);
+      vfloat16mf2_t a_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(
+                      __riscv_vslidedown_vx_f16m1(a_.sv128, 4, 4));
+      ret_.sv128 = __riscv_vfwmacc_vv_f32m1(r_.sv128, b_mf2, a_mf2, 4);
     #else
       SIMDE_VECTORIZE
       for (size_t i = 0 ; i < (sizeof(ret_.values) / sizeof(ret_.values[0])) ; i++) {
@@ -188,8 +188,8 @@ simde_vfmlal_lane_low_f16(simde_float32x2_t r, simde_float16x4_t a, simde_float1
     b_ = simde_float16x4_to_private(b);
 
   #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE == 128)
-    vfloat16mf2_t b_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(b_.sv64);
-    ret.sv64 = __riscv_vfwmacc_vf_f32m1(a_.sv64, c_.values[lane], b_mf2, 2);
+    vfloat16mf2_t a_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(a_.sv64);
+    ret.sv64 = __riscv_vfwmacc_vf_f32m1(r_.sv64, b_.values[lane], a_mf2, 2);
   #else
     SIMDE_VECTORIZE
     for (size_t i = 0 ; i < (sizeof(ret_.values) / sizeof(ret_.values[0])) ; i++) {
@@ -222,8 +222,8 @@ simde_vfmlal_laneq_low_f16(simde_float32x2_t r, simde_float16x4_t a, simde_float
     b_ = simde_float16x8_to_private(b);
 
   #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE == 128)
-    vfloat16mf2_t b_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(b_.sv64);
-    ret_.sv64 = __riscv_vfwmacc_vf_f32m1(a_.sv64, c_.values[lane], b_mf2, 2);
+    vfloat16mf2_t a_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(a_.sv64);
+    ret_.sv64 = __riscv_vfwmacc_vf_f32m1(r_.sv64, b_.values[lane], a_mf2, 2);
   #else
     SIMDE_VECTORIZE
     for (size_t i = 0 ; i < (sizeof(ret_.values) / sizeof(ret_.values[0])) ; i++) {
@@ -256,8 +256,8 @@ simde_vfmlalq_lane_low_f16(simde_float32x4_t r, simde_float16x8_t a, simde_float
     a_ = simde_float16x8_to_private(a);
 
   #if defined(SIMDE_RISCV_V_NATIVE)
-      vfloat16mf2_t b_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(b_.sv128);
-      ret_.sv128 = __riscv_vfwmacc_vf_f32m1(a_.sv128, c_.values[lane], b_mf2, 4);
+      vfloat16mf2_t a_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(a_.sv128);
+      ret_.sv128 = __riscv_vfwmacc_vf_f32m1(r_.sv128, b_.values[lane], a_mf2, 4);
   #else
     SIMDE_VECTORIZE
     for (size_t i = 0 ; i < (sizeof(ret_.values) / sizeof(ret_.values[0])) ; i++) {
@@ -289,8 +289,8 @@ simde_vfmlalq_laneq_low_f16(simde_float32x4_t r, simde_float16x8_t a, simde_floa
     b_ = simde_float16x8_to_private(b);
 
   #if defined(SIMDE_RISCV_V_NATIVE)
-    vfloat16mf2_t b_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(b_.sv128);
-    ret_.sv128 = __riscv_vfwmacc_vf_f32m1(a_.sv128, c_.values[lane], b_mf2, 4);
+    vfloat16mf2_t a_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(a_.sv128);
+    ret_.sv128 = __riscv_vfwmacc_vf_f32m1(r_.sv128, b_.values[lane], a_mf2, 4);
   #else
     SIMDE_VECTORIZE
     for (size_t i = 0 ; i < (sizeof(ret_.values) / sizeof(ret_.values[0])) ; i++) {
@@ -323,9 +323,9 @@ simde_vfmlal_lane_high_f16(simde_float32x2_t r, simde_float16x4_t a, simde_float
   size_t high_offset = sizeof(a_.values) / sizeof(a_.values[0]) / 2;
 
   #if defined(SIMDE_RISCV_V_NATIVE)
-    vfloat16mf2_t b_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(
-                    __riscv_vslidedown_vx_f16m1(b_.sv64, 2, 2));
-    ret_.sv64 = __riscv_vfwmacc_vf_f32m1(a_.sv64, c_.values[lane], b_mf2, 2);
+    vfloat16mf2_t a_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(
+                    __riscv_vslidedown_vx_f16m1(a_.sv64, 2, 2));
+    ret_.sv64 = __riscv_vfwmacc_vf_f32m1(r_.sv64, b_.values[lane], a_mf2, 2);
   #else
     SIMDE_VECTORIZE
     for (size_t i = 0 ; i < (sizeof(ret_.values) / sizeof(ret_.values[0])) ; i++) {
@@ -359,9 +359,9 @@ simde_vfmlal_laneq_high_f16(simde_float32x2_t r, simde_float16x4_t a, simde_floa
   size_t high_offset = sizeof(a_.values) / sizeof(a_.values[0]) / 2;
 
   #if defined(SIMDE_RISCV_V_NATIVE)
-    vfloat16mf2_t b_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(
-                    __riscv_vslidedown_vx_f16m1(b_.sv64, 2, 2));
-    ret_.sv64 = __riscv_vfwmacc_vf_f32m1(a_.sv64, c_.values[lane], b_mf2, 2);
+    vfloat16mf2_t a_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(
+                    __riscv_vslidedown_vx_f16m1(a_.sv64, 2, 2));
+    ret_.sv64 = __riscv_vfwmacc_vf_f32m1(r_.sv64, b_.values[lane], a_mf2, 2);
   #else
     SIMDE_VECTORIZE
     for (size_t i = 0 ; i < (sizeof(ret_.values) / sizeof(ret_.values[0])) ; i++) {
@@ -395,9 +395,9 @@ simde_vfmlalq_lane_high_f16(simde_float32x4_t r, simde_float16x8_t a, simde_floa
   size_t high_offset = sizeof(a_.values) / sizeof(a_.values[0]) / 2;
 
   #if defined(SIMDE_RISCV_V_NATIVE)
-    vfloat16mf2_t b_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(
-                    __riscv_vslidedown_vx_f16m1(b_.sv128, 4, 4));
-    ret_.sv128 = __riscv_vfwmacc_vf_f32m1(a_.sv128, c_.values[lane], b_mf2, 4);
+    vfloat16mf2_t a_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(
+                    __riscv_vslidedown_vx_f16m1(a_.sv128, 4, 4));
+    ret_.sv128 = __riscv_vfwmacc_vf_f32m1(r_.sv128, b_.values[lane], a_mf2, 4);
   #else
     SIMDE_VECTORIZE
     for (size_t i = 0 ; i < (sizeof(ret_.values) / sizeof(ret_.values[0])) ; i++) {
@@ -430,9 +430,9 @@ simde_vfmlalq_laneq_high_f16(simde_float32x4_t r, simde_float16x8_t a, simde_flo
   size_t high_offset = sizeof(a_.values) / sizeof(a_.values[0]) / 2;
 
   #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE == 128)
-    vfloat16mf2_t b_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(
-                    __riscv_vslidedown_vx_f16m1(b_.sv128, 4, 4));
-    ret_.sv128 = __riscv_vfwmacc_vf_f32m1(a_.sv128, c_.values[lane], b_mf2, 4);
+    vfloat16mf2_t a_mf2 = __riscv_vlmul_trunc_v_f16m1_f16mf2(
+                    __riscv_vslidedown_vx_f16m1(a_.sv128, 4, 4));
+    ret_.sv128 = __riscv_vfwmacc_vf_f32m1(r_.sv128, b_.values[lane], a_mf2, 4);
   #else
     SIMDE_VECTORIZE
     for (size_t i = 0 ; i < (sizeof(ret_.values) / sizeof(ret_.values[0])) ; i++) {

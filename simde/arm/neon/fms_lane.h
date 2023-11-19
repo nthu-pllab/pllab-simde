@@ -190,7 +190,7 @@ SIMDE_BEGIN_DECLS_
 /* simde_vfms_lane_f32 */
 SIMDE_FUNCTION_ATTRIBUTES
 simde_float32x2_t
-simde_vfms_lane_f32(simde_float32x2_t a, simde_float32x2_t b, simde_float32x2_t c, const int lane) 
+simde_vfms_lane_f32(simde_float32x2_t a, simde_float32x2_t b, simde_float32x2_t c, const int lane)
   SIMDE_REQUIRE_CONSTANT_RANGE(lane, 0, 1) {
 
   simde_float32x2_private
@@ -209,7 +209,7 @@ simde_vfms_lane_f32(simde_float32x2_t a, simde_float32x2_t b, simde_float32x2_t 
       r_.values[i] = a_.values[i] - (b_.values[i] * c_.values[lane]);
     }
   #endif
-    
+
   return simde_float32x2_from_private(r_);
 }
 #if defined(SIMDE_ARM_NEON_A64V8_NATIVE) && defined(SIMDE_ARCH_ARM_FMA)
@@ -226,7 +226,7 @@ simde_vfms_lane_f32(simde_float32x2_t a, simde_float32x2_t b, simde_float32x2_t 
 /* simde_vfms_lane_f64 */
 SIMDE_FUNCTION_ATTRIBUTES
 simde_float64x1_t
-simde_vfms_lane_f64(simde_float64x1_t a, simde_float64x1_t b, simde_float64x1_t c, const int lane) 
+simde_vfms_lane_f64(simde_float64x1_t a, simde_float64x1_t b, simde_float64x1_t c, const int lane)
   SIMDE_REQUIRE_CONSTANT_RANGE(lane, 0, 0) {
 
   simde_float64x1_private

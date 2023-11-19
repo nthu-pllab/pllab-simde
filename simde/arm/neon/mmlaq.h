@@ -93,7 +93,7 @@ simde_vmmlaq_s32(simde_int32x4_t r, simde_int8x16_t a, simde_int8x16_t b) {
           __riscv_vwredsum_vs_i16mf2_i32m1(vd1_high0, vd, 4),
           __riscv_vwredsum_vs_i16mf2_i32m1(vd1_high1, vd, 4), 1);
 
-       r_.sv128 = __riscv_vslideup_vx_i32m1(
+       ret.sv128 = __riscv_vslideup_vx_i32m1(
         __riscv_vslideup_vx_i32m1(
           __riscv_vslideup_vx_i32m1(
             __riscv_vadd_vx_i32m1(rst_00, r_.values[0], 4),

@@ -14169,7 +14169,7 @@ test_simde_vreinterpret_f16_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float16x4_t r = simde_vreinterpret_f16_p16(a);
     simde_float16x4_private r_ = simde_float16x4_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -14722,7 +14722,7 @@ test_simde_vreinterpret_f16_p64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float16x4_t r = simde_vreinterpret_f16_p64(a);
     simde_float16x4_private r_ = simde_float16x4_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -14769,7 +14769,7 @@ test_simde_vreinterpret_f16_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float16x4_t r = simde_vreinterpret_f16_p8(a);
     simde_float16x4_private r_ = simde_float16x4_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;

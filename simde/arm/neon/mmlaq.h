@@ -180,12 +180,12 @@ simde_vmmlaq_u32(simde_uint32x4_t r, simde_uint8x16_t a, simde_uint8x16_t b) {
        ret.sv128 = __riscv_vslideup_vx_u32m1(
         __riscv_vslideup_vx_u32m1(
           __riscv_vslideup_vx_u32m1(
-            __riscv_vadd_vx_u32m1(rst_00, c_.values[0], 4),
-            __riscv_vadd_vx_u32m1(rst_01, c_.values[1], 4),
+            __riscv_vadd_vx_u32m1(rst_00, r_.values[0], 4),
+            __riscv_vadd_vx_u32m1(rst_01, r_.values[1], 4),
             1, 4),
-          __riscv_vadd_vx_u32m1(rst_10, c_.values[2], 4),
+          __riscv_vadd_vx_u32m1(rst_10, r_.values[2], 4),
           2, 4),
-        __riscv_vadd_vx_u32m1(rst_11, c_.values[3], 4),
+        __riscv_vadd_vx_u32m1(rst_11, r_.values[3], 4),
         3, 4);
     #else
       for (size_t k = 0 ; k < (sizeof(ret.values) / sizeof(ret.values[0])) ; k++) {
@@ -265,12 +265,12 @@ simde_vusmmlaq_s32(simde_int32x4_t r, simde_uint8x16_t a, simde_int8x16_t b) {
        ret.sv128 = __riscv_vslideup_vx_i32m1(
         __riscv_vslideup_vx_i32m1(
           __riscv_vslideup_vx_i32m1(
-            __riscv_vadd_vx_i32m1(rst_00, c_.values[0], 4),
-            __riscv_vadd_vx_i32m1(rst_01, c_.values[1], 4),
+            __riscv_vadd_vx_i32m1(rst_00, r_.values[0], 4),
+            __riscv_vadd_vx_i32m1(rst_01, r_.values[1], 4),
             1, 4),
-          __riscv_vadd_vx_i32m1(rst_10, c_.values[2], 4),
+          __riscv_vadd_vx_i32m1(rst_10, r_.values[2], 4),
           2, 4),
-        __riscv_vadd_vx_i32m1(rst_11, c_.values[3], 4),
+        __riscv_vadd_vx_i32m1(rst_11, r_.values[3], 4),
         3, 4);
     #else
       for (size_t k = 0 ; k < (sizeof(ret.values) / sizeof(ret.values[0])) ; k++) {

@@ -560,7 +560,7 @@ simde_veor3q_s8(simde_int8x16_t a, simde_int8x16_t b, simde_int8x16_t c) {
       a_ = simde_int8x16_to_private(a),
       b_ = simde_int8x16_to_private(b),
       c_ = simde_int8x16_to_private(c);
-    
+
     #if defined(SIMDE_RISCV_V_NATIVE)
       r_.sv128 = __riscv_vxor_vv_i8m1(__riscv_vxor_vv_i8m1(a_.sv128, b_.sv128, 16), c_.sv128, 16);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)

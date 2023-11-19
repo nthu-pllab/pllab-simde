@@ -22,6 +22,7 @@
  *
  * Copyright:
  *   2023      Yi-Yen Chung <eric681@andestech.com> (Copyright owned by Andes Technology)
+ *   2023      Yung-Cheng Su <eric20607@gapp.nthu.edu.tw>
  */
 
 #if !defined(SIMDE_ARM_NEON_MMLAQ_H)
@@ -49,12 +50,68 @@ simde_vmmlaq_s32(simde_int32x4_t r, simde_int8x16_t a, simde_int8x16_t b) {
       r_ = simde_int32x4_to_private(r),
       ret;
 
-    for (size_t k = 0 ; k < (sizeof(ret.values) / sizeof(ret.values[0])) ; k++) {
-      ret.values[k] = r_.values[k];
-      for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0]) / 2) ; i++) {
-         ret.values[k] += a_.values[(k/2)*8+i] * b_.values[(k%2)*8+i];
+    #if defined(SIMDE_RISCV_V_NATIVE)
+        vint8mf4_t va_low0 = __riscv_vlmul_trunc_v_i8m1_i8mf4(
+          __riscv_vslidedown_vx_i8m1(a_.sv128, 0, 4));
+         vint8mf4_t va_low1 = __riscv_vlmul_trunc_v_i8m1_i8mf4(
+          __riscv_vslidedown_vx_i8m1(a_.sv128, 4, 4));
+        vint8mf4_t va_high0 = __riscv_vlmul_trunc_v_i8m1_i8mf4(
+          __riscv_vslidedown_vx_i8m1(a_.sv128, 8, 4));
+        vint8mf4_t va_high1 = __riscv_vlmul_trunc_v_i8m1_i8mf4(
+          __riscv_vslidedown_vx_i8m1(a_.sv128, 12, 4));
+
+        vint8mf4_t vb_low0 = __riscv_vlmul_trunc_v_i8m1_i8mf4(
+          __riscv_vslidedown_vx_i8m1(b_.sv128, 0, 4));
+        vint8mf4_t vb_low1 = __riscv_vlmul_trunc_v_i8m1_i8mf4(
+          __riscv_vslidedown_vx_i8m1(b_.sv128, 4, 4));
+        vint8mf4_t vb_high0 = __riscv_vlmul_trunc_v_i8m1_i8mf4(
+          __riscv_vslidedown_vx_i8m1(b_.sv128, 8, 4));
+        vint8mf4_t vb_high1 = __riscv_vlmul_trunc_v_i8m1_i8mf4(
+          __riscv_vslidedown_vx_i8m1(b_.sv128, 12, 4));
+
+        vint16mf2_t vd0_low0 = __riscv_vwmul_vv_i16mf2 (va_low0, vb_low0, 4);
+        vint16mf2_t vd0_low1 = __riscv_vwmul_vv_i16mf2 (va_low1, vb_low1, 4);
+        vint16mf2_t vd0_high0 = __riscv_vwmul_vv_i16mf2 (va_low0, vb_high0, 4);
+        vint16mf2_t vd0_high1 = __riscv_vwmul_vv_i16mf2 (va_low1, vb_high1, 4);
+        vint16mf2_t vd1_low0 = __riscv_vwmul_vv_i16mf2 (va_high0, vb_low0, 4);
+        vint16mf2_t vd1_low1 = __riscv_vwmul_vv_i16mf2 (va_high1, vb_low1, 4);
+        vint16mf2_t vd1_high0 = __riscv_vwmul_vv_i16mf2 (va_high0, vb_high0, 4);
+        vint16mf2_t vd1_high1 = __riscv_vwmul_vv_i16mf2 (va_high1, vb_high1, 4);
+       
+        vint32m1_t vd = __riscv_vmv_v_x_i32m1(0, 4);
+        
+        vint32m1_t rst_00 = __riscv_vadd_vv_i32m1(
+          __riscv_vwredsum_vs_i16mf2_i32m1(vd0_low0, vd, 4),
+          __riscv_vwredsum_vs_i16mf2_i32m1(vd0_low1, vd, 4), 1);
+        vint32m1_t rst_01 = __riscv_vadd_vv_i32m1(
+          __riscv_vwredsum_vs_i16mf2_i32m1(vd0_high0, vd, 4),
+          __riscv_vwredsum_vs_i16mf2_i32m1(vd0_high1, vd, 4), 1);
+        vint32m1_t rst_10 = __riscv_vadd_vv_i32m1(
+          __riscv_vwredsum_vs_i16mf2_i32m1(vd1_low0, vd, 4),
+          __riscv_vwredsum_vs_i16mf2_i32m1(vd1_low1, vd, 4), 1);
+        vint32m1_t rst_11 = __riscv_vadd_vv_i32m1(
+          __riscv_vwredsum_vs_i16mf2_i32m1(vd1_high0, vd, 4),
+          __riscv_vwredsum_vs_i16mf2_i32m1(vd1_high1, vd, 4), 1);
+       
+       r_.sv128 = __riscv_vslideup_vx_i32m1(
+        __riscv_vslideup_vx_i32m1(
+          __riscv_vslideup_vx_i32m1(
+            __riscv_vadd_vx_i32m1(rst_00, c_.values[0], 4),
+            __riscv_vadd_vx_i32m1(rst_01, c_.values[1], 4),
+            1, 4),
+          __riscv_vadd_vx_i32m1(rst_10, c_.values[2], 4),
+          2, 4),
+        __riscv_vadd_vx_i32m1(rst_11, c_.values[3], 4),
+        3, 4);
+    #else
+      for (size_t k = 0 ; k < (sizeof(ret.values) / sizeof(ret.values[0])) ; k++) {
+        ret.values[k] = r_.values[k];
+        for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0]) / 2) ; i++) {
+          ret.values[k] += a_.values[(k/2)*8+i] * b_.values[(k%2)*8+i];
+        }
       }
-    }
+    #endif
+
     return simde_int32x4_from_private(ret);
   #endif
 }
@@ -76,12 +133,69 @@ simde_vmmlaq_u32(simde_uint32x4_t r, simde_uint8x16_t a, simde_uint8x16_t b) {
       r_ = simde_uint32x4_to_private(r),
       ret;
 
-    for (size_t k = 0 ; k < (sizeof(ret.values) / sizeof(ret.values[0])) ; k++) {
-      ret.values[k] = r_.values[k];
-      for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0]) / 2) ; i++) {
-         ret.values[k] += a_.values[(k/2)*8+i] * b_.values[(k%2)*8+i];
+    #if defined(SIMDE_RISCV_V_NATIVE)
+
+        vuint8mf4_t va_low0 = __riscv_vlmul_trunc_v_u8m1_u8mf4(
+          __riscv_vslidedown_vx_u8m1(a_.sv128, 0, 4));
+         vuint8mf4_t va_low1 = __riscv_vlmul_trunc_v_u8m1_u8mf4(
+          __riscv_vslidedown_vx_u8m1(a_.sv128, 4, 4));
+        vuint8mf4_t va_high0 = __riscv_vlmul_trunc_v_u8m1_u8mf4(
+          __riscv_vslidedown_vx_u8m1(a_.sv128, 8, 4));
+        vuint8mf4_t va_high1 = __riscv_vlmul_trunc_v_u8m1_u8mf4(
+          __riscv_vslidedown_vx_u8m1(a_.sv128, 12, 4));
+
+        vuint8mf4_t vb_low0 = __riscv_vlmul_trunc_v_u8m1_u8mf4(
+          __riscv_vslidedown_vx_u8m1(b_.sv128, 0, 4));
+        vuint8mf4_t vb_low1 = __riscv_vlmul_trunc_v_u8m1_u8mf4(
+          __riscv_vslidedown_vx_u8m1(b_.sv128, 4, 4));
+        vuint8mf4_t vb_high0 = __riscv_vlmul_trunc_v_u8m1_u8mf4(
+          __riscv_vslidedown_vx_u8m1(b_.sv128, 8, 4));
+        vuint8mf4_t vb_high1 = __riscv_vlmul_trunc_v_u8m1_u8mf4(
+          __riscv_vslidedown_vx_u8m1(b_.sv128, 12, 4));
+
+        vuint16mf2_t vd0_low0 = __riscv_vwmulu_vv_u16mf2(va_low0, vb_low0, 4);
+        vuint16mf2_t vd0_low1 = __riscv_vwmulu_vv_u16mf2(va_low1, vb_low1, 4);
+        vuint16mf2_t vd0_high0 = __riscv_vwmulu_vv_u16mf2(va_low0, vb_high0, 4);
+        vuint16mf2_t vd0_high1 = __riscv_vwmulu_vv_u16mf2(va_low1, vb_high1, 4);
+        vuint16mf2_t vd1_low0 = __riscv_vwmulu_vv_u16mf2(va_high0, vb_low0, 4);
+        vuint16mf2_t vd1_low1 = __riscv_vwmulu_vv_u16mf2(va_high1, vb_low1, 4);
+        vuint16mf2_t vd1_high0 = __riscv_vwmulu_vv_u16mf2(va_high0, vb_high0, 4);
+        vuint16mf2_t vd1_high1 = __riscv_vwmulu_vv_u16mf2(va_high1, vb_high1, 4);
+       
+        vuint32m1_t vd = __riscv_vmv_v_x_u32m1(0, 4);
+        
+        vuint32m1_t rst_00 = __riscv_vadd_vv_u32m1(
+          __riscv_vwredsumu_vs_u16mf2_u32m1(vd0_low0, vd, 4),
+          __riscv_vwredsumu_vs_u16mf2_u32m1(vd0_low1, vd, 4), 1);
+        vuint32m1_t rst_01 = __riscv_vadd_vv_u32m1(
+          __riscv_vwredsumu_vs_u16mf2_u32m1(vd0_high0, vd, 4),
+          __riscv_vwredsumu_vs_u16mf2_u32m1(vd0_high1, vd, 4), 1);
+        vuint32m1_t rst_10 = __riscv_vadd_vv_u32m1(
+          __riscv_vwredsumu_vs_u16mf2_u32m1(vd1_low0, vd, 4),
+          __riscv_vwredsumu_vs_u16mf2_u32m1(vd1_low1, vd, 4), 1);
+        vuint32m1_t rst_11 = __riscv_vadd_vv_u32m1(
+          __riscv_vwredsumu_vs_u16mf2_u32m1(vd1_high0, vd, 4),
+          __riscv_vwredsumu_vs_u16mf2_u32m1(vd1_high1, vd, 4), 1);
+       
+       r_.sv128 = __riscv_vslideup_vx_u32m1(
+        __riscv_vslideup_vx_u32m1(
+          __riscv_vslideup_vx_u32m1(
+            __riscv_vadd_vx_u32m1(rst_00, c_.values[0], 4),
+            __riscv_vadd_vx_u32m1(rst_01, c_.values[1], 4),
+            1, 4),
+          __riscv_vadd_vx_u32m1(rst_10, c_.values[2], 4),
+          2, 4),
+        __riscv_vadd_vx_u32m1(rst_11, c_.values[3], 4),
+        3, 4);
+    #else
+      for (size_t k = 0 ; k < (sizeof(ret.values) / sizeof(ret.values[0])) ; k++) {
+        ret.values[k] = r_.values[k];
+        for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0]) / 2) ; i++) {
+          ret.values[k] += a_.values[(k/2)*8+i] * b_.values[(k%2)*8+i];
+        }
       }
-    }
+    #endif
+
     return simde_uint32x4_from_private(ret);
   #endif
 }
@@ -104,12 +218,69 @@ simde_vusmmlaq_s32(simde_int32x4_t r, simde_uint8x16_t a, simde_int8x16_t b) {
       r_ = simde_int32x4_to_private(r),
       ret;
 
-    for (size_t k = 0 ; k < (sizeof(ret.values) / sizeof(ret.values[0])) ; k++) {
-      ret.values[k] = r_.values[k];
-      for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0]) / 2) ; i++) {
-         ret.values[k] += a_.values[(k/2)*8+i] * b_.values[(k%2)*8+i];
+    #if defined(SIMDE_RISCV_V_NATIVE)
+
+        vuint8mf4_t va_low0 = __riscv_vlmul_trunc_v_u8m1_u8mf4(
+          __riscv_vslidedown_vx_u8m1(a_.sv128, 0, 4));
+        vuint8mf4_t va_low1 = __riscv_vlmul_trunc_v_u8m1_u8mf4(
+          __riscv_vslidedown_vx_u8m1(a_.sv128, 4, 4));
+        vuint8mf4_t va_high0 = __riscv_vlmul_trunc_v_u8m1_u8mf4(
+          __riscv_vslidedown_vx_u8m1(a_.sv128, 8, 4));
+        vuint8mf4_t va_high1 = __riscv_vlmul_trunc_v_u8m1_u8mf4(
+          __riscv_vslidedown_vx_u8m1(a_.sv128, 12, 4));
+
+        vint8mf4_t vb_low0 = __riscv_vlmul_trunc_v_i8m1_i8mf4(
+          __riscv_vslidedown_vx_i8m1(b_.sv128, 0, 4));
+        vint8mf4_t vb_low1 = __riscv_vlmul_trunc_v_i8m1_i8mf4(
+          __riscv_vslidedown_vx_i8m1(b_.sv128, 4, 4));
+        vint8mf4_t vb_high0 = __riscv_vlmul_trunc_v_i8m1_i8mf4(
+          __riscv_vslidedown_vx_i8m1(b_.sv128, 8, 4));
+        vint8mf4_t vb_high1 = __riscv_vlmul_trunc_v_i8m1_i8mf4(
+          __riscv_vslidedown_vx_i8m1(b_.sv128, 12, 4));
+
+        vint16mf2_t vd0_low0 = __riscv_vwmulsu_vv_i16mf2 (vb_low0, va_low0, 4);
+        vint16mf2_t vd0_low1 = __riscv_vwmulsu_vv_i16mf2 (vb_low1, va_low1, 4);
+        vint16mf2_t vd0_high0 = __riscv_vwmulsu_vv_i16mf2 (vb_high0, va_low0, 4);
+        vint16mf2_t vd0_high1 = __riscv_vwmulsu_vv_i16mf2 (vb_high1, va_low1, 4);
+        vint16mf2_t vd1_low0 = __riscv_vwmulsu_vv_i16mf2 (vb_low0, va_high0, 4);
+        vint16mf2_t vd1_low1 = __riscv_vwmulsu_vv_i16mf2 (vb_low1, va_high1, 4);
+        vint16mf2_t vd1_high0 = __riscv_vwmulsu_vv_i16mf2 (vb_high0, va_high0, 4);
+        vint16mf2_t vd1_high1 = __riscv_vwmulsu_vv_i16mf2 (vb_high1, va_high1, 4);
+       
+        vint32m1_t vd = __riscv_vmv_v_x_i32m1(0, 4);
+        
+        vint32m1_t rst_00 = __riscv_vadd_vv_i32m1(
+          __riscv_vwredsum_vs_i16mf2_i32m1(vd0_low0, vd, 4),
+          __riscv_vwredsum_vs_i16mf2_i32m1(vd0_low1, vd, 4), 1);
+        vint32m1_t rst_01 = __riscv_vadd_vv_i32m1(
+          __riscv_vwredsum_vs_i16mf2_i32m1(vd0_high0, vd, 4),
+          __riscv_vwredsum_vs_i16mf2_i32m1(vd0_high1, vd, 4), 1);
+        vint32m1_t rst_10 = __riscv_vadd_vv_i32m1(
+          __riscv_vwredsum_vs_i16mf2_i32m1(vd1_low0, vd, 4),
+          __riscv_vwredsum_vs_i16mf2_i32m1(vd1_low1, vd, 4), 1);
+        vint32m1_t rst_11 = __riscv_vadd_vv_i32m1(
+          __riscv_vwredsum_vs_i16mf2_i32m1(vd1_high0, vd, 4),
+          __riscv_vwredsum_vs_i16mf2_i32m1(vd1_high1, vd, 4), 1);
+       
+       r_.sv128 = __riscv_vslideup_vx_i32m1(
+        __riscv_vslideup_vx_i32m1(
+          __riscv_vslideup_vx_i32m1(
+            __riscv_vadd_vx_i32m1(rst_00, c_.values[0], 4),
+            __riscv_vadd_vx_i32m1(rst_01, c_.values[1], 4),
+            1, 4),
+          __riscv_vadd_vx_i32m1(rst_10, c_.values[2], 4),
+          2, 4),
+        __riscv_vadd_vx_i32m1(rst_11, c_.values[3], 4),
+        3, 4);
+    #else
+      for (size_t k = 0 ; k < (sizeof(ret.values) / sizeof(ret.values[0])) ; k++) {
+        ret.values[k] = r_.values[k];
+        for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0]) / 2) ; i++) {
+          ret.values[k] += a_.values[(k/2)*8+i] * b_.values[(k%2)*8+i];
+        }
       }
-    }
+    #endif
+
     return simde_int32x4_from_private(ret);
   #endif
 }

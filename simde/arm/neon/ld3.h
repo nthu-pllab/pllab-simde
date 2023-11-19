@@ -82,7 +82,7 @@ simde_vld3_f32(simde_float32 const *ptr) {
     return vld3_f32(ptr);
   #else
     simde_float32x2_private r_[3];
-    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    #if defined(SIMDE_RISCV_V_NATIVE)
       vfloat32m1x3_t dest = __riscv_vlseg3e32_v_f32m1x3(&ptr[0], 2);
       r_[0].sv64 = __riscv_vget_v_f32m1x3_f32m1(dest, 0);
       r_[1].sv64 = __riscv_vget_v_f32m1x3_f32m1(dest, 1);
@@ -115,7 +115,7 @@ simde_vld3_f64(simde_float64 const *ptr) {
     return vld3_f64(ptr);
   #else
     simde_float64x1_private r_[3];
-    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    #if defined(SIMDE_RISCV_V_NATIVE)
       vfloat64m1x3_t dest = __riscv_vlseg3e64_v_f64m1x3(&ptr[0], 1);
       r_[0].sv64 = __riscv_vget_v_f64m1x3_f64m1(dest, 0);
       r_[1].sv64 = __riscv_vget_v_f64m1x3_f64m1(dest, 1);
@@ -148,7 +148,7 @@ simde_vld3_s8(int8_t const *ptr) {
     return vld3_s8(ptr);
   #else
     simde_int8x8_private r_[3];
-    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    #if defined(SIMDE_RISCV_V_NATIVE)
       vint8m1x3_t dest = __riscv_vlseg3e8_v_i8m1x3(&ptr[0], 8);
       r_[0].sv64 = __riscv_vget_v_i8m1x3_i8m1(dest, 0);
       r_[1].sv64 = __riscv_vget_v_i8m1x3_i8m1(dest, 1);
@@ -181,7 +181,7 @@ simde_vld3_s16(int16_t const *ptr) {
     return vld3_s16(ptr);
   #else
     simde_int16x4_private r_[3];
-    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    #if defined(SIMDE_RISCV_V_NATIVE)
       vint16m1x3_t dest = __riscv_vlseg3e16_v_i16m1x3(&ptr[0], 4);
       r_[0].sv64 = __riscv_vget_v_i16m1x3_i16m1(dest, 0);
       r_[1].sv64 = __riscv_vget_v_i16m1x3_i16m1(dest, 1);
@@ -214,7 +214,7 @@ simde_vld3_s32(int32_t const *ptr) {
     return vld3_s32(ptr);
   #else
     simde_int32x2_private r_[3];
-    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    #if defined(SIMDE_RISCV_V_NATIVE)
       vint32m1x3_t dest = __riscv_vlseg3e32_v_i32m1x3(&ptr[0], 2);
       r_[0].sv64 = __riscv_vget_v_i32m1x3_i32m1(dest, 0);
       r_[1].sv64 = __riscv_vget_v_i32m1x3_i32m1(dest, 1);
@@ -247,7 +247,7 @@ simde_vld3_s64(int64_t const *ptr) {
     return vld3_s64(ptr);
   #else
     simde_int64x1_private r_[3];
-    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    #if defined(SIMDE_RISCV_V_NATIVE)
       vint64m1x3_t dest = __riscv_vlseg3e64_v_i64m1x3(&ptr[0], 1);
       r_[0].sv64 = __riscv_vget_v_i64m1x3_i64m1(dest, 0);
       r_[1].sv64 = __riscv_vget_v_i64m1x3_i64m1(dest, 1);
@@ -280,7 +280,7 @@ simde_vld3_u8(uint8_t const *ptr) {
     return vld3_u8(ptr);
   #else
     simde_uint8x8_private r_[3];
-    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    #if defined(SIMDE_RISCV_V_NATIVE)
       vuint8m1x3_t dest = __riscv_vlseg3e8_v_u8m1x3(&ptr[0], 8);
       r_[0].sv64 = __riscv_vget_v_u8m1x3_u8m1(dest, 0);
       r_[1].sv64 = __riscv_vget_v_u8m1x3_u8m1(dest, 1);
@@ -313,7 +313,7 @@ simde_vld3_u16(uint16_t const *ptr) {
     return vld3_u16(ptr);
   #else
     simde_uint16x4_private r_[3];
-    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    #if defined(SIMDE_RISCV_V_NATIVE)
       vuint16m1x3_t dest = __riscv_vlseg3e16_v_u16m1x3(&ptr[0], 4);
       r_[0].sv64 = __riscv_vget_v_u16m1x3_u16m1(dest, 0);
       r_[1].sv64 = __riscv_vget_v_u16m1x3_u16m1(dest, 1);
@@ -346,7 +346,7 @@ simde_vld3_u32(uint32_t const *ptr) {
     return vld3_u32(ptr);
   #else
     simde_uint32x2_private r_[3];
-    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    #if defined(SIMDE_RISCV_V_NATIVE)
       vuint32m1x3_t dest = __riscv_vlseg3e32_v_u32m1x3(&ptr[0], 2);
       r_[0].sv64 = __riscv_vget_v_u32m1x3_u32m1(dest, 0);
       r_[1].sv64 = __riscv_vget_v_u32m1x3_u32m1(dest, 1);
@@ -379,7 +379,7 @@ simde_vld3_u64(uint64_t const *ptr) {
     return vld3_u64(ptr);
   #else
     simde_uint64x1_private r_[3];
-    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    #if defined(SIMDE_RISCV_V_NATIVE)
       vuint64m1x3_t dest = __riscv_vlseg3e64_v_u64m1x3(&ptr[0], 1);
       r_[0].sv64 = __riscv_vget_v_u64m1x3_u64m1(dest, 0);
       r_[1].sv64 = __riscv_vget_v_u64m1x3_u64m1(dest, 1);
@@ -443,7 +443,7 @@ simde_float32x4x3_t
 simde_vld3q_f32(simde_float32 const *ptr) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vld3q_f32(ptr);
-  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+  #elif defined(SIMDE_RISCV_V_NATIVE)
     simde_float32x4_private r_[3];
     vfloat32m1x3_t dest = __riscv_vlseg3e32_v_f32m1x3(&ptr[0], 4);
     r_[0].sv128 = __riscv_vget_v_f32m1x3_f32m1(dest, 0);
@@ -483,7 +483,7 @@ simde_float64x2x3_t
 simde_vld3q_f64(simde_float64 const *ptr) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
     return vld3q_f64(ptr);
-  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+  #elif defined(SIMDE_RISCV_V_NATIVE)
     simde_float64x2_private r_[3];
     vfloat64m1x3_t dest = __riscv_vlseg3e64_v_f64m1x3(&ptr[0], 2);
     r_[0].sv128 = __riscv_vget_v_f64m1x3_f64m1(dest, 0);
@@ -523,7 +523,7 @@ simde_int8x16x3_t
 simde_vld3q_s8(int8_t const *ptr) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vld3q_s8(ptr);
-  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+  #elif defined(SIMDE_RISCV_V_NATIVE)
     simde_int8x16_private r_[3];
     vint8m1x3_t dest = __riscv_vlseg3e8_v_i8m1x3(&ptr[0], 16);
     r_[0].sv128 = __riscv_vget_v_i8m1x3_i8m1(dest, 0);
@@ -563,7 +563,7 @@ simde_int16x8x3_t
 simde_vld3q_s16(int16_t const *ptr) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vld3q_s16(ptr);
-  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+  #elif defined(SIMDE_RISCV_V_NATIVE)
     simde_int16x8_private r_[3];
     vint16m1x3_t dest = __riscv_vlseg3e16_v_i16m1x3(&ptr[0], 8);
     r_[0].sv128 = __riscv_vget_v_i16m1x3_i16m1(dest, 0);
@@ -603,7 +603,7 @@ simde_int32x4x3_t
 simde_vld3q_s32(int32_t const *ptr) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vld3q_s32(ptr);
-  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+  #elif defined(SIMDE_RISCV_V_NATIVE)
     simde_int32x4_private r_[3];
     vint32m1x3_t dest = __riscv_vlseg3e32_v_i32m1x3(&ptr[0], 4);
     r_[0].sv128 = __riscv_vget_v_i32m1x3_i32m1(dest, 0);
@@ -643,7 +643,7 @@ simde_int64x2x3_t
 simde_vld3q_s64(int64_t const *ptr) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
     return vld3q_s64(ptr);
-  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+  #elif defined(SIMDE_RISCV_V_NATIVE)
     simde_int64x2_private r_[3];
     vint64m1x3_t dest = __riscv_vlseg3e64_v_i64m1x3(&ptr[0], 2);
     r_[0].sv128 = __riscv_vget_v_i64m1x3_i64m1(dest, 0);
@@ -684,7 +684,7 @@ simde_uint8x16x3_t
 simde_vld3q_u8(uint8_t const *ptr) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vld3q_u8(ptr);
-  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+  #elif defined(SIMDE_RISCV_V_NATIVE)
     simde_uint8x16_private r_[3];
     vuint8m1x3_t dest = __riscv_vlseg3e8_v_u8m1x3(&ptr[0], 16);
     r_[0].sv128 = __riscv_vget_v_u8m1x3_u8m1(dest, 0);
@@ -724,7 +724,7 @@ simde_uint16x8x3_t
 simde_vld3q_u16(uint16_t const *ptr) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vld3q_u16(ptr);
-  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+  #elif defined(SIMDE_RISCV_V_NATIVE)
     simde_uint16x8_private r_[3];
     vuint16m1x3_t dest = __riscv_vlseg3e16_v_u16m1x3(&ptr[0], 8);
     r_[0].sv128 = __riscv_vget_v_u16m1x3_u16m1(dest, 0);
@@ -764,7 +764,7 @@ simde_uint32x4x3_t
 simde_vld3q_u32(uint32_t const *ptr) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vld3q_u32(ptr);
-  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+  #elif defined(SIMDE_RISCV_V_NATIVE)
     simde_uint32x4_private r_[3];
     vuint32m1x3_t dest = __riscv_vlseg3e32_v_u32m1x3(&ptr[0], 4);
     r_[0].sv128 = __riscv_vget_v_u32m1x3_u32m1(dest, 0);
@@ -804,7 +804,7 @@ simde_uint64x2x3_t
 simde_vld3q_u64(uint64_t const *ptr) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
     return vld3q_u64(ptr);
-  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+  #elif defined(SIMDE_RISCV_V_NATIVE)
     simde_uint64x2_private r_[3];
     vuint64m1x3_t dest = __riscv_vlseg3e64_v_u64m1x3(&ptr[0], 2);
     r_[0].sv128 = __riscv_vget_v_u64m1x3_u64m1(dest, 0);

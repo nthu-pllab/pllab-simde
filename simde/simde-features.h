@@ -293,7 +293,7 @@
 #endif
 
 #if !defined(SIMDE_X86_SVML_NATIVE) && !defined(SIMDE_X86_SVML_NO_NATIVE) && !defined(SIMDE_NO_NATIVE)
-  #if defined(SIMDE_ARCH_X86) && (defined(__INTEL_COMPILER) || HEDLEY_MSVC_VERSION_CHECK(14, 20, 0))
+  #if defined(SIMDE_ARCH_X86) && (defined(__INTEL_COMPILER) || (HEDLEY_MSVC_VERSION_CHECK(14, 20, 0) && !defined(__clang__)))
     #define SIMDE_X86_SVML_NATIVE
   #endif
 #endif
@@ -352,6 +352,9 @@
     #define SIMDE_ARM_NEON_A32V8_NATIVE
   #endif
 #endif
+#if defined(__ARM_ACLE)
+  #include <arm_acle.h>
+#endif
 #if defined(SIMDE_ARM_NEON_A32V8_NATIVE) && !defined(SIMDE_ARM_NEON_A32V7_NATIVE)
   #define SIMDE_ARM_NEON_A32V7_NATIVE
 #endif
@@ -377,7 +380,7 @@
 
 /*TODO: Support for other Zve* extensions ?*/
 #if !defined(SIMDE_RISCV_V_NATIVE) && !defined(SIMDE_RISCV_V_NO_NATIVE) && !defined(SIMDE_NO_NATIVE)
-  #if defined(SIMDE_ARCH_RISCV_ZVE64D)
+  #if defined(SIMDE_ARCH_RISCV_V)
     #define SIMDE_RISCV_V_NATIVE
   #endif
 #endif
@@ -551,7 +554,8 @@
     #define SIMDE_NATURAL_INT_VECTOR_SIZE (64)
     #define SIMDE_NATURAL_DOUBLE_VECTOR_SIZE (0)
   #elif defined(SIMDE_RISCV_V_NATIVE) && defined(__riscv_v_fixed_vlen)
-        #define SIMDE_NATURAL_VECTOR_SIZE __riscv_v_fixed_vlen
+        //FIXME : SIMDE_NATURAL_VECTOR_SIZE == __riscv_v_fixed_vlen
+        #define SIMDE_NATURAL_VECTOR_SIZE (128)
   #endif
 
   #if !defined(SIMDE_NATURAL_VECTOR_SIZE)

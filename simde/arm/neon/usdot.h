@@ -42,7 +42,7 @@ simde_vusdot_s32(simde_int32x2_t r, simde_uint8x8_t a, simde_int8x8_t b) {
   #if defined(SIMDE_ARM_NEON_A32V8_NATIVE) && defined(__ARM_FEATURE_MATMUL_INT8)
     return vusdot_s32(r, a, b);
   #elif defined(SIMDE_RISCV_V_NATIVE)
-    simde_int32x2_private r_;
+    simde_int32x2_private r_ = simde_int32x2_to_private(r);
     simde_uint8x8_private a_ = simde_uint8x8_to_private(a);
     simde_int8x8_private b_ = simde_int8x8_to_private(b);
 
@@ -99,6 +99,10 @@ simde_vusdotq_s32(simde_int32x4_t r, simde_uint8x16_t a, simde_int8x16_t b) {
   #if defined(SIMDE_ARM_NEON_A32V8_NATIVE) && defined(__ARM_FEATURE_MATMUL_INT8)
     return vusdotq_s32(r, a, b);
   #elif defined(SIMDE_RISCV_V_NATIVE)
+    simde_int32x4_private r_  = simde_int32x4_to_private(r);
+    simde_uint8x16_private a_ = simde_uint8x16_to_private(a);
+    simde_int8x16_private b_ = simde_int8x16_to_private(b);
+
     vuint8mf4_t va_low = __riscv_vlmul_trunc_v_u8m1_u8mf4(
       __riscv_vslidedown_vx_u8m1(a_.sv128, 0, 4));
     vuint8mf4_t va_mid1 = __riscv_vlmul_trunc_v_u8m1_u8mf4(

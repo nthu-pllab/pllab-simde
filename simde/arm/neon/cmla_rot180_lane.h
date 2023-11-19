@@ -128,16 +128,18 @@ SIMDE_FUNCTION_ATTRIBUTES
 simde_float16x8_t simde_vcmlaq_rot180_lane_f16(simde_float16x8_t r, simde_float16x8_t a, simde_float16x4_t b, const int lane)
     SIMDE_REQUIRE_CONSTANT_RANGE(lane, 0, 1)
 {
-  #if defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH && (SIMDE_NATURAL_VECTOR_SIZE > 128)
+  #if defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH
     simde_float16x8_private r_ = simde_float16x8_to_private(r),
                             a_ = simde_float16x8_to_private(a),
                             b_ = simde_vdupq_n_f16(simde_float16x4_to_private(b).values[lane]);
     uint16_t idx1[8] = {0, 0, 2, 2, 4, 4, 6, 6};
     uint16_t idx2[8] = {0, 1, 2, 3, 4, 5, 6, 7};
-    vfloat16m1_t op1 = __riscv_vrgather_vv_f16m1(__riscv_vslideup_vx_f16m1( \
-      a_.sv128, a_.sv128, 8, 16), __riscv_vle16_v_u16m1(idx1, 8), 8);
-    vfloat16m1_t op2 = __riscv_vrgather_vv_f16m1(__riscv_vslideup_vx_f16m1( \
-      __riscv_vfneg_v_f16m1(b_.sv128, 8), b_.sv128, 8, 16), __riscv_vle16_v_u16m1(idx2, 8), 8);
+    vfloat16m2_t a_tmp = __riscv_vlmul_ext_v_f16m1_f16m2 (a_.sv128);
+    vfloat16m2_t b_tmp = __riscv_vlmul_ext_v_f16m1_f16m2 (b_.sv128);
+    vfloat16m1_t op1 = __riscv_vlmul_trunc_v_f16m2_f16m1(__riscv_vrgather_vv_f16m2(__riscv_vslideup_vx_f16m2( \
+      a_tmp, a_tmp, 8, 16), __riscv_vle16_v_u16m2(idx1, 8), 8));
+    vfloat16m1_t op2 = __riscv_vlmul_trunc_v_f16m2_f16m1(__riscv_vrgather_vv_f16m2(__riscv_vslideup_vx_f16m2( \
+      __riscv_vfneg_v_f16m2(b_tmp, 8), b_tmp, 8, 16), __riscv_vle16_v_u16m2(idx2, 8), 8));
     r_.sv128 = __riscv_vfmacc_vv_f16m1(r_.sv128, op1, op2, 8);
     return simde_float16x8_from_private(r_);
   #else
@@ -184,13 +186,15 @@ simde_float32x4_t simde_vcmlaq_rot180_lane_f32(simde_float32x4_t r, simde_float3
 {
   simde_float32x4_private r_ = simde_float32x4_to_private(r), a_ = simde_float32x4_to_private(a),
                           b_ = simde_float32x4_to_private(simde_vdupq_n_f32(simde_float32x2_to_private(b).values[lane]));
-  #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE > 128)
+  #if defined(SIMDE_RISCV_V_NATIVE)
       uint32_t idx1[4] = {0, 0, 2, 2};
       uint32_t idx2[4] = {0, 1, 2, 3};
-      vfloat32m1_t op1 = __riscv_vrgather_vv_f32m1(__riscv_vslideup_vx_f32m1( \
-        a_.sv128, a_.sv128, 4, 8), __riscv_vle32_v_u32m1(idx1, 4), 4);
-      vfloat32m1_t op2 = __riscv_vrgather_vv_f32m1(__riscv_vslideup_vx_f32m1( \
-        __riscv_vfneg_v_f32m1(b_.sv128, 4), b_.sv128, 4, 8), __riscv_vle32_v_u32m1(idx2, 4), 4);
+      vfloat32m2_t a_tmp = __riscv_vlmul_ext_v_f32m1_f32m2 (a_.sv128);
+      vfloat32m2_t b_tmp = __riscv_vlmul_ext_v_f32m1_f32m2 (b_.sv128);
+      vfloat32m1_t op1 = __riscv_vlmul_trunc_v_f32m2_f32m1(__riscv_vrgather_vv_f32m2(__riscv_vslideup_vx_f32m2( \
+        a_tmp, a_tmp, 4, 8), __riscv_vle32_v_u32m2(idx1, 4), 4));
+      vfloat32m1_t op2 = __riscv_vlmul_trunc_v_f32m2_f32m1(__riscv_vrgather_vv_f32m2(__riscv_vslideup_vx_f32m2( \
+        __riscv_vfneg_v_f32m2(b_tmp, 4), b_tmp, 4, 8), __riscv_vle32_v_u32m2(idx2, 4), 4));
       r_.sv128 = __riscv_vfmacc_vv_f32m1(r_.sv128, op1, op2, 4);
   #elif defined(SIMDE_SHUFFLE_VECTOR_) && !defined(SIMDE_BUG_GCC_100760)
     a_.values = SIMDE_SHUFFLE_VECTOR_(32, 16, a_.values, a_.values, 0, 0, 2, 2);
@@ -305,16 +309,18 @@ SIMDE_FUNCTION_ATTRIBUTES
 simde_float16x8_t simde_vcmlaq_rot180_laneq_f16(simde_float16x8_t r, simde_float16x8_t a, simde_float16x8_t b,
                                                 const int lane) SIMDE_REQUIRE_CONSTANT_RANGE(lane, 0, 3)
 {
-  #if defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH && (SIMDE_NATURAL_VECTOR_SIZE > 128)
+  #if defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH
     simde_float16x8_private r_ = simde_float16x8_to_private(r),
                             a_ = simde_float16x8_to_private(a),
                             b_ = simde_vdupq_n_f16(simde_float16x8_to_private(b).values[lane]);
     uint16_t idx1[8] = {0, 0, 2, 2, 4, 4, 6, 6};
     uint16_t idx2[8] = {0, 1, 2, 3, 4, 5, 6, 7};
-    vfloat16m1_t op1 = __riscv_vrgather_vv_f16m1(__riscv_vslideup_vx_f16m1( \
-      a_.sv128, a_.sv128, 8, 16), __riscv_vle16_v_u16m1(idx1, 8), 8);
-    vfloat16m1_t op2 = __riscv_vrgather_vv_f16m1(__riscv_vslideup_vx_f16m1( \
-      __riscv_vfneg_v_f16m1(b_.sv128, 8), b_.sv128, 8, 16), __riscv_vle16_v_u16m1(idx2, 8), 8);
+    vfloat16m2_t a_tmp = __riscv_vlmul_ext_v_f16m1_f16m2 (a_.sv128);
+    vfloat16m2_t b_tmp = __riscv_vlmul_ext_v_f16m1_f16m2 (b_.sv128);
+    vfloat16m1_t op1 = __riscv_vlmul_trunc_v_f16m2_f16m1(__riscv_vrgather_vv_f16m2(__riscv_vslideup_vx_f16m2( \
+      a_tmp, a_tmp, 8, 16), __riscv_vle16_v_u16m2(idx1, 8), 8));
+    vfloat16m1_t op2 = __riscv_vlmul_trunc_v_f16m2_f16m1(__riscv_vrgather_vv_f16m2(__riscv_vslideup_vx_f16m2( \
+      __riscv_vfneg_v_f16m2(b_tmp, 8), b_tmp, 8, 16), __riscv_vle16_v_u16m2(idx2, 8), 8));
     r_.sv128 = __riscv_vfmacc_vv_f16m1(r_.sv128, op1, op2, 8);
     return simde_float16x8_from_private(r_);
   #else
@@ -361,13 +367,15 @@ simde_float32x4_t simde_vcmlaq_rot180_laneq_f32(simde_float32x4_t r, simde_float
 {
   simde_float32x4_private r_ = simde_float32x4_to_private(r), a_ = simde_float32x4_to_private(a),
                           b_ = simde_float32x4_to_private(simde_vdupq_n_f32(simde_float32x4_to_private(b).values[lane]));
-  #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE > 128)
+  #if defined(SIMDE_RISCV_V_NATIVE)
       uint32_t idx1[4] = {0, 0, 2, 2};
       uint32_t idx2[4] = {0, 1, 2, 3};
-      vfloat32m1_t op1 = __riscv_vrgather_vv_f32m1(__riscv_vslideup_vx_f32m1( \
-        a_.sv128, a_.sv128, 4, 8), __riscv_vle32_v_u32m1(idx1, 4), 4);
-      vfloat32m1_t op2 = __riscv_vrgather_vv_f32m1(__riscv_vslideup_vx_f32m1( \
-        __riscv_vfneg_v_f32m1(b_.sv128, 4), b_.sv128, 4, 8), __riscv_vle32_v_u32m1(idx2, 4), 4);
+      vfloat32m2_t a_tmp = __riscv_vlmul_ext_v_f32m1_f32m2 (a_.sv128);
+      vfloat32m2_t b_tmp = __riscv_vlmul_ext_v_f32m1_f32m2 (b_.sv128);
+      vfloat32m1_t op1 = __riscv_vlmul_trunc_v_f32m2_f32m1(__riscv_vrgather_vv_f32m2(__riscv_vslideup_vx_f32m2( \
+        a_tmp, a_tmp, 4, 8), __riscv_vle32_v_u32m2(idx1, 4), 4));
+      vfloat32m1_t op2 = __riscv_vlmul_trunc_v_f32m2_f32m1(__riscv_vrgather_vv_f32m2(__riscv_vslideup_vx_f32m2( \
+        __riscv_vfneg_v_f32m2(b_tmp, 4), b_tmp, 4, 8), __riscv_vle32_v_u32m2(idx2, 4), 4));
       r_.sv128 = __riscv_vfmacc_vv_f32m1(r_.sv128, op1, op2, 4);
   #elif defined(SIMDE_SHUFFLE_VECTOR_) && !defined(SIMDE_BUG_GCC_100760)
     a_.values = SIMDE_SHUFFLE_VECTOR_(32, 16, a_.values, a_.values, 0, 0, 2, 2);

@@ -301,9 +301,14 @@ simde_vld1_p8_x2(simde_poly8_t const ptr[HEDLEY_ARRAY_PARAM(16)]) {
     return vld1_p8_x2(ptr);
   #else
     simde_poly8x8_private a_[2];
-    for (size_t i = 0; i < 16; i++) {
-      a_[i / 8].values[i % 8] = ptr[i];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      a_[0].sv64 = __riscv_vle8_v_u8m1(ptr , 8);
+      a_[1].sv64 = __riscv_vle8_v_u8m1(ptr+8 , 8);
+    #else
+      for (size_t i = 0; i < 16; i++) {
+        a_[i / 8].values[i % 8] = ptr[i];
+      }
+    #endif
     simde_poly8x8x2_t s_ = { { simde_poly8x8_from_private(a_[0]),
                                simde_poly8x8_from_private(a_[1]) } };
     return s_;
@@ -321,9 +326,14 @@ simde_vld1_p16_x2(simde_poly16_t const ptr[HEDLEY_ARRAY_PARAM(8)]) {
     return vld1_p16_x2(ptr);
   #else
     simde_poly16x4_private a_[2];
-    for (size_t i = 0; i < 8; i++) {
-      a_[i / 4].values[i % 4] = ptr[i];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      a_[0].sv64 = __riscv_vle16_v_u16m1(ptr , 4);
+      a_[1].sv64 = __riscv_vle16_v_u16m1(ptr+4 , 4);
+    #else
+      for (size_t i = 0; i < 8; i++) {
+        a_[i / 4].values[i % 4] = ptr[i];
+      }
+    #endif
     simde_poly16x4x2_t s_ = { { simde_poly16x4_from_private(a_[0]),
                                 simde_poly16x4_from_private(a_[1]) } };
     return s_;
@@ -344,9 +354,14 @@ simde_vld1_p64_x2(simde_poly64_t const ptr[HEDLEY_ARRAY_PARAM(2)]) {
     return vld1_p64_x2(ptr);
   #else
     simde_poly64x1_private a_[2];
-    for (size_t i = 0; i < 2; i++) {
-      a_[i].values[0] = ptr[i];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      a_[0].sv64 = __riscv_vle64_v_u64m1(ptr , 1);
+      a_[1].sv64 = __riscv_vle64_v_u64m1(ptr+1 , 1);
+    #else
+      for (size_t i = 0; i < 2; i++) {
+        a_[i].values[0] = ptr[i];
+      }
+    #endif
     simde_poly64x1x2_t s_ = { { simde_poly64x1_from_private(a_[0]),
                                 simde_poly64x1_from_private(a_[1]) } };
     return s_;

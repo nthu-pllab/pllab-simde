@@ -666,11 +666,18 @@ simde_vld3_p8(simde_poly8_t const *ptr) {
   #else
     simde_poly8x8_private r_[3];
 
-    for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
-      for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
-        r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint8m1x3_t dest = __riscv_vlseg3e8_v_u8m1x3(&ptr[0], 8);
+      r_[0].sv64 = __riscv_vget_v_u8m1x3_u8m1(dest, 0);
+      r_[1].sv64 = __riscv_vget_v_u8m1x3_u8m1(dest, 1);
+      r_[2].sv64 = __riscv_vget_v_u8m1x3_u8m1(dest, 2);
+    #else
+      for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
+        for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
+          r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+        }
       }
-    }
+    #endif
 
     simde_poly8x8x3_t r = { {
       simde_poly8x8_from_private(r_[0]),
@@ -694,11 +701,18 @@ simde_vld3_p16(simde_poly16_t const *ptr) {
   #else
     simde_poly16x4_private r_[3];
 
-    for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
-      for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
-        r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint16m1x3_t dest = __riscv_vlseg3e16_v_u16m1x3(&ptr[0], 4);
+      r_[0].sv64 = __riscv_vget_v_u16m1x3_u16m1(dest, 0);
+      r_[1].sv64 = __riscv_vget_v_u16m1x3_u16m1(dest, 1);
+      r_[2].sv64 = __riscv_vget_v_u16m1x3_u16m1(dest, 2);
+    #else
+      for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
+        for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
+          r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+        }
       }
-    }
+    #endif
 
     simde_poly16x4x3_t r = { {
       simde_poly16x4_from_private(r_[0]),
@@ -722,11 +736,18 @@ simde_vld3_p64(simde_poly64_t const *ptr) {
   #else
     simde_poly64x1_private r_[3];
 
-    for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
-      for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
-        r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint64m1x3_t dest = __riscv_vlseg3e64_v_u64m1x3(&ptr[0], 1);
+      r_[0].sv64 = __riscv_vget_v_u64m1x3_u64m1(dest, 0);
+      r_[1].sv64 = __riscv_vget_v_u64m1x3_u64m1(dest, 1);
+      r_[2].sv64 = __riscv_vget_v_u64m1x3_u64m1(dest, 2);
+    #else
+      for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
+        for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
+          r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+        }
       }
-    }
+    #endif
 
     simde_poly64x1x3_t r = { {
       simde_poly64x1_from_private(r_[0]),
@@ -750,11 +771,18 @@ simde_vld3q_p8(simde_poly8_t const *ptr) {
   #else
     simde_poly8x16_private r_[3];
 
-    for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
-      for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
-        r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint8m1x3_t dest = __riscv_vlseg3e8_v_u8m1x3(&ptr[0], 16);
+      r_[0].sv128 = __riscv_vget_v_u8m1x3_u8m1(dest, 0);
+      r_[1].sv128 = __riscv_vget_v_u8m1x3_u8m1(dest, 1);
+      r_[2].sv128 = __riscv_vget_v_u8m1x3_u8m1(dest, 2);
+    #else
+      for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
+        for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
+          r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+        }
       }
-    }
+    #endif
 
     simde_poly8x16x3_t r = { {
       simde_poly8x16_from_private(r_[0]),
@@ -778,11 +806,18 @@ simde_vld3q_p16(simde_poly16_t const *ptr) {
   #else
     simde_poly16x8_private r_[3];
 
-    for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
-      for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
-        r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint16m1x3_t dest = __riscv_vlseg3e16_v_u16m1x3(&ptr[0], 8);
+      r_[0].sv128 = __riscv_vget_v_u16m1x3_u16m1(dest, 0);
+      r_[1].sv128 = __riscv_vget_v_u16m1x3_u16m1(dest, 1);
+      r_[2].sv128 = __riscv_vget_v_u16m1x3_u16m1(dest, 2);
+    #else
+      for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
+        for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
+          r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+        }
       }
-    }
+    #endif
 
     simde_poly16x8x3_t r = { {
       simde_poly16x8_from_private(r_[0]),
@@ -806,11 +841,18 @@ simde_vld3q_p64(simde_poly64_t const *ptr) {
   #else
     simde_poly64x2_private r_[3];
 
-    for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
-      for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
-        r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint64m1x3_t dest = __riscv_vlseg3e64_v_u64m1x3(&ptr[0], 2);
+      r_[0].sv128 = __riscv_vget_v_u64m1x3_u64m1(dest, 0);
+      r_[1].sv128 = __riscv_vget_v_u64m1x3_u64m1(dest, 1);
+      r_[2].sv128 = __riscv_vget_v_u64m1x3_u64m1(dest, 2);
+    #else
+      for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
+        for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
+          r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
+        }
       }
-    }
+    #endif
 
     simde_poly64x2x3_t r = { {
       simde_poly64x2_from_private(r_[0]),

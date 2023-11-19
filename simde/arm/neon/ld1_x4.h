@@ -324,9 +324,16 @@ simde_vld1_p8_x4(simde_poly8_t const ptr[HEDLEY_ARRAY_PARAM(32)]) {
     return vld1_p8_x4(ptr);
   #else
     simde_poly8x8_private a_[4];
-    for (size_t i = 0; i < 32; i++) {
-      a_[i / 8].values[i % 8] = ptr[i];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      a_[0].sv64 = __riscv_vle8_v_u8m1(ptr , 8);
+      a_[1].sv64 = __riscv_vle8_v_u8m1(ptr+8 , 8);
+      a_[2].sv64 = __riscv_vle8_v_u8m1(ptr+16 , 8);
+      a_[3].sv64 = __riscv_vle8_v_u8m1(ptr+24 , 8);
+    #else
+      for (size_t i = 0; i < 32; i++) {
+        a_[i / 8].values[i % 8] = ptr[i];
+      }
+    #endif
     simde_poly8x8x4_t s_ = { { simde_poly8x8_from_private(a_[0]),
                                simde_poly8x8_from_private(a_[1]),
                                simde_poly8x8_from_private(a_[2]),
@@ -347,9 +354,16 @@ simde_vld1_p16_x4(simde_poly16_t const ptr[HEDLEY_ARRAY_PARAM(16)]) {
     return vld1_p16_x4(ptr);
   #else
     simde_poly16x4_private a_[4];
-    for (size_t i = 0; i < 16; i++) {
-      a_[i / 4].values[i % 4] = ptr[i];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      a_[0].sv64 = __riscv_vle16_v_u16m1(ptr , 4);
+      a_[1].sv64 = __riscv_vle16_v_u16m1(ptr+4 , 4);
+      a_[2].sv64 = __riscv_vle16_v_u16m1(ptr+8 , 4);
+      a_[3].sv64 = __riscv_vle16_v_u16m1(ptr+12 , 4);
+    #else
+      for (size_t i = 0; i < 16; i++) {
+        a_[i / 4].values[i % 4] = ptr[i];
+      }
+    #endif
     simde_poly16x4x4_t s_ = { { simde_poly16x4_from_private(a_[0]),
                                 simde_poly16x4_from_private(a_[1]),
                                 simde_poly16x4_from_private(a_[2]),
@@ -372,9 +386,16 @@ simde_vld1_p64_x4(simde_poly64_t const ptr[HEDLEY_ARRAY_PARAM(4)]) {
     return vld1_p64_x4(ptr);
   #else
     simde_poly64x1_private a_[4];
-    for (size_t i = 0; i < 4; i++) {
-      a_[i].values[0] = ptr[i];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      a_[0].sv64 = __riscv_vle64_v_u64m1(ptr , 1);
+      a_[1].sv64 = __riscv_vle64_v_u64m1(ptr+1 , 1);
+      a_[2].sv64 = __riscv_vle64_v_u64m1(ptr+2 , 1);
+      a_[3].sv64 = __riscv_vle64_v_u64m1(ptr+3 , 1);
+    #else
+      for (size_t i = 0; i < 4; i++) {
+        a_[i].values[0] = ptr[i];
+      }
+    #endif
     simde_poly64x1x4_t s_ = { { simde_poly64x1_from_private(a_[0]),
                                 simde_poly64x1_from_private(a_[1]),
                                 simde_poly64x1_from_private(a_[2]),

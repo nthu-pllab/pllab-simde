@@ -313,9 +313,15 @@ simde_vld1q_p8_x3(simde_poly8_t const ptr[HEDLEY_ARRAY_PARAM(48)]) {
     return vld1q_p8_x3(ptr);
   #else
     simde_poly8x16_private a_[3];
-    for (size_t i = 0; i < 48; i++) {
-      a_[i / 16].values[i % 16] = ptr[i];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      a_[0].sv128 = __riscv_vle8_v_u8m1(ptr , 16);
+      a_[1].sv128 = __riscv_vle8_v_u8m1(ptr+16 , 16);
+      a_[2].sv128 = __riscv_vle8_v_u8m1(ptr+32 , 16);
+    #else
+      for (size_t i = 0; i < 48; i++) {
+        a_[i / 16].values[i % 16] = ptr[i];
+      }
+    #endif
     simde_poly8x16x3_t s_ = { { simde_poly8x16_from_private(a_[0]),
                                 simde_poly8x16_from_private(a_[1]),
                                 simde_poly8x16_from_private(a_[2]) } };
@@ -336,9 +342,15 @@ simde_vld1q_p16_x3(simde_poly16_t const ptr[HEDLEY_ARRAY_PARAM(24)]) {
     return vld1q_p16_x3(ptr);
   #else
     simde_poly16x8_private a_[3];
-    for (size_t i = 0; i < 24; i++) {
-      a_[i / 8].values[i % 8] = ptr[i];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      a_[0].sv128 = __riscv_vle16_v_u16m1(ptr , 8);
+      a_[1].sv128 = __riscv_vle16_v_u16m1(ptr+8 , 8);
+      a_[2].sv128 = __riscv_vle16_v_u16m1(ptr+16 , 8);
+    #else
+      for (size_t i = 0; i < 24; i++) {
+        a_[i / 8].values[i % 8] = ptr[i];
+      }
+    #endif
     simde_poly16x8x3_t s_ = { { simde_poly16x8_from_private(a_[0]),
                                 simde_poly16x8_from_private(a_[1]),
                                 simde_poly16x8_from_private(a_[2]) } };
@@ -359,9 +371,15 @@ simde_vld1q_p64_x3(simde_poly64_t const ptr[HEDLEY_ARRAY_PARAM(3)]) {
     return vld1q_p64_x3(ptr);
   #else
     simde_poly64x2_private a_[3];
-    for (size_t i = 0; i < 6; i++) {
-      a_[i / 2].values[i % 2] = ptr[i];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      a_[0].sv128 = __riscv_vle64_v_u64m1(ptr , 2);
+      a_[1].sv128 = __riscv_vle64_v_u64m1(ptr+2 , 2);
+      a_[2].sv128 = __riscv_vle64_v_u64m1(ptr+4 , 2);
+    #else
+      for (size_t i = 0; i < 6; i++) {
+        a_[i / 2].values[i % 2] = ptr[i];
+      }
+    #endif
     simde_poly64x2x3_t s_ = { { simde_poly64x2_from_private(a_[0]),
                                 simde_poly64x2_from_private(a_[1]),
                                 simde_poly64x2_from_private(a_[2]) } };

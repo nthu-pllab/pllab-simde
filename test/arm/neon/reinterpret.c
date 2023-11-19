@@ -10542,7 +10542,7 @@ test_simde_vreinterpret_p8_s8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x8_t r = simde_vreinterpret_p8_s8(a);
     simde_poly8x8_private r_ = simde_poly8x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -10588,7 +10588,7 @@ test_simde_vreinterpret_p16_s8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int8x8_private a_ = simde_int8x8_to_private(a);
     simde_poly16x4_t r = simde_vreinterpret_p16_s8(a);
     simde_poly16x4_private r_ = simde_poly16x4_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -10634,7 +10634,7 @@ test_simde_vreinterpret_p64_s8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int8x8_private a_ = simde_int8x8_to_private(a);
     simde_poly64x1_t r = simde_vreinterpret_p64_s8(a);
     simde_poly64x1_private r_ = simde_poly64x1_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -10681,7 +10681,7 @@ test_simde_vreinterpret_p8_s16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x8_t r = simde_vreinterpret_p8_s16(a);
     simde_poly8x8_private r_ = simde_poly8x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -10727,7 +10727,7 @@ test_simde_vreinterpret_p16_s16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int16x4_private a_ = simde_int16x4_to_private(a);
     simde_poly16x4_t r = simde_vreinterpret_p16_s16(a);
     simde_poly16x4_private r_ = simde_poly16x4_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -10773,7 +10773,7 @@ test_simde_vreinterpret_p64_s16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int16x4_private a_ = simde_int16x4_to_private(a);
     simde_poly64x1_t r = simde_vreinterpret_p64_s16(a);
     simde_poly64x1_private r_ = simde_poly64x1_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -10820,7 +10820,7 @@ test_simde_vreinterpret_p8_s32 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x8_t r = simde_vreinterpret_p8_s32(a);
     simde_poly8x8_private r_ = simde_poly8x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -10866,7 +10866,7 @@ test_simde_vreinterpret_p16_s32 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int32x2_private a_ = simde_int32x2_to_private(a);
     simde_poly16x4_t r = simde_vreinterpret_p16_s32(a);
     simde_poly16x4_private r_ = simde_poly16x4_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -10912,7 +10912,7 @@ test_simde_vreinterpret_p64_s32 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int32x2_private a_ = simde_int32x2_to_private(a);
     simde_poly64x1_t r = simde_vreinterpret_p64_s32(a);
     simde_poly64x1_private r_ = simde_poly64x1_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -10959,7 +10959,7 @@ test_simde_vreinterpret_p8_s64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x8_t r = simde_vreinterpret_p8_s64(a);
     simde_poly8x8_private r_ = simde_poly8x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -11005,7 +11005,7 @@ test_simde_vreinterpret_p16_s64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int64x1_private a_ = simde_int64x1_to_private(a);
     simde_poly16x4_t r = simde_vreinterpret_p16_s64(a);
     simde_poly16x4_private r_ = simde_poly16x4_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -11051,7 +11051,7 @@ test_simde_vreinterpret_p16_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x8_private a_ = simde_poly8x8_to_private(a);
     simde_poly16x4_t r = simde_vreinterpret_p16_p8(a);
     simde_poly16x4_private r_ = simde_poly16x4_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -11097,7 +11097,7 @@ test_simde_vreinterpret_p64_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x8_private a_ = simde_poly8x8_to_private(a);
     simde_poly64x1_t r = simde_vreinterpret_p64_p8(a);
     simde_poly64x1_private r_ = simde_poly64x1_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -11144,7 +11144,7 @@ test_simde_vreinterpret_p8_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x8_t r = simde_vreinterpret_p8_p16(a);
     simde_poly8x8_private r_ = simde_poly8x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -11190,7 +11190,7 @@ test_simde_vreinterpret_p64_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly16x4_private a_ = simde_poly16x4_to_private(a);
     simde_poly64x1_t r = simde_vreinterpret_p64_p16(a);
     simde_poly64x1_private r_ = simde_poly64x1_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -11237,7 +11237,7 @@ test_simde_vreinterpret_p8_p64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x8_t r = simde_vreinterpret_p8_p64(a);
     simde_poly8x8_private r_ = simde_poly8x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -11283,7 +11283,7 @@ test_simde_vreinterpret_p16_p64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly64x1_private a_ = simde_poly64x1_to_private(a);
     simde_poly16x4_t r = simde_vreinterpret_p16_p64(a);
     simde_poly16x4_private r_ = simde_poly16x4_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -11330,7 +11330,7 @@ test_simde_vreinterpret_p8_f32 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x8_t r = simde_vreinterpret_p8_f32(a);
     simde_poly8x8_private r_ = simde_poly8x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -11376,7 +11376,7 @@ test_simde_vreinterpret_p16_f32 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float32x2_private a_ = simde_float32x2_to_private(a);
     simde_poly16x4_t r = simde_vreinterpret_p16_f32(a);
     simde_poly16x4_private r_ = simde_poly16x4_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -11413,7 +11413,7 @@ test_simde_vreinterpret_p16_f16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float16x4_private a_ = simde_float16x4_to_private(a);
     simde_poly16x4_t r = simde_vreinterpret_p16_f16(a);
     simde_poly16x4_private r_ = simde_poly16x4_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -11459,7 +11459,7 @@ test_simde_vreinterpret_p64_f32 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float32x2_private a_ = simde_float32x2_to_private(a);
     simde_poly64x1_t r = simde_vreinterpret_p64_f32(a);
     simde_poly64x1_private r_ = simde_poly64x1_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -11506,7 +11506,7 @@ test_simde_vreinterpret_p8_f64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x8_t r = simde_vreinterpret_p8_f64(a);
     simde_poly8x8_private r_ = simde_poly8x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -11552,7 +11552,7 @@ test_simde_vreinterpret_p16_f64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float64x1_private a_ = simde_float64x1_to_private(a);
     simde_poly16x4_t r = simde_vreinterpret_p16_f64(a);
     simde_poly16x4_private r_ = simde_poly16x4_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -11598,7 +11598,7 @@ test_simde_vreinterpret_p64_f64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float64x1_private a_ = simde_float64x1_to_private(a);
     simde_poly64x1_t r = simde_vreinterpret_p64_f64(a);
     simde_poly64x1_private r_ = simde_poly64x1_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -11719,7 +11719,7 @@ test_simde_vreinterpret_p64_f16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float16x4_private a_ = simde_float16x4_to_private(a);
     simde_poly64x1_t r = simde_vreinterpret_p64_f16(a);
     simde_poly64x1_private r_ = simde_poly64x1_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -11764,7 +11764,7 @@ test_simde_vreinterpretq_p64_f16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float16x8_private a_ = simde_float16x8_to_private(a);
     simde_poly64x2_t r = simde_vreinterpretq_p64_f16(a);
     simde_poly64x2_private r_ = simde_poly64x2_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -11819,7 +11819,7 @@ test_simde_vreinterpretq_p8_s8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x16_t r = simde_vreinterpretq_p8_s8(a);
     simde_poly8x16_private r_ = simde_poly8x16_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -11873,7 +11873,7 @@ test_simde_vreinterpretq_p16_s8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int8x16_private a_ = simde_int8x16_to_private(a);
     simde_poly16x8_t r = simde_vreinterpretq_p16_s8(a);
     simde_poly16x8_private r_ = simde_poly16x8_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -11927,7 +11927,7 @@ test_simde_vreinterpretq_p64_s8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int8x16_private a_ = simde_int8x16_to_private(a);
     simde_poly64x2_t r = simde_vreinterpretq_p64_s8(a);
     simde_poly64x2_private r_ = simde_poly64x2_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -11974,7 +11974,7 @@ test_simde_vreinterpretq_p8_s16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x16_t r = simde_vreinterpretq_p8_s16(a);
     simde_poly8x16_private r_ = simde_poly8x16_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -12020,7 +12020,7 @@ test_simde_vreinterpretq_p16_s16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int16x8_private a_ = simde_int16x8_to_private(a);
     simde_poly16x8_t r = simde_vreinterpretq_p16_s16(a);
     simde_poly16x8_private r_ = simde_poly16x8_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -12066,7 +12066,7 @@ test_simde_vreinterpretq_p64_s16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int16x8_private a_ = simde_int16x8_to_private(a);
     simde_poly64x2_t r = simde_vreinterpretq_p64_s16(a);
     simde_poly64x2_private r_ = simde_poly64x2_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -12113,7 +12113,7 @@ test_simde_vreinterpretq_p8_s32 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x16_t r = simde_vreinterpretq_p8_s32(a);
     simde_poly8x16_private r_ = simde_poly8x16_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -12159,7 +12159,7 @@ test_simde_vreinterpretq_p16_s32 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int32x4_private a_ = simde_int32x4_to_private(a);
     simde_poly16x8_t r = simde_vreinterpretq_p16_s32(a);
     simde_poly16x8_private r_ = simde_poly16x8_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -12205,7 +12205,7 @@ test_simde_vreinterpretq_p64_s32 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int32x4_private a_ = simde_int32x4_to_private(a);
     simde_poly64x2_t r = simde_vreinterpretq_p64_s32(a);
     simde_poly64x2_private r_ = simde_poly64x2_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -12252,7 +12252,7 @@ test_simde_vreinterpretq_p8_s64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x16_t r = simde_vreinterpretq_p8_s64(a);
     simde_poly8x16_private r_ = simde_poly8x16_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -12298,7 +12298,7 @@ test_simde_vreinterpretq_p16_s64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int64x2_private a_ = simde_int64x2_to_private(a);
     simde_poly16x8_t r = simde_vreinterpretq_p16_s64(a);
     simde_poly16x8_private r_ = simde_poly16x8_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -12344,7 +12344,7 @@ test_simde_vreinterpretq_p64_s64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int64x2_private a_ = simde_int64x2_to_private(a);
     simde_poly64x2_t r = simde_vreinterpretq_p64_s64(a);
     simde_poly64x2_private r_ = simde_poly64x2_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -12398,7 +12398,7 @@ test_simde_vreinterpretq_p16_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x16_private a_ = simde_poly8x16_to_private(a);
     simde_poly16x8_t r = simde_vreinterpretq_p16_p8(a);
     simde_poly16x8_private r_ = simde_poly16x8_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -12452,7 +12452,7 @@ test_simde_vreinterpretq_p64_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x16_private a_ = simde_poly8x16_to_private(a);
     simde_poly64x2_t r = simde_vreinterpretq_p64_p8(a);
     simde_poly64x2_private r_ = simde_poly64x2_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -12499,7 +12499,7 @@ test_simde_vreinterpretq_p8_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x16_t r = simde_vreinterpretq_p8_p16(a);
     simde_poly8x16_private r_ = simde_poly8x16_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -12545,7 +12545,7 @@ test_simde_vreinterpretq_p64_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly16x8_private a_ = simde_poly16x8_to_private(a);
     simde_poly64x2_t r = simde_vreinterpretq_p64_p16(a);
     simde_poly64x2_private r_ = simde_poly64x2_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -12592,7 +12592,7 @@ test_simde_vreinterpretq_p8_p64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x16_t r = simde_vreinterpretq_p8_p64(a);
     simde_poly8x16_private r_ = simde_poly8x16_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -12638,7 +12638,7 @@ test_simde_vreinterpretq_p16_p64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly64x2_private a_ = simde_poly64x2_to_private(a);
     simde_poly16x8_t r = simde_vreinterpretq_p16_p64(a);
     simde_poly16x8_private r_ = simde_poly16x8_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -12685,7 +12685,7 @@ test_simde_vreinterpretq_p8_f32 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x16_t r = simde_vreinterpretq_p8_f32(a);
     simde_poly8x16_private r_ = simde_poly8x16_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -12731,7 +12731,7 @@ test_simde_vreinterpretq_p16_f32 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float32x4_private a_ = simde_float32x4_to_private(a);
     simde_poly16x8_t r = simde_vreinterpretq_p16_f32(a);
     simde_poly16x8_private r_ = simde_poly16x8_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -12776,7 +12776,7 @@ test_simde_vreinterpretq_p16_f16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float16x8_private a_ = simde_float16x8_to_private(a);
     simde_poly16x8_t r = simde_vreinterpretq_p16_f16(a);
     simde_poly16x8_private r_ = simde_poly16x8_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -12822,7 +12822,7 @@ test_simde_vreinterpretq_p64_f32 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float32x4_private a_ = simde_float32x4_to_private(a);
     simde_poly64x2_t r = simde_vreinterpretq_p64_f32(a);
     simde_poly64x2_private r_ = simde_poly64x2_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -12869,7 +12869,7 @@ test_simde_vreinterpretq_p8_f64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x16_t r = simde_vreinterpretq_p8_f64(a);
     simde_poly8x16_private r_ = simde_poly8x16_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -12915,7 +12915,7 @@ test_simde_vreinterpretq_p16_f64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float64x2_private a_ = simde_float64x2_to_private(a);
     simde_poly16x8_t r = simde_vreinterpretq_p16_f64(a);
     simde_poly16x8_private r_ = simde_poly16x8_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -12961,7 +12961,7 @@ test_simde_vreinterpretq_p64_f64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float64x2_private a_ = simde_float64x2_to_private(a);
     simde_poly64x2_t r = simde_vreinterpretq_p64_f64(a);
     simde_poly64x2_private r_ = simde_poly64x2_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -13008,7 +13008,7 @@ test_simde_vreinterpret_f32_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float32x2_t r = simde_vreinterpret_f32_p8(a);
     simde_float32x2_private r_ = simde_float32x2_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -13055,7 +13055,7 @@ test_simde_vreinterpret_f64_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float64x1_t r = simde_vreinterpret_f64_p8(a);
     simde_float64x1_private r_ = simde_float64x1_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -13102,7 +13102,7 @@ test_simde_vreinterpret_s8_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int8x8_t r = simde_vreinterpret_s8_p8(a);
     simde_int8x8_private r_ = simde_int8x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -13149,7 +13149,7 @@ test_simde_vreinterpret_s16_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int16x4_t r = simde_vreinterpret_s16_p8(a);
     simde_int16x4_private r_ = simde_int16x4_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -13196,7 +13196,7 @@ test_simde_vreinterpret_s32_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int32x2_t r = simde_vreinterpret_s32_p8(a);
     simde_int32x2_private r_ = simde_int32x2_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -13243,7 +13243,7 @@ test_simde_vreinterpret_s64_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int64x1_t r = simde_vreinterpret_s64_p8(a);
     simde_int64x1_private r_ = simde_int64x1_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -13297,7 +13297,7 @@ test_simde_vreinterpretq_f32_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x16_private a_ = simde_poly8x16_to_private(a);
     simde_float32x4_t r = simde_vreinterpretq_f32_p8(a);
     simde_float32x4_private r_ = simde_float32x4_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -13352,7 +13352,7 @@ test_simde_vreinterpretq_f64_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float64x2_t r = simde_vreinterpretq_f64_p8(a);
     simde_float64x2_private r_ = simde_float64x2_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -13407,7 +13407,7 @@ test_simde_vreinterpretq_s8_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int8x16_t r = simde_vreinterpretq_s8_p8(a);
     simde_int8x16_private r_ = simde_int8x16_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -13462,7 +13462,7 @@ test_simde_vreinterpretq_s16_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int16x8_t r = simde_vreinterpretq_s16_p8(a);
     simde_int16x8_private r_ = simde_int16x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -13516,7 +13516,7 @@ test_simde_vreinterpretq_s32_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x16_private a_ = simde_poly8x16_to_private(a);
     simde_int32x4_t r = simde_vreinterpretq_s32_p8(a);
     simde_int32x4_private r_ = simde_int32x4_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -13570,7 +13570,7 @@ test_simde_vreinterpretq_s64_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x16_private a_ = simde_poly8x16_to_private(a);
     simde_int64x2_t r = simde_vreinterpretq_s64_p8(a);
     simde_int64x2_private r_ = simde_int64x2_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -13617,7 +13617,7 @@ test_simde_vreinterpret_f32_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float32x2_t r = simde_vreinterpret_f32_p16(a);
     simde_float32x2_private r_ = simde_float32x2_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -13664,7 +13664,7 @@ test_simde_vreinterpret_f64_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float64x1_t r = simde_vreinterpret_f64_p16(a);
     simde_float64x1_private r_ = simde_float64x1_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -13711,7 +13711,7 @@ test_simde_vreinterpret_s8_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int8x8_t r = simde_vreinterpret_s8_p16(a);
     simde_int8x8_private r_ = simde_int8x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -13758,7 +13758,7 @@ test_simde_vreinterpret_s16_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int16x4_t r = simde_vreinterpret_s16_p16(a);
     simde_int16x4_private r_ = simde_int16x4_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -13805,7 +13805,7 @@ test_simde_vreinterpret_s32_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int32x2_t r = simde_vreinterpret_s32_p16(a);
     simde_int32x2_private r_ = simde_int32x2_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -13852,7 +13852,7 @@ test_simde_vreinterpret_s64_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int64x1_t r = simde_vreinterpret_s64_p16(a);
     simde_int64x1_private r_ = simde_int64x1_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -13898,7 +13898,7 @@ test_simde_vreinterpretq_f32_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly16x8_private a_ = simde_poly16x8_to_private(a);
     simde_float32x4_t r = simde_vreinterpretq_f32_p16(a);
     simde_float32x4_private r_ = simde_float32x4_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -13945,7 +13945,7 @@ test_simde_vreinterpretq_f64_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float64x2_t r = simde_vreinterpretq_f64_p16(a);
     simde_float64x2_private r_ = simde_float64x2_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -13992,7 +13992,7 @@ test_simde_vreinterpretq_s8_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int8x16_t r = simde_vreinterpretq_s8_p16(a);
     simde_int8x16_private r_ = simde_int8x16_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -14039,7 +14039,7 @@ test_simde_vreinterpretq_s16_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int16x8_t r = simde_vreinterpretq_s16_p16(a);
     simde_int16x8_private r_ = simde_int16x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -14085,7 +14085,7 @@ test_simde_vreinterpretq_s32_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly16x8_private a_ = simde_poly16x8_to_private(a);
     simde_int32x4_t r = simde_vreinterpretq_s32_p16(a);
     simde_int32x4_private r_ = simde_int32x4_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -14131,7 +14131,7 @@ test_simde_vreinterpretq_s64_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly16x8_private a_ = simde_poly16x8_to_private(a);
     simde_int64x2_t r = simde_vreinterpretq_s64_p16(a);
     simde_int64x2_private r_ = simde_int64x2_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -14207,7 +14207,7 @@ test_simde_vreinterpretq_f16_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float16x8_t r = simde_vreinterpretq_f16_p16(a);
     simde_float16x8_private r_ = simde_float16x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -14254,7 +14254,7 @@ test_simde_vreinterpret_f64_p64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float64x1_t r = simde_vreinterpret_f64_p64(a);
     simde_float64x1_private r_ = simde_float64x1_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -14301,7 +14301,7 @@ test_simde_vreinterpret_s8_p64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int8x8_t r = simde_vreinterpret_s8_p64(a);
     simde_int8x8_private r_ = simde_int8x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -14348,7 +14348,7 @@ test_simde_vreinterpret_s16_p64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int16x4_t r = simde_vreinterpret_s16_p64(a);
     simde_int16x4_private r_ = simde_int16x4_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -14395,7 +14395,7 @@ test_simde_vreinterpret_s32_p64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int32x2_t r = simde_vreinterpret_s32_p64(a);
     simde_int32x2_private r_ = simde_int32x2_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -14442,7 +14442,7 @@ test_simde_vreinterpret_s64_p64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int64x1_t r = simde_vreinterpret_s64_p64(a);
     simde_int64x1_private r_ = simde_int64x1_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -14489,7 +14489,7 @@ test_simde_vreinterpretq_f64_p64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float64x2_t r = simde_vreinterpretq_f64_p64(a);
     simde_float64x2_private r_ = simde_float64x2_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -14536,7 +14536,7 @@ test_simde_vreinterpretq_s8_p64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int8x16_t r = simde_vreinterpretq_s8_p64(a);
     simde_int8x16_private r_ = simde_int8x16_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -14583,7 +14583,7 @@ test_simde_vreinterpretq_s16_p64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_int16x8_t r = simde_vreinterpretq_s16_p64(a);
     simde_int16x8_private r_ = simde_int16x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -14629,7 +14629,7 @@ test_simde_vreinterpretq_s32_p64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly64x2_private a_ = simde_poly64x2_to_private(a);
     simde_int32x4_t r = simde_vreinterpretq_s32_p64(a);
     simde_int32x4_private r_ = simde_int32x4_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -14675,7 +14675,7 @@ test_simde_vreinterpretq_s64_p64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly64x2_private a_ = simde_poly64x2_to_private(a);
     simde_int64x2_t r = simde_vreinterpretq_s64_p64(a);
     simde_int64x2_private r_ = simde_int64x2_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -14815,7 +14815,7 @@ test_simde_vreinterpretq_f16_p64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly64x2_private a_ = simde_poly64x2_to_private(a);
     simde_float16x8_t r = simde_vreinterpretq_f16_p64(a);
     simde_float16x8_private r_ = simde_float16x8_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -14869,7 +14869,7 @@ test_simde_vreinterpretq_f16_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x16_private a_ = simde_poly8x16_to_private(a);
     simde_float16x8_t r = simde_vreinterpretq_f16_p8(a);
     simde_float16x8_private r_ = simde_float16x8_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -14915,7 +14915,7 @@ test_simde_vreinterpret_u16_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x8_private a_ = simde_poly8x8_to_private(a);
     simde_uint16x4_t r = simde_vreinterpret_u16_p8(a);
     simde_uint16x4_private r_ = simde_uint16x4_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -14961,7 +14961,7 @@ test_simde_vreinterpret_u32_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x8_private a_ = simde_poly8x8_to_private(a);
     simde_uint32x2_t r = simde_vreinterpret_u32_p8(a);
     simde_uint32x2_private r_ = simde_uint32x2_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -15007,7 +15007,7 @@ test_simde_vreinterpret_u64_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x8_private a_ = simde_poly8x8_to_private(a);
     simde_uint64x1_t r = simde_vreinterpret_u64_p8(a);
     simde_uint64x1_private r_ = simde_uint64x1_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -15061,7 +15061,7 @@ test_simde_vreinterpretq_u16_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x16_private a_ = simde_poly8x16_to_private(a);
     simde_uint16x8_t r = simde_vreinterpretq_u16_p8(a);
     simde_uint16x8_private r_ = simde_uint16x8_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -15116,7 +15116,7 @@ test_simde_vreinterpretq_u32_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint32x4_t r = simde_vreinterpretq_u32_p8(a);
     simde_uint32x4_private r_ = simde_uint32x4_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -15170,7 +15170,7 @@ test_simde_vreinterpretq_u64_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x16_private a_ = simde_poly8x16_to_private(a);
     simde_uint64x2_t r = simde_vreinterpretq_u64_p8(a);
     simde_uint64x2_private r_ = simde_uint64x2_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -15217,7 +15217,7 @@ test_simde_vreinterpret_u8_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint8x8_t r = simde_vreinterpret_u8_p16(a);
     simde_uint8x8_private r_ = simde_uint8x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -15263,7 +15263,7 @@ test_simde_vreinterpret_u32_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly16x4_private a_ = simde_poly16x4_to_private(a);
     simde_uint32x2_t r = simde_vreinterpret_u32_p16(a);
     simde_uint32x2_private r_ = simde_uint32x2_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -15309,7 +15309,7 @@ test_simde_vreinterpret_u64_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly16x4_private a_ = simde_poly16x4_to_private(a);
     simde_uint64x1_t r = simde_vreinterpret_u64_p16(a);
     simde_uint64x1_private r_ = simde_uint64x1_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -15356,7 +15356,7 @@ test_simde_vreinterpretq_u8_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint8x16_t r = simde_vreinterpretq_u8_p16(a);
     simde_uint8x16_private r_ = simde_uint8x16_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -15403,7 +15403,7 @@ test_simde_vreinterpretq_u32_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint32x4_t r = simde_vreinterpretq_u32_p16(a);
     simde_uint32x4_private r_ = simde_uint32x4_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -15449,7 +15449,7 @@ test_simde_vreinterpretq_u64_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly16x8_private a_ = simde_poly16x8_to_private(a);
     simde_uint64x2_t r = simde_vreinterpretq_u64_p16(a);
     simde_uint64x2_private r_ = simde_uint64x2_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -15496,7 +15496,7 @@ test_simde_vreinterpret_u8_p64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint8x8_t r = simde_vreinterpret_u8_p64(a);
     simde_uint8x8_private r_ = simde_uint8x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -15542,7 +15542,7 @@ test_simde_vreinterpret_u16_p64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly64x1_private a_ = simde_poly64x1_to_private(a);
     simde_uint16x4_t r = simde_vreinterpret_u16_p64(a);
     simde_uint16x4_private r_ = simde_uint16x4_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -15588,7 +15588,7 @@ test_simde_vreinterpret_u32_p64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly64x1_private a_ = simde_poly64x1_to_private(a);
     simde_uint32x2_t r = simde_vreinterpret_u32_p64(a);
     simde_uint32x2_private r_ = simde_uint32x2_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -15635,7 +15635,7 @@ test_simde_vreinterpretq_u8_p64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint8x16_t r = simde_vreinterpretq_u8_p64(a);
     simde_uint8x16_private r_ = simde_uint8x16_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -15681,7 +15681,7 @@ test_simde_vreinterpretq_u16_p64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly64x2_private a_ = simde_poly64x2_to_private(a);
     simde_uint16x8_t r = simde_vreinterpretq_u16_p64(a);
     simde_uint16x8_private r_ = simde_uint16x8_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -15728,7 +15728,7 @@ test_simde_vreinterpretq_u32_p64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint32x4_t r = simde_vreinterpretq_u32_p64(a);
     simde_uint32x4_private r_ = simde_uint32x4_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -15774,7 +15774,7 @@ test_simde_vreinterpret_p16_u8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint8x8_private a_ = simde_uint8x8_to_private(a);
     simde_poly16x4_t r = simde_vreinterpret_p16_u8(a);
     simde_poly16x4_private r_ = simde_poly16x4_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -15828,7 +15828,7 @@ test_simde_vreinterpretq_p16_u8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint8x16_private a_ = simde_uint8x16_to_private(a);
     simde_poly16x8_t r = simde_vreinterpretq_p16_u8(a);
     simde_poly16x8_private r_ = simde_poly16x8_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -15874,7 +15874,7 @@ test_simde_vreinterpret_p16_u32 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint32x2_private a_ = simde_uint32x2_to_private(a);
     simde_poly16x4_t r = simde_vreinterpret_p16_u32(a);
     simde_poly16x4_private r_ = simde_poly16x4_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -15921,7 +15921,7 @@ test_simde_vreinterpretq_p16_u32 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint32x4_private a_ = simde_uint32x4_to_private(a);
     simde_poly16x8_t r = simde_vreinterpretq_p16_u32(a);
     simde_poly16x8_private r_ = simde_poly16x8_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -15967,7 +15967,7 @@ test_simde_vreinterpret_p16_u64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint64x1_private a_ = simde_uint64x1_to_private(a);
     simde_poly16x4_t r = simde_vreinterpret_p16_u64(a);
     simde_poly16x4_private r_ = simde_poly16x4_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -16013,7 +16013,7 @@ test_simde_vreinterpretq_p16_u64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint64x2_private a_ = simde_uint64x2_to_private(a);
     simde_poly16x8_t r = simde_vreinterpretq_p16_u64(a);
     simde_poly16x8_private r_ = simde_poly16x8_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -16059,7 +16059,7 @@ test_simde_vreinterpret_p64_u8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint8x8_private a_ = simde_uint8x8_to_private(a);
     simde_poly64x1_t r = simde_vreinterpret_p64_u8(a);
     simde_poly64x1_private r_ = simde_poly64x1_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -16113,7 +16113,7 @@ test_simde_vreinterpretq_p64_u8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint8x16_private a_ = simde_uint8x16_to_private(a);
     simde_poly64x2_t r = simde_vreinterpretq_p64_u8(a);
     simde_poly64x2_private r_ = simde_poly64x2_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -16159,7 +16159,7 @@ test_simde_vreinterpret_p64_u16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint16x4_private a_ = simde_uint16x4_to_private(a);
     simde_poly64x1_t r = simde_vreinterpret_p64_u16(a);
     simde_poly64x1_private r_ = simde_poly64x1_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -16205,7 +16205,7 @@ test_simde_vreinterpretq_p64_u16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint16x8_private a_ = simde_uint16x8_to_private(a);
     simde_poly64x2_t r = simde_vreinterpretq_p64_u16(a);
     simde_poly64x2_private r_ = simde_poly64x2_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -16251,7 +16251,7 @@ test_simde_vreinterpret_p64_u32 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint32x2_private a_ = simde_uint32x2_to_private(a);
     simde_poly64x1_t r = simde_vreinterpret_p64_u32(a);
     simde_poly64x1_private r_ = simde_poly64x1_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -16297,7 +16297,7 @@ test_simde_vreinterpretq_p64_u32 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint32x4_private a_ = simde_uint32x4_to_private(a);
     simde_poly64x2_t r = simde_vreinterpretq_p64_u32(a);
     simde_poly64x2_private r_ = simde_poly64x2_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -16344,7 +16344,7 @@ test_simde_vreinterpret_p8_u16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x8_t r = simde_vreinterpret_p8_u16(a);
     simde_poly8x8_private r_ = simde_poly8x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -16391,7 +16391,7 @@ test_simde_vreinterpretq_p8_u16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x16_t r = simde_vreinterpretq_p8_u16(a);
     simde_poly8x16_private r_ = simde_poly8x16_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -16438,7 +16438,7 @@ test_simde_vreinterpret_p8_u32 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x8_t r = simde_vreinterpret_p8_u32(a);
     simde_poly8x8_private r_ = simde_poly8x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -16485,7 +16485,7 @@ test_simde_vreinterpretq_p8_u32 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x16_t r = simde_vreinterpretq_p8_u32(a);
     simde_poly8x16_private r_ = simde_poly8x16_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -16532,7 +16532,7 @@ test_simde_vreinterpret_p8_u64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x8_t r = simde_vreinterpret_p8_u64(a);
     simde_poly8x8_private r_ = simde_poly8x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -16579,7 +16579,7 @@ test_simde_vreinterpretq_p8_u64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x16_t r = simde_vreinterpretq_p8_u64(a);
     simde_poly8x16_private r_ = simde_poly8x16_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -16626,7 +16626,7 @@ test_simde_vreinterpret_p8_u8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x8_t r = simde_vreinterpret_p8_u8(a);
     simde_poly8x8_private r_ = simde_poly8x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -16681,7 +16681,7 @@ test_simde_vreinterpretq_p8_u8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly8x16_t r = simde_vreinterpretq_p8_u8(a);
     simde_poly8x16_private r_ = simde_poly8x16_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -16728,7 +16728,7 @@ test_simde_vreinterpret_p16_u16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly16x4_t r = simde_vreinterpret_p16_u16(a);
     simde_poly16x4_private r_ = simde_poly16x4_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -16775,7 +16775,7 @@ test_simde_vreinterpretq_p16_u16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly16x8_t r = simde_vreinterpretq_p16_u16(a);
     simde_poly16x8_private r_ = simde_poly16x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -16822,7 +16822,7 @@ test_simde_vreinterpret_p64_u64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly64x1_t r = simde_vreinterpret_p64_u64(a);
     simde_poly64x1_private r_ = simde_poly64x1_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -16868,7 +16868,7 @@ test_simde_vreinterpretq_p64_u64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint64x2_private a_ = simde_uint64x2_to_private(a);
     simde_poly64x2_t r = simde_vreinterpretq_p64_u64(a);
     simde_poly64x2_private r_ = simde_poly64x2_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -16915,7 +16915,7 @@ test_simde_vreinterpret_u8_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint8x8_t r = simde_vreinterpret_u8_p8(a);
     simde_uint8x8_private r_ = simde_uint8x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -16970,7 +16970,7 @@ test_simde_vreinterpretq_u8_p8 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint8x16_t r = simde_vreinterpretq_u8_p8(a);
     simde_uint8x16_private r_ = simde_uint8x16_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -17017,7 +17017,7 @@ test_simde_vreinterpret_u16_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint16x4_t r = simde_vreinterpret_u16_p16(a);
     simde_uint16x4_private r_ = simde_uint16x4_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -17064,7 +17064,7 @@ test_simde_vreinterpretq_u16_p16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint16x8_t r = simde_vreinterpretq_u16_p16(a);
     simde_uint16x8_private r_ = simde_uint16x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -17111,7 +17111,7 @@ test_simde_vreinterpret_u64_p64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_uint64x1_t r = simde_vreinterpret_u64_p64(a);
     simde_uint64x1_private r_ = simde_uint64x1_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 8));
   }
 
   return 0;
@@ -17157,7 +17157,7 @@ test_simde_vreinterpretq_u64_p64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_poly64x2_private a_ = simde_poly64x2_to_private(a);
     simde_uint64x2_t r = simde_vreinterpretq_u64_p64(a);
     simde_uint64x2_private r_ = simde_uint64x2_to_private(r);
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a_, 16));
   }
 
   return 0;
@@ -17812,7 +17812,7 @@ test_simde_vreinterpretq_p8_p128 (SIMDE_MUNIT_TEST_ARGS) {
     r = simde_vreinterpretq_p8_p128(a);
     r_ = simde_poly8x16_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a, 16));
   }
 
   return 0;
@@ -17861,7 +17861,7 @@ test_simde_vreinterpretq_p16_p128 (SIMDE_MUNIT_TEST_ARGS) {
     r = simde_vreinterpretq_p16_p128(a);
     r_ = simde_poly16x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a, 16));
   }
 
   return 0;
@@ -17910,7 +17910,7 @@ test_simde_vreinterpretq_s8_p128 (SIMDE_MUNIT_TEST_ARGS) {
     r = simde_vreinterpretq_s8_p128(a);
     r_ = simde_int8x16_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a, 16));
   }
 
   return 0;
@@ -17959,7 +17959,7 @@ test_simde_vreinterpretq_s16_p128 (SIMDE_MUNIT_TEST_ARGS) {
     r = simde_vreinterpretq_s16_p128(a);
     r_ = simde_int16x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a, 16));
   }
 
   return 0;
@@ -18008,7 +18008,7 @@ test_simde_vreinterpretq_s32_p128 (SIMDE_MUNIT_TEST_ARGS) {
     r = simde_vreinterpretq_s32_p128(a);
     r_ = simde_int32x4_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a, 16));
   }
 
   return 0;
@@ -18057,7 +18057,7 @@ test_simde_vreinterpretq_s64_p128 (SIMDE_MUNIT_TEST_ARGS) {
     r = simde_vreinterpretq_s64_p128(a);
     r_ = simde_int64x2_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a, 16));
   }
 
   return 0;
@@ -18106,7 +18106,7 @@ test_simde_vreinterpretq_u8_p128 (SIMDE_MUNIT_TEST_ARGS) {
     r = simde_vreinterpretq_u8_p128(a);
     r_ = simde_uint8x16_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a, 16));
   }
 
   return 0;
@@ -18155,7 +18155,7 @@ test_simde_vreinterpretq_u16_p128 (SIMDE_MUNIT_TEST_ARGS) {
     r = simde_vreinterpretq_u16_p128(a);
     r_ = simde_uint16x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a, 16));
   }
 
   return 0;
@@ -18204,7 +18204,7 @@ test_simde_vreinterpretq_u32_p128 (SIMDE_MUNIT_TEST_ARGS) {
     r = simde_vreinterpretq_u32_p128(a);
     r_ = simde_uint32x4_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a, 16));
   }
 
   return 0;
@@ -18253,7 +18253,7 @@ test_simde_vreinterpretq_u64_p128 (SIMDE_MUNIT_TEST_ARGS) {
     r = simde_vreinterpretq_u64_p128(a);
     r_ = simde_uint64x2_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a, 16));
   }
 
   return 0;
@@ -18302,7 +18302,7 @@ test_simde_vreinterpretq_f16_p128 (SIMDE_MUNIT_TEST_ARGS) {
     r = simde_vreinterpretq_f16_p128(a);
     r_ = simde_float16x8_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a, 16));
   }
 
   return 0;
@@ -18351,7 +18351,7 @@ test_simde_vreinterpretq_f64_p128 (SIMDE_MUNIT_TEST_ARGS) {
     r = simde_vreinterpretq_f64_p128(a);
     r_ = simde_float64x2_to_private(r);
 
-    simde_assert_equal_i(0, simde_memcmp(&r_, &a, sizeof(r_)));
+    simde_assert_equal_i(0, simde_memcmp(&r_, &a, 16));
   }
 
   return 0;

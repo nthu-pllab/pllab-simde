@@ -525,9 +525,17 @@ simde_vld4_p8(simde_poly8_t const ptr[HEDLEY_ARRAY_PARAM(32)]) {
     return vld4_p8(ptr);
   #else
     simde_poly8x8_private a_[4];
-    for (size_t i = 0; i < (sizeof(simde_poly8x8_t) / sizeof(*ptr)) * 4 ; i++) {
-      a_[i % 4].values[i / 4] = ptr[i];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint8m1x4_t dest = __riscv_vlseg4e8_v_u8m1x4(&ptr[0], 8);
+      a_[0].sv64 = __riscv_vget_v_u8m1x4_u8m1(dest, 0);
+      a_[1].sv64 = __riscv_vget_v_u8m1x4_u8m1(dest, 1);
+      a_[2].sv64 = __riscv_vget_v_u8m1x4_u8m1(dest, 2);
+      a_[3].sv64 = __riscv_vget_v_u8m1x4_u8m1(dest, 3);
+    #else
+      for (size_t i = 0; i < (sizeof(simde_poly8x8_t) / sizeof(*ptr)) * 4 ; i++) {
+        a_[i % 4].values[i / 4] = ptr[i];
+      }
+    #endif
     simde_poly8x8x4_t s_ = { { simde_poly8x8_from_private(a_[0]), simde_poly8x8_from_private(a_[1]),
                                simde_poly8x8_from_private(a_[2]), simde_poly8x8_from_private(a_[3]) } };
     return s_;
@@ -545,9 +553,17 @@ simde_vld4_p16(simde_poly16_t const ptr[HEDLEY_ARRAY_PARAM(16)]) {
     return vld4_p16(ptr);
   #else
     simde_poly16x4_private a_[4];
-    for (size_t i = 0; i < (sizeof(simde_poly16x4_t) / sizeof(*ptr)) * 4 ; i++) {
-      a_[i % 4].values[i / 4] = ptr[i];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint16m1x4_t dest = __riscv_vlseg4e16_v_u16m1x4(&ptr[0], 4);
+      a_[0].sv64 = __riscv_vget_v_u16m1x4_u16m1(dest, 0);
+      a_[1].sv64 = __riscv_vget_v_u16m1x4_u16m1(dest, 1);
+      a_[2].sv64 = __riscv_vget_v_u16m1x4_u16m1(dest, 2);
+      a_[3].sv64 = __riscv_vget_v_u16m1x4_u16m1(dest, 3);
+    #else
+      for (size_t i = 0; i < (sizeof(simde_poly16x4_t) / sizeof(*ptr)) * 4 ; i++) {
+        a_[i % 4].values[i / 4] = ptr[i];
+      }
+    #endif
     simde_poly16x4x4_t s_ = { { simde_poly16x4_from_private(a_[0]), simde_poly16x4_from_private(a_[1]),
                                 simde_poly16x4_from_private(a_[2]), simde_poly16x4_from_private(a_[3]) } };
     return s_;
@@ -565,9 +581,17 @@ simde_vld4_p64(simde_poly64_t const ptr[HEDLEY_ARRAY_PARAM(4)]) {
     return vld4_p64(ptr);
   #else
     simde_poly64x1_private a_[4];
-    for (size_t i = 0; i < (sizeof(simde_poly64x1_t) / sizeof(*ptr)) * 4 ; i++) {
-      a_[i % 4].values[i / 4] = ptr[i];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint64m1x4_t dest = __riscv_vlseg4e64_v_u64m1x4(&ptr[0], 1);
+      a_[0].sv64 = __riscv_vget_v_u64m1x4_u64m1(dest, 0);
+      a_[1].sv64 = __riscv_vget_v_u64m1x4_u64m1(dest, 1);
+      a_[2].sv64 = __riscv_vget_v_u64m1x4_u64m1(dest, 2);
+      a_[3].sv64 = __riscv_vget_v_u64m1x4_u64m1(dest, 3);
+    #else
+      for (size_t i = 0; i < (sizeof(simde_poly64x1_t) / sizeof(*ptr)) * 4 ; i++) {
+        a_[i % 4].values[i / 4] = ptr[i];
+      }
+    #endif
     simde_poly64x1x4_t s_ = { { simde_poly64x1_from_private(a_[0]), simde_poly64x1_from_private(a_[1]),
                                 simde_poly64x1_from_private(a_[2]), simde_poly64x1_from_private(a_[3]) } };
     return s_;
@@ -585,9 +609,17 @@ simde_vld4q_p8(simde_poly8_t const ptr[HEDLEY_ARRAY_PARAM(64)]) {
     return vld4q_p8(ptr);
   #else
     simde_poly8x16_private a_[4];
-    for (size_t i = 0; i < (sizeof(simde_poly8x16_t) / sizeof(*ptr)) * 4 ; i++) {
-      a_[i % 4].values[i / 4] = ptr[i];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint8m1x4_t dest = __riscv_vlseg4e8_v_u8m1x4(&ptr[0], 16);
+      a_[0].sv128 = __riscv_vget_v_u8m1x4_u8m1(dest, 0);
+      a_[1].sv128 = __riscv_vget_v_u8m1x4_u8m1(dest, 1);
+      a_[2].sv128 = __riscv_vget_v_u8m1x4_u8m1(dest, 2);
+      a_[3].sv128 = __riscv_vget_v_u8m1x4_u8m1(dest, 3);
+    #else
+      for (size_t i = 0; i < (sizeof(simde_poly8x16_t) / sizeof(*ptr)) * 4 ; i++) {
+        a_[i % 4].values[i / 4] = ptr[i];
+      }
+    #endif
     simde_poly8x16x4_t s_ = { { simde_poly8x16_from_private(a_[0]), simde_poly8x16_from_private(a_[1]),
                                 simde_poly8x16_from_private(a_[2]), simde_poly8x16_from_private(a_[3]) } };
     return s_;
@@ -605,9 +637,17 @@ simde_vld4q_p16(simde_poly16_t const ptr[HEDLEY_ARRAY_PARAM(32)]) {
     return vld4q_p16(ptr);
   #else
     simde_poly16x8_private a_[4];
-    for (size_t i = 0; i < (sizeof(simde_poly16x8_t) / sizeof(*ptr)) * 4 ; i++) {
-      a_[i % 4].values[i / 4] = ptr[i];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint16m1x4_t dest = __riscv_vlseg4e16_v_u16m1x4(&ptr[0], 8);
+      a_[0].sv128 = __riscv_vget_v_u16m1x4_u16m1(dest, 0);
+      a_[1].sv128 = __riscv_vget_v_u16m1x4_u16m1(dest, 1);
+      a_[2].sv128 = __riscv_vget_v_u16m1x4_u16m1(dest, 2);
+      a_[3].sv128 = __riscv_vget_v_u16m1x4_u16m1(dest, 3);
+    #else
+      for (size_t i = 0; i < (sizeof(simde_poly16x8_t) / sizeof(*ptr)) * 4 ; i++) {
+        a_[i % 4].values[i / 4] = ptr[i];
+      }
+    #endif
     simde_poly16x8x4_t s_ = { { simde_poly16x8_from_private(a_[0]), simde_poly16x8_from_private(a_[1]),
                                 simde_poly16x8_from_private(a_[2]), simde_poly16x8_from_private(a_[3]) } };
     return s_;
@@ -625,9 +665,17 @@ simde_vld4q_p64(simde_poly64_t const ptr[HEDLEY_ARRAY_PARAM(8)]) {
     return vld4q_p64(ptr);
   #else
     simde_poly64x2_private a_[4];
-    for (size_t i = 0; i < (sizeof(simde_poly64x2_t) / sizeof(*ptr)) * 4 ; i++) {
-      a_[i % 4].values[i / 4] = ptr[i];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint64m1x4_t dest = __riscv_vlseg4e64_v_u64m1x4(&ptr[0], 2);
+      a_[0].sv128 = __riscv_vget_v_u64m1x4_u64m1(dest, 0);
+      a_[1].sv128 = __riscv_vget_v_u64m1x4_u64m1(dest, 1);
+      a_[2].sv128 = __riscv_vget_v_u64m1x4_u64m1(dest, 2);
+      a_[3].sv128 = __riscv_vget_v_u64m1x4_u64m1(dest, 3);
+    #else
+      for (size_t i = 0; i < (sizeof(simde_poly64x2_t) / sizeof(*ptr)) * 4 ; i++) {
+        a_[i % 4].values[i / 4] = ptr[i];
+      }
+    #endif
     simde_poly64x2x4_t s_ = { { simde_poly64x2_from_private(a_[0]), simde_poly64x2_from_private(a_[1]),
                                 simde_poly64x2_from_private(a_[2]), simde_poly64x2_from_private(a_[3]) } };
     return s_;

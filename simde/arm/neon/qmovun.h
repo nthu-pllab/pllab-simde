@@ -23,6 +23,7 @@
  * Copyright:
  *   2020      Evan Nemerson <evan@nemerson.com>
  *   2020      Sean Maher <seanptmaher@gmail.com> (Copyright owned by Google, LLC)
+ *   2023      Yung-Cheng Su <eric20607@gapp.nthu.edu.tw>
  */
 
 #if !defined(SIMDE_ARM_NEON_QMOVUN_H)
@@ -85,6 +86,19 @@ simde_uint8x8_t
 simde_vqmovun_s16(simde_int16x8_t a) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vqmovun_s16(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE)
+    simde_uint8x8_t r;
+    vuint8mf2_t r_;
+    simde_int16x8_private a_ = simde_int16x8_to_private(a);
+
+    r_ = __riscv_vnclipu_wx_u8mf2(
+      __riscv_vreinterpret_v_i16m1_u16m1(
+        __riscv_vmax_vx_i16m1(a_.sv128, 0, 8)
+        ), 0, 0, 8);
+
+    simde_memcpy(&r, &r_, sizeof(simde_uint8x8_t));
+
+    return r;
   #elif SIMDE_NATURAL_VECTOR_SIZE > 0
     return simde_vmovn_u16(simde_vreinterpretq_u16_s16(simde_vmaxq_s16(simde_vdupq_n_s16(0), simde_vminq_s16(simde_vdupq_n_s16(UINT8_MAX), a))));
   #else
@@ -109,6 +123,20 @@ simde_uint16x4_t
 simde_vqmovun_s32(simde_int32x4_t a) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vqmovun_s32(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE)
+    simde_uint16x4_t r;
+    vuint16mf2_t r_;
+    simde_int32x4_private a_ = simde_int32x4_to_private(a);
+
+    r_ = __riscv_vnclipu_wx_u16mf2(
+      __riscv_vreinterpret_v_i32m1_u32m1(
+        __riscv_vmax_vx_i32m1(a_.sv128, 0, 4)
+        ), 0, 0, 4);
+
+    simde_memcpy(&r, &r_, sizeof(simde_uint16x4_t));
+
+    return r;
+
   #elif SIMDE_NATURAL_VECTOR_SIZE > 0
     return simde_vmovn_u32(simde_vreinterpretq_u32_s32(simde_vmaxq_s32(simde_vdupq_n_s32(0), simde_vminq_s32(simde_vdupq_n_s32(UINT16_MAX), a))));
   #else
@@ -133,6 +161,20 @@ simde_uint32x2_t
 simde_vqmovun_s64(simde_int64x2_t a) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vqmovun_s64(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE) && SIMDE_NATURAL_VECTOR_SIZE == 128
+    simde_uint32x2_t r;
+    vuint32mf2_t r_;
+    simde_int64x2_private a_ = simde_int64x2_to_private(a);
+
+    r_ = __riscv_vnclipu_wx_u32mf2(
+      __riscv_vreinterpret_v_i64m1_u64m1(
+        __riscv_vmax_vx_i64m1(a_.sv128, 0, 2)
+        ), 0, 0, 2);
+
+    simde_memcpy(&r, &r_, sizeof(simde_uint32x2_t));
+
+    return r;
+
   #elif SIMDE_NATURAL_VECTOR_SIZE > 0
     return simde_vmovn_u64(simde_vreinterpretq_u64_s64(simde_x_vmaxq_s64(simde_vdupq_n_s64(0), simde_x_vminq_s64(simde_vdupq_n_s64(UINT32_MAX), a))));
   #else

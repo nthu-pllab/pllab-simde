@@ -23,6 +23,7 @@
  * Copyright:
  *   2020      Evan Nemerson <evan@nemerson.com>
  *   2020      Sean Maher <seanptmaher@gmail.com> (Copyright owned by Google, LLC)
+ *   2023      Yung-Cheng Su <eric20607@gapp.nthu.edu.tw>
  */
 
 #if !defined(SIMDE_ARM_NEON_QMOVN_H)
@@ -128,6 +129,15 @@ simde_int8x8_t
 simde_vqmovn_s16(simde_int16x8_t a) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vqmovn_s16(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE)
+    simde_int8x8_t r;
+    vint8mf2_t r_;
+    simde_int16x8_private a_ = simde_int16x8_to_private(a);
+
+    r_ = __riscv_vnclip_wx_i8mf2(a_.sv128, 0, 0, 8);
+    simde_memcpy(&r, &r_, sizeof(simde_int8x8_t));
+
+    return r;
   #elif SIMDE_NATURAL_VECTOR_SIZE > 0
     return simde_vmovn_s16(simde_vmaxq_s16(simde_vdupq_n_s16(INT8_MIN), simde_vminq_s16(simde_vdupq_n_s16(INT8_MAX), a)));
   #else
@@ -152,6 +162,15 @@ simde_int16x4_t
 simde_vqmovn_s32(simde_int32x4_t a) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vqmovn_s32(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE)
+    simde_int16x4_t r;
+    vint16mf2_t r_;
+    simde_int32x4_private a_ = simde_int32x4_to_private(a);
+
+    r_ = __riscv_vnclip_wx_i16mf2(a_.sv128, 0, 0, 4);
+    simde_memcpy(&r, &r_, sizeof(simde_int16x4_t));
+
+    return r;
   #elif SIMDE_NATURAL_VECTOR_SIZE > 0
     return simde_vmovn_s32(simde_vmaxq_s32(simde_vdupq_n_s32(INT16_MIN), simde_vminq_s32(simde_vdupq_n_s32(INT16_MAX), a)));
   #else
@@ -176,6 +195,15 @@ simde_int32x2_t
 simde_vqmovn_s64(simde_int64x2_t a) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vqmovn_s64(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE)
+    simde_int32x2_t r;
+    vint32mf2_t r_;
+    simde_int64x2_private a_ = simde_int64x2_to_private(a);
+
+    r_ = __riscv_vnclip_wx_i32mf2(a_.sv128, 0, 0, 2);
+    simde_memcpy(&r, &r_, sizeof(simde_int32x2_t));
+
+    return r;
   #elif SIMDE_NATURAL_VECTOR_SIZE > 0
     return simde_vmovn_s64(simde_x_vmaxq_s64(simde_vdupq_n_s64(INT32_MIN), simde_x_vminq_s64(simde_vdupq_n_s64(INT32_MAX), a)));
   #else
@@ -200,6 +228,15 @@ simde_uint8x8_t
 simde_vqmovn_u16(simde_uint16x8_t a) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vqmovn_u16(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE)
+    simde_uint8x8_t r;
+    vuint8mf2_t r_;
+    simde_uint16x8_private a_ = simde_uint16x8_to_private(a);
+
+    r_ = __riscv_vnclipu_wx_u8mf2(a_.sv128, 0, 0, 8);
+    simde_memcpy(&r, &r_, sizeof(simde_uint8x8_t));
+
+    return r;
   #elif SIMDE_NATURAL_VECTOR_SIZE > 0
     return simde_vmovn_u16(simde_vminq_u16(a, simde_vdupq_n_u16(UINT8_MAX)));
   #else
@@ -224,6 +261,15 @@ simde_uint16x4_t
 simde_vqmovn_u32(simde_uint32x4_t a) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vqmovn_u32(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE)
+    simde_uint16x4_t r;
+    vuint16mf2_t r_;
+    simde_uint32x4_private a_ = simde_uint32x4_to_private(a);
+
+    r_ = __riscv_vnclipu_wx_u16mf2(a_.sv128, 0, 0, 4);
+    simde_memcpy(&r, &r_, sizeof(simde_uint16x4_t));
+
+    return r;
   #elif SIMDE_NATURAL_VECTOR_SIZE > 0
     return simde_vmovn_u32(simde_vminq_u32(a, simde_vdupq_n_u32(UINT16_MAX)));
   #else
@@ -248,6 +294,15 @@ simde_uint32x2_t
 simde_vqmovn_u64(simde_uint64x2_t a) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)
     return vqmovn_u64(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE)
+    simde_uint32x2_t r;
+    vuint32mf2_t r_;
+    simde_uint64x2_private a_ = simde_uint64x2_to_private(a);
+
+    r_ = __riscv_vnclipu_wx_u32mf2(a_.sv128, 0, 0, 2);
+    simde_memcpy(&r, &r_, sizeof(simde_uint32x2_t));
+
+    return r;
   #elif SIMDE_NATURAL_VECTOR_SIZE > 0
     return simde_vmovn_u64(simde_x_vminq_u64(a, simde_vdupq_n_u64(UINT32_MAX)));
   #else

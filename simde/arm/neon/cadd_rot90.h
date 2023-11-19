@@ -182,7 +182,7 @@ simde_float64x2_t simde_vcaddq_rot90_f64(simde_float64x2_t a, simde_float64x2_t 
     simde_float64x2_private r_, a_ = simde_float64x2_to_private(a), b_ = simde_float64x2_to_private(b);
     #if defined(SIMDE_RISCV_V_NATIVE)
       uint64_t idx1[2] = {1, 2};
-      vfloat64m2_t b_tmp = __riscv_vlmul_ext_v_f16m1_f16m2 (b_.sv128);
+      vfloat64m2_t b_tmp = __riscv_vlmul_ext_v_f64m1_f64m2 (b_.sv128);
       vfloat64m1_t op1 = __riscv_vlmul_trunc_v_f64m2_f64m1(__riscv_vrgather_vv_f64m2(__riscv_vslideup_vx_f64m2( \
         __riscv_vfneg_v_f64m2(b_tmp, 2), b_tmp, 2, 4), __riscv_vle64_v_u64m2(idx1, 2), 2));
       r_.sv128 = __riscv_vfadd_vv_f64m1(op1, a_.sv128, 2);

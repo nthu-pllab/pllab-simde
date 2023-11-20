@@ -141,11 +141,11 @@ simde_vrsqrte_u32(simde_uint32x2_t a) {
       r_;
 
     for(size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[i])) ; i++) {
-      if(a_.values[i] < 0x3FFFFFFF) {
+      if (a_.values[i] < 0x3FFFFFFF) {
         r_.values[i] = UINT32_MAX;
       } else {
         uint32_t a_temp = (a_.values[i] >> 23) & 511;
-        if(a_temp < 256) {
+        if (a_temp < 256) {
           a_temp = a_temp * 2 + 1;
         } else {
           a_temp = (a_temp >> 1) << 1;
@@ -176,7 +176,9 @@ simde_vrsqrte_f16(simde_float16x4_t a) {
       r_,
       a_ = simde_float16x4_to_private(a);
 
-    #if defined(simde_math_sqrtf)
+    #if defined(SIMDE_RISCV_V_NATIVE) && defined(SIMDE_ARCH_RISCV_ZVFH)
+      r_.sv64 = __riscv_vfrsqrt7_v_f16m1(a_.sv64, 4);
+    #elif defined(simde_math_sqrtf)
       SIMDE_VECTORIZE
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
         r_.values[i] = simde_vrsqrteh_f16(a_.values[i]);
@@ -203,7 +205,10 @@ simde_vrsqrte_f32(simde_float32x2_t a) {
       r_,
       a_ = simde_float32x2_to_private(a);
 
-    #if defined(SIMDE_IEEE754_STORAGE)
+
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv64 = __riscv_vfrsqrt7_v_f32m1(a_.sv64, 2);
+    #elif defined(SIMDE_IEEE754_STORAGE)
       /* https://basesandframes.files.wordpress.com/2020/04/even_faster_math_functions_green_2020.pdf
         Pages 100 - 103 */
       SIMDE_VECTORIZE
@@ -303,11 +308,11 @@ simde_vrsqrteq_u32(simde_uint32x4_t a) {
       r_;
 
     for(size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[i])) ; i++) {
-      if(a_.values[i] < 0x3FFFFFFF) {
+      if (a_.values[i] < 0x3FFFFFFF) {
         r_.values[i] = UINT32_MAX;
       } else {
         uint32_t a_temp = (a_.values[i] >> 23) & 511;
-        if(a_temp < 256) {
+        if (a_temp < 256) {
           a_temp = a_temp * 2 + 1;
         } else {
           a_temp = (a_temp >> 1) << 1;
@@ -338,7 +343,9 @@ simde_vrsqrteq_f16(simde_float16x8_t a) {
       r_,
       a_ = simde_float16x8_to_private(a);
 
-    #if defined(simde_math_sqrtf)
+    #if defined(SIMDE_RISCV_V_NATIVE) && defined(SIMDE_ARCH_RISCV_ZVFH)
+      r_.sv128 = __riscv_vfrsqrt7_v_f16m1(a_.sv128 , 8);
+    #elif defined(simde_math_sqrtf)
       SIMDE_VECTORIZE
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
         r_.values[i] = simde_vrsqrteh_f16(a_.values[i]);
@@ -367,7 +374,9 @@ simde_vrsqrteq_f32(simde_float32x4_t a) {
       r_,
       a_ = simde_float32x4_to_private(a);
 
-    #if defined(SIMDE_X86_SSE_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv128 = __riscv_vfrsqrt7_v_f32m1(a_.sv128 , 4);
+    #elif defined(SIMDE_X86_SSE_NATIVE)
       r_.m128 = _mm_rsqrt_ps(a_.m128);
     #elif defined(SIMDE_IEEE754_STORAGE)
       /* https://basesandframes.files.wordpress.com/2020/04/even_faster_math_functions_green_2020.pdf
@@ -426,7 +435,9 @@ simde_vrsqrteq_f64(simde_float64x2_t a) {
       r_,
       a_ = simde_float64x2_to_private(a);
 
-    #if defined(SIMDE_IEEE754_STORAGE)
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv128 = __riscv_vfrsqrt7_v_f64m1(a_.sv128 , 2);
+    #elif defined(SIMDE_IEEE754_STORAGE)
       //https://www.mdpi.com/1099-4300/23/1/86/htm
       SIMDE_VECTORIZE
       for(size_t i = 0 ; i < (sizeof(r_.values)/sizeof(r_.values[0])) ; i++) {

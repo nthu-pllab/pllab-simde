@@ -150,7 +150,7 @@ simde_vcvt_f64_f32(simde_float32x2_t a) {
 
 SIMDE_FUNCTION_ATTRIBUTES
 int16_t
-simde_vcvth_s16_f16(simde_float16 a) {
+simde_vcvth_s16_f16(simde_float16_t a) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE) && defined(SIMDE_ARM_NEON_FP16)
     return vcvth_s16_f16(a);
   #elif defined(SIMDE_FAST_CONVERSION_RANGE)
@@ -176,7 +176,7 @@ simde_vcvth_s16_f16(simde_float16 a) {
 
 SIMDE_FUNCTION_ATTRIBUTES
 uint16_t
-simde_vcvth_u16_f16(simde_float16 a) {
+simde_vcvth_u16_f16(simde_float16_t a) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE) && defined(SIMDE_ARM_NEON_FP16)
     return vcvth_u16_f16(a);
   #elif defined(SIMDE_FAST_CONVERSION_RANGE)
@@ -202,7 +202,7 @@ simde_vcvth_u16_f16(simde_float16 a) {
 
 SIMDE_FUNCTION_ATTRIBUTES
 int32_t
-simde_vcvth_s32_f16(simde_float16 a) {
+simde_vcvth_s32_f16(simde_float16_t a) {
   #if defined(SIMDE_ARM_NEON_A32V8_NATIVE) && defined(SIMDE_ARM_NEON_FP16)
     return vcvth_s32_f16(a);
   #elif defined(SIMDE_FAST_CONVERSION_RANGE)
@@ -228,7 +228,7 @@ simde_vcvth_s32_f16(simde_float16 a) {
 
 SIMDE_FUNCTION_ATTRIBUTES
 uint32_t
-simde_vcvth_u32_f16(simde_float16 a) {
+simde_vcvth_u32_f16(simde_float16_t a) {
   #if defined(SIMDE_ARM_NEON_A32V8_NATIVE) && defined(SIMDE_ARM_NEON_FP16)
     return vcvth_u32_f16(a);
   #elif defined(SIMDE_FAST_CONVERSION_RANGE)
@@ -254,7 +254,7 @@ simde_vcvth_u32_f16(simde_float16 a) {
 
 SIMDE_FUNCTION_ATTRIBUTES
 int64_t
-simde_vcvth_s64_f16(simde_float16 a) {
+simde_vcvth_s64_f16(simde_float16_t a) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE) && defined(SIMDE_ARM_NEON_FP16)
     return vcvth_s64_f16(a);
   #elif defined(SIMDE_FAST_CONVERSION_RANGE)
@@ -280,7 +280,7 @@ simde_vcvth_s64_f16(simde_float16 a) {
 
 SIMDE_FUNCTION_ATTRIBUTES
 uint64_t
-simde_vcvth_u64_f16(simde_float16 a) {
+simde_vcvth_u64_f16(simde_float16_t a) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE) && defined(SIMDE_ARM_NEON_FP16)
     return vcvth_u64_f16(a);
   #elif defined(SIMDE_FAST_CONVERSION_RANGE)
@@ -1507,7 +1507,7 @@ simde_vcvtq_f64_u64(simde_uint64x2_t a) {
 
 SIMDE_FUNCTION_ATTRIBUTES
 int16_t
-simde_vcvtah_s16_f16(simde_float16 a) {
+simde_vcvtah_s16_f16(simde_float16_t a) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE) && defined(SIMDE_ARM_NEON_FP16)
     return vcvtah_s16_f16(a);
   #elif defined(SIMDE_FAST_CONVERSION_RANGE)
@@ -1533,7 +1533,7 @@ simde_vcvtah_s16_f16(simde_float16 a) {
 
 SIMDE_FUNCTION_ATTRIBUTES
 uint16_t
-simde_vcvtah_u16_f16(simde_float16 a) {
+simde_vcvtah_u16_f16(simde_float16_t a) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE) && !defined(SIMDE_BUG_CLANG_46844) && defined(SIMDE_ARM_NEON_FP16)
     return vcvtah_u16_f16(a);
   #elif defined(SIMDE_FAST_CONVERSION_RANGE)
@@ -1559,7 +1559,7 @@ simde_vcvtah_u16_f16(simde_float16 a) {
 
 SIMDE_FUNCTION_ATTRIBUTES
 int32_t
-simde_vcvtah_s32_f16(simde_float16 a) {
+simde_vcvtah_s32_f16(simde_float16_t a) {
   #if defined(SIMDE_ARM_NEON_A32V8_NATIVE) && defined(SIMDE_ARM_NEON_FP16)
     return vcvtah_s32_f16(a);
   #elif defined(SIMDE_FAST_CONVERSION_RANGE)
@@ -1585,7 +1585,7 @@ simde_vcvtah_s32_f16(simde_float16 a) {
 
 SIMDE_FUNCTION_ATTRIBUTES
 uint32_t
-simde_vcvtah_u32_f16(simde_float16 a) {
+simde_vcvtah_u32_f16(simde_float16_t a) {
   #if defined(SIMDE_ARM_NEON_A32V8_NATIVE) && !defined(SIMDE_BUG_CLANG_46844) && defined(SIMDE_ARM_NEON_FP16)
     return vcvtah_u32_f16(a);
   #elif defined(SIMDE_FAST_CONVERSION_RANGE)
@@ -1611,7 +1611,7 @@ simde_vcvtah_u32_f16(simde_float16 a) {
 
 SIMDE_FUNCTION_ATTRIBUTES
 int64_t
-simde_vcvtah_s64_f16(simde_float16 a) {
+simde_vcvtah_s64_f16(simde_float16_t a) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE) && defined(SIMDE_ARM_NEON_FP16)
     return vcvtah_s64_f16(a);
   #elif defined(SIMDE_FAST_CONVERSION_RANGE)
@@ -1637,7 +1637,7 @@ simde_vcvtah_s64_f16(simde_float16 a) {
 
 SIMDE_FUNCTION_ATTRIBUTES
 uint64_t
-simde_vcvtah_u64_f16(simde_float16 a) {
+simde_vcvtah_u64_f16(simde_float16_t a) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE) && !defined(SIMDE_BUG_CLANG_46844) && defined(SIMDE_ARM_NEON_FP16)
     return vcvtah_u64_f16(a);
   #elif defined(SIMDE_FAST_CONVERSION_RANGE)
@@ -1748,7 +1748,7 @@ simde_vcvtas_u32_f32(simde_float32 a) {
     } else if (HEDLEY_UNLIKELY(simde_math_isnanf(a))) {
       return 0;
     } else {
-      if(a < 0) return 0;
+      if (a < 0) return 0;
       return HEDLEY_STATIC_CAST(uint32_t, simde_math_roundf(a));
     }
   #endif
@@ -2189,6 +2189,7 @@ simde_vcvtx_high_f32_f64(simde_float32x2_t r, simde_float64x2_t a) {
   #undef vcvtx_high_f32_f64
   #define vcvtx_high_f32_f64(r, a) simde_vcvtx_high_f32_f64((r), (a))
 #endif
+
 
 SIMDE_END_DECLS_
 HEDLEY_DIAGNOSTIC_POP

@@ -22,6 +22,7 @@
  *
  * Copyright:
  *   2021      Atharva Nimbalkar <atharvakn@gmail.com>
+ *   2023      Yi-Yen Chung <eric681@andestech.com> (Copyright owned by Andes Technology)
  *   2023      Chi-Wei Chu <wewe5215@gapp.nthu.edu.tw>
  */
 

@@ -61,16 +61,16 @@ simde_vld2_s8(int8_t const ptr[HEDLEY_ARRAY_PARAM(16)]) {
       simde_vget_high_s8(q)
     };
     return u;
-  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
-    simde_int8x8_private a_[2];
-    vint8mf2x2_t dest = __riscv_vlseg2e8_v_i8mf2x2(&ptr[0], 8);
-    a_[0].sv64 = __riscv_vget_v_i8mf2x2_i8mf2(dest, 0);
-    a_[1].sv64 = __riscv_vget_v_i8mf2x2_i8mf2(dest, 1);
-    simde_int8x8x2_t r = { {
-      simde_int8x8_from_private(a_[0]),
-      simde_int8x8_from_private(a_[1]),
-    } };
-    return r;
+  // #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+  //   simde_int8x8_private a_[2];
+  //   vint8m1x2_t dest = __riscv_vlseg2e8_v_i8m1x2(&ptr[0], 8);
+  //   a_[0].sv64 = __riscv_vget_v_i8m1x2_i8m1(dest, 0);
+  //   a_[1].sv64 = __riscv_vget_v_i8m1x2_i8m1(dest, 1);
+  //   simde_int8x8x2_t r = { {
+  //     simde_int8x8_from_private(a_[0]),
+  //     simde_int8x8_from_private(a_[1]),
+  //   } };
+  //   return r;
   #elif SIMDE_NATURAL_VECTOR_SIZE_GE(128) && defined(SIMDE_SHUFFLE_VECTOR_)
     simde_int8x16_private a_ = simde_int8x16_to_private(simde_vld1q_s8(ptr));
     a_.values = SIMDE_SHUFFLE_VECTOR_(8, 16, a_.values, a_.values, 0, 2, 4, 6, 8, 10, 12, 14, 1, 3, 5, 7, 9, 11, 13, 15);

@@ -77,7 +77,7 @@ simde_vmaxnmvq_f32(simde_float32x4_t a) {
     #if defined(SIMDE_RISCV_V_NATIVE)
       r = __riscv_vfmv_f_s_f32m1_f32(__riscv_vfredmax_vs_f32m1_f32m1(a_.sv128, \
         __riscv_vfmv_v_f_f32m1(r, 4), 4));
-    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS) && HEDLEY_HAS_BUILTIN(__builtin_reduce_max)
       simde_float32_t rst = __builtin_reduce_max(a_.values);
       r = (rst > r) ? rst : r;
     #else

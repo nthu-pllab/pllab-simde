@@ -50,7 +50,7 @@ test_simde_vst2_f16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float16_t a_[8];
     simde_vst2_f16(a_, r_);
 
-    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, 16));
+    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, sizeof(test_vec[i].a)));
   }
 
   return 0;
@@ -97,7 +97,7 @@ test_simde_vst2_f32 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float32 a_[4];
     simde_vst2_f32(a_, r_);
 
-    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, 16));
+    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, sizeof(test_vec[i].a)));
   }
 
   return 0;
@@ -161,7 +161,7 @@ test_simde_vst2_f64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float64 a_[2];
     simde_vst2_f64(a_, r_);
 
-    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, 16));
+    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, sizeof(test_vec[i].a)));
   }
 
   return 0;
@@ -233,7 +233,7 @@ test_simde_vst2_s8 (SIMDE_MUNIT_TEST_ARGS) {
     int8_t a_[16];
     simde_vst2_s8(a_, r_);
 
-    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, 16));
+    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, sizeof(test_vec[i].a)));
   }
 
   return 0;
@@ -297,7 +297,7 @@ test_simde_vst2_s16 (SIMDE_MUNIT_TEST_ARGS) {
     int16_t a_[8];
     simde_vst2_s16(a_, r_);
 
-    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, 16));
+    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, sizeof(test_vec[i].a)));
   }
 
   return 0;
@@ -361,7 +361,7 @@ test_simde_vst2_s32 (SIMDE_MUNIT_TEST_ARGS) {
     int32_t a_[4];
     simde_vst2_s32(a_, r_);
 
-    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, 16));
+    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, sizeof(test_vec[i].a)));
   }
 
   return 0;
@@ -425,7 +425,7 @@ test_simde_vst2_s64 (SIMDE_MUNIT_TEST_ARGS) {
     int64_t a_[2];
     simde_vst2_s64(a_, r_);
 
-    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, 16));
+    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, sizeof(test_vec[i].a)));
   }
 
   return 0;
@@ -497,7 +497,7 @@ test_simde_vst2_u8 (SIMDE_MUNIT_TEST_ARGS) {
     uint8_t a_[16];
     simde_vst2_u8(a_, r_);
 
-    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, 16));
+    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, sizeof(test_vec[i].a)));
   }
 
   return 0;
@@ -561,7 +561,7 @@ test_simde_vst2_u16 (SIMDE_MUNIT_TEST_ARGS) {
     uint16_t a_[8];
     simde_vst2_u16(a_, r_);
 
-    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, 16));
+    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, sizeof(test_vec[i].a)));
   }
 
   return 0;
@@ -625,7 +625,7 @@ test_simde_vst2_u32 (SIMDE_MUNIT_TEST_ARGS) {
     uint32_t a_[4];
     simde_vst2_u32(a_, r_);
 
-    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, 16));
+    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, sizeof(test_vec[i].a)));
   }
 
   return 0;
@@ -689,7 +689,7 @@ test_simde_vst2_u64 (SIMDE_MUNIT_TEST_ARGS) {
     uint64_t a_[2];
     simde_vst2_u64(a_, r_);
 
-    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, 16));
+    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, sizeof(test_vec[i].a)));
   }
 
   return 0;
@@ -758,7 +758,7 @@ test_simde_vst2q_f16 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float16_t a_[16];
     simde_vst2q_f16(a_, r_);
 
-    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, 16));
+    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, sizeof(test_vec[i].a)));
   }
 
   return 0;
@@ -813,7 +813,7 @@ test_simde_vst2q_f32 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float32 a_[8];
     simde_vst2q_f32(a_, r_);
 
-    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, 16));
+    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, sizeof(test_vec[i].a)));
   }
 
   return 0;
@@ -877,7 +877,7 @@ test_simde_vst2q_f64 (SIMDE_MUNIT_TEST_ARGS) {
     simde_float64 a_[4];
     simde_vst2q_f64(a_, r_);
 
-    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, 16));
+    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, sizeof(test_vec[i].a)));
   }
 
   return 0;
@@ -981,7 +981,7 @@ test_simde_vst2q_s8 (SIMDE_MUNIT_TEST_ARGS) {
     int8_t a_[32];
     simde_vst2q_s8(a_, r_);
 
-    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, 16));
+    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, sizeof(test_vec[i].a)));
   }
 
   return 0;
@@ -1053,7 +1053,7 @@ test_simde_vst2q_s16 (SIMDE_MUNIT_TEST_ARGS) {
     int16_t a_[16];
     simde_vst2q_s16(a_, r_);
 
-    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, 16));
+    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, sizeof(test_vec[i].a)));
   }
 
   return 0;
@@ -1117,7 +1117,7 @@ test_simde_vst2q_s32 (SIMDE_MUNIT_TEST_ARGS) {
     int32_t a_[8];
     simde_vst2q_s32(a_, r_);
 
-    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, 16));
+    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, sizeof(test_vec[i].a)));
   }
 
   return 0;
@@ -1181,7 +1181,7 @@ test_simde_vst2q_s64 (SIMDE_MUNIT_TEST_ARGS) {
     int64_t a_[8];
     simde_vst2q_s64(a_, r_);
 
-    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, 16));
+    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, sizeof(test_vec[i].a)));
   }
 
   return 0;
@@ -1285,7 +1285,7 @@ test_simde_vst2q_u8 (SIMDE_MUNIT_TEST_ARGS) {
     uint8_t a_[32];
     simde_vst2q_u8(a_, r_);
 
-    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, 16));
+    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, sizeof(test_vec[i].a)));
   }
 
   return 0;
@@ -1356,7 +1356,7 @@ test_simde_vst2q_u16 (SIMDE_MUNIT_TEST_ARGS) {
     uint16_t a_[16];
     simde_vst2q_u16(a_, r_);
 
-    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, 16));
+    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, sizeof(test_vec[i].a)));
   }
 
   return 0;
@@ -1420,7 +1420,7 @@ test_simde_vst2q_u32 (SIMDE_MUNIT_TEST_ARGS) {
     uint32_t a_[8];
     simde_vst2q_u32(a_, r_);
 
-    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, 16));
+    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, sizeof(test_vec[i].a)));
   }
 
   return 0;
@@ -1484,7 +1484,7 @@ test_simde_vst2q_u64 (SIMDE_MUNIT_TEST_ARGS) {
     uint64_t a_[8];
     simde_vst2q_u64(a_, r_);
 
-    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, 16));
+    simde_assert_equal_i(0, simde_memcmp(a_, test_vec[i].a, sizeof(test_vec[i].a)));
   }
 
   return 0;

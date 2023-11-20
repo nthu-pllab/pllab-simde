@@ -23,6 +23,7 @@
  * Copyright:
  *   2020      Evan Nemerson <evan@nemerson.com>
  *   2020      Christopher Moore <moore@free.fr>
+ *   2023      Yung-Cheng Su <eric20607@gapp.nthu.edu.tw>
  *   2023      Yi-Yen Chung <eric681@andestech.com> (Copyright owned by Andes Technology)
  */
 
@@ -55,6 +56,8 @@ simde_vmvnq_s8(simde_int8x16_t a) {
       r_.m128i = _mm_andnot_si128(a_.m128i, _mm_cmpeq_epi8(a_.m128i, a_.m128i));
     #elif defined(SIMDE_WASM_SIMD128_NATIVE)
       r_.v128 = wasm_v128_not(a_.v128);
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv128 = __riscv_vnot_v_i8m1(a_.sv128, 16);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = ~a_.values;
     #else
@@ -90,6 +93,8 @@ simde_vmvnq_s16(simde_int16x8_t a) {
       r_.m128i = _mm_andnot_si128(a_.m128i, _mm_cmpeq_epi16(a_.m128i, a_.m128i));
     #elif defined(SIMDE_WASM_SIMD128_NATIVE)
       r_.v128 = wasm_v128_not(a_.v128);
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv128 = __riscv_vnot_v_i16m1(a_.sv128, 8);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = ~a_.values;
     #else
@@ -125,6 +130,8 @@ simde_vmvnq_s32(simde_int32x4_t a) {
       r_.m128i = _mm_andnot_si128(a_.m128i, _mm_cmpeq_epi32(a_.m128i, a_.m128i));
     #elif defined(SIMDE_WASM_SIMD128_NATIVE)
       r_.v128 = wasm_v128_not(a_.v128);
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv128 = __riscv_vnot_v_i32m1(a_.sv128, 4);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = ~a_.values;
     #else
@@ -160,6 +167,8 @@ simde_vmvnq_u8(simde_uint8x16_t a) {
       r_.m128i = _mm_andnot_si128(a_.m128i, _mm_cmpeq_epi8(a_.m128i, a_.m128i));
     #elif defined(SIMDE_WASM_SIMD128_NATIVE)
       r_.v128 = wasm_v128_not(a_.v128);
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv128 = __riscv_vnot_v_u8m1(a_.sv128, 16);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = ~a_.values;
     #else
@@ -195,6 +204,8 @@ simde_vmvnq_u16(simde_uint16x8_t a) {
       r_.m128i = _mm_andnot_si128(a_.m128i, _mm_cmpeq_epi16(a_.m128i, a_.m128i));
     #elif defined(SIMDE_WASM_SIMD128_NATIVE)
       r_.v128 = wasm_v128_not(a_.v128);
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv128 = __riscv_vnot_v_u16m1(a_.sv128, 8);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = ~a_.values;
     #else
@@ -230,6 +241,8 @@ simde_vmvnq_u32(simde_uint32x4_t a) {
       r_.m128i = _mm_andnot_si128(a_.m128i, _mm_cmpeq_epi32(a_.m128i, a_.m128i));
     #elif defined(SIMDE_WASM_SIMD128_NATIVE)
       r_.v128 = wasm_v128_not(a_.v128);
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv128 = __riscv_vnot_v_u32m1(a_.sv128, 4);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = ~a_.values;
     #else
@@ -259,6 +272,8 @@ simde_vmvn_s8(simde_int8x8_t a) {
 
     #if defined(SIMDE_X86_MMX_NATIVE)
       r_.m64 = _mm_andnot_si64(a_.m64, _mm_cmpeq_pi8(a_.m64, a_.m64));
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv64 = __riscv_vnot_v_i8m1(a_.sv64, 8);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = ~a_.values;
     #else
@@ -288,6 +303,8 @@ simde_vmvn_s16(simde_int16x4_t a) {
 
     #if defined(SIMDE_X86_MMX_NATIVE)
       r_.m64 = _mm_andnot_si64(a_.m64, _mm_cmpeq_pi16(a_.m64, a_.m64));
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv64 = __riscv_vnot_v_i16m1(a_.sv64, 4);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = ~a_.values;
     #else
@@ -317,6 +334,8 @@ simde_vmvn_s32(simde_int32x2_t a) {
 
     #if defined(SIMDE_X86_MMX_NATIVE)
       r_.m64 = _mm_andnot_si64(a_.m64, _mm_cmpeq_pi32(a_.m64, a_.m64));
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv64 = __riscv_vnot_v_i32m1(a_.sv64, 2);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = ~a_.values;
     #else
@@ -346,6 +365,8 @@ simde_vmvn_u8(simde_uint8x8_t a) {
 
     #if defined(SIMDE_X86_MMX_NATIVE)
       r_.m64 = _mm_andnot_si64(a_.m64, _mm_cmpeq_pi8(a_.m64, a_.m64));
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv64 = __riscv_vnot_v_u8m1(a_.sv64, 8);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = ~a_.values;
     #else
@@ -375,6 +396,8 @@ simde_vmvn_u16(simde_uint16x4_t a) {
 
     #if defined(SIMDE_X86_MMX_NATIVE)
       r_.m64 = _mm_andnot_si64(a_.m64, _mm_cmpeq_pi16(a_.m64, a_.m64));
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv64 = __riscv_vnot_v_u16m1(a_.sv64, 4);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = ~a_.values;
     #else
@@ -404,6 +427,8 @@ simde_vmvn_u32(simde_uint32x2_t a) {
 
     #if defined(SIMDE_X86_MMX_NATIVE)
       r_.m64 = _mm_andnot_si64(a_.m64, _mm_cmpeq_pi32(a_.m64, a_.m64));
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv64 = __riscv_vnot_v_u32m1(a_.sv64, 2);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS)
       r_.values = ~a_.values;
     #else

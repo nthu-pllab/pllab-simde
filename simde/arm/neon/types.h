@@ -190,14 +190,23 @@ typedef union {
 
 typedef union {
   SIMDE_ARM_NEON_DECLARE_VECTOR(simde_poly8, values, 8);
+  #if defined(SIMDE_RISCV_V_NATIVE)
+    fixed_vuint8m1_t sv64;
+  #endif
 } simde_poly8x8_private;
 
 typedef union {
   SIMDE_ARM_NEON_DECLARE_VECTOR(simde_poly16, values, 8);
+  #if defined(SIMDE_RISCV_V_NATIVE)
+    fixed_vuint16m1_t sv64;
+  #endif
 } simde_poly16x4_private;
 
 typedef union {
   SIMDE_ARM_NEON_DECLARE_VECTOR(simde_poly64, values, 8);
+  #if defined(SIMDE_RISCV_V_NATIVE)
+    fixed_vuint64m1_t sv64;
+  #endif
 } simde_poly64x1_private;
 
 typedef union {
@@ -441,14 +450,23 @@ typedef union {
 
 typedef union {
   SIMDE_ARM_NEON_DECLARE_VECTOR(simde_poly8, values, 16);
+  #if defined(SIMDE_RISCV_V_NATIVE)
+    fixed_vuint8m1_t sv128;
+  #endif
 } simde_poly8x16_private;
 
 typedef union {
   SIMDE_ARM_NEON_DECLARE_VECTOR(simde_poly16, values, 16);
+  #if defined(SIMDE_RISCV_V_NATIVE)
+    fixed_vuint16m1_t sv128;
+  #endif
 } simde_poly16x8_private;
 
 typedef union {
   SIMDE_ARM_NEON_DECLARE_VECTOR(simde_poly64, values, 16);
+  #if defined(SIMDE_RISCV_V_NATIVE)
+    fixed_vuint64m1_t sv128;
+  #endif
 } simde_poly64x2_private;
 
 #if defined(SIMDE_ARM_NEON_A32V7_NATIVE)

@@ -151,8 +151,8 @@ simde_vrndmq_f16(simde_float16x8_t a) {
       a_ = simde_float16x8_to_private(a);
 
     #if defined(SIMDE_RISCV_V_NATIVE) && defined(SIMDE_ARCH_RISCV_ZVFH)
-      r_.sv64 = __riscv_vfcvt_f_x_v_f16m1(
-        __riscv_vfcvt_x_f_v_i16m1_rm(a_.sv64, 2, 8)
+      r_.sv128 = __riscv_vfcvt_f_x_v_f16m1(
+        __riscv_vfcvt_x_f_v_i16m1_rm(a_.sv128, 2, 8)
         , 8);
     #else
       SIMDE_VECTORIZE
@@ -186,8 +186,8 @@ simde_vrndmq_f32(simde_float32x4_t a) {
     #elif defined(SIMDE_X86_SVML_NATIVE) && defined(SIMDE_X86_SSE_NATIVE)
       r_.m128 = _mm_floor_ps(a_.m128);
     #elif defined(SIMDE_RISCV_V_NATIVE)
-      r_.sv64 = __riscv_vfcvt_f_x_v_f32m1(
-        __riscv_vfcvt_x_f_v_i32m1_rm(a_.sv64, 2, 4)
+      r_.sv128 = __riscv_vfcvt_f_x_v_f32m1(
+        __riscv_vfcvt_x_f_v_i32m1_rm(a_.sv128, 2, 4)
         , 4);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS) && HEDLEY_HAS_BUILTIN(__builtin_elementwise_floor)
       r_.values = __builtin_elementwise_floor(a_.values);
@@ -223,8 +223,8 @@ simde_vrndmq_f64(simde_float64x2_t a) {
     #elif defined(SIMDE_X86_SVML_NATIVE) && defined(SIMDE_X86_SSE_NATIVE)
       r_.m128d = _mm_floor_pd(a_.m128d);
     #elif defined(SIMDE_RISCV_V_NATIVE)
-      r_.sv64 = __riscv_vfcvt_f_x_v_f64m1(
-        __riscv_vfcvt_x_f_v_i64m1_rm(a_.sv64, 2, 2)
+      r_.sv128 = __riscv_vfcvt_f_x_v_f64m1(
+        __riscv_vfcvt_x_f_v_i64m1_rm(a_.sv128, 2, 2)
         , 2);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS) && HEDLEY_HAS_BUILTIN(__builtin_elementwise_floor)
       r_.values = __builtin_elementwise_floor(a_.values);

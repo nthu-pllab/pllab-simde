@@ -41,6 +41,13 @@ simde_float16x4_t
 simde_vfma_n_f16(simde_float16x4_t a, simde_float16x4_t b, simde_float16_t c) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE) && defined(SIMDE_ARCH_ARM_FMA) && (!defined(__clang__) || SIMDE_DETECT_CLANG_VERSION_CHECK(7,0,0)) && !defined(SIMDE_BUG_GCC_95399) && defined(SIMDE_ARM_NEON_FP16)
     return vfma_n_f16(a, b, c);
+  #elif defined(SIMDE_RISCV_V_NATIVE) && defined(SIMDE_ARCH_RISCV_ZVFH)
+    simde_float16x4_private
+      r_,
+      a_ = simde_float16x4_to_private(a),
+      b_ = simde_float16x4_to_private(b);
+      r_.sv64 = __riscv_vfmacc_vf_f16m1(a_.sv64 , c , b_.sv64 , 4);
+    return simde_float16x4_from_private(r_);
   #else
     return simde_vfma_f16(a, b, simde_vdup_n_f16(c));
   #endif
@@ -55,6 +62,13 @@ simde_float16x8_t
 simde_vfmaq_n_f16(simde_float16x8_t a, simde_float16x8_t b, simde_float16_t c) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE) && defined(SIMDE_ARCH_ARM_FMA) && (!defined(__clang__) || SIMDE_DETECT_CLANG_VERSION_CHECK(7,0,0)) && !defined(SIMDE_BUG_GCC_95399) && defined(SIMDE_ARM_NEON_FP16)
     return vfmaq_n_f16(a, b, c);
+  #elif defined(SIMDE_RISCV_V_NATIVE) && defined(SIMDE_ARCH_RISCV_ZVFH)
+    simde_float16x8_private
+      r_,
+      a_ = simde_float16x8_to_private(a),
+      b_ = simde_float16x8_to_private(b);
+      r_.sv128 = __riscv_vfmacc_vf_f16m1(a_.sv128 , c , b_.sv128 , 8);
+    return simde_float16x8_from_private(r_);
   #else
     return simde_vfmaq_f16(a, b, simde_vdupq_n_f16(c));
   #endif
@@ -67,8 +81,15 @@ simde_vfmaq_n_f16(simde_float16x8_t a, simde_float16x8_t b, simde_float16_t c) {
 SIMDE_FUNCTION_ATTRIBUTES
 simde_float32x2_t
 simde_vfma_n_f32(simde_float32x2_t a, simde_float32x2_t b, simde_float32_t c) {
-  #if defined(SIMDE_ARM_NEON_A32V7_NATIVE) && defined(SIMDE_ARCH_ARM_FMA) && (!defined(__clang__) || SIMDE_DETECT_CLANG_VERSION_CHECK(7,0,0)) && !defined(SIMDE_BUG_GCC_95399)
+  #if defined(SIMDE_ARM_NEON_A32V7_NATIVE) && (defined(__ARM_FEATURE_FMA) && __ARM_FEATURE_FMA) && (!defined(__clang__) || SIMDE_DETECT_CLANG_VERSION_CHECK(7,0,0)) && !defined(SIMDE_BUG_GCC_95399)
     return vfma_n_f32(a, b, c);
+  #elif defined(SIMDE_RISCV_V_NATIVE)
+    simde_float32x2_private
+      r_,
+      a_ = simde_float32x2_to_private(a),
+      b_ = simde_float32x2_to_private(b);
+      r_.sv64 = __riscv_vfmacc_vf_f32m1(a_.sv64 , c , b_.sv64 , 2);
+    return simde_float32x2_from_private(r_);
   #else
     return simde_vfma_f32(a, b, simde_vdup_n_f32(c));
   #endif
@@ -81,8 +102,15 @@ simde_vfma_n_f32(simde_float32x2_t a, simde_float32x2_t b, simde_float32_t c) {
 SIMDE_FUNCTION_ATTRIBUTES
 simde_float64x1_t
 simde_vfma_n_f64(simde_float64x1_t a, simde_float64x1_t b, simde_float64_t c) {
-  #if defined(SIMDE_ARM_NEON_A64V8_NATIVE) && defined(SIMDE_ARCH_ARM_FMA) && (!defined(__clang__) || SIMDE_DETECT_CLANG_VERSION_CHECK(7,0,0))
+  #if defined(SIMDE_ARM_NEON_A64V8_NATIVE) && (defined(__ARM_FEATURE_FMA) && __ARM_FEATURE_FMA) && (!defined(__clang__) || SIMDE_DETECT_CLANG_VERSION_CHECK(7,0,0))
     return vfma_n_f64(a, b, c);
+  #elif defined(SIMDE_RISCV_V_NATIVE)
+    simde_float64x1_private
+      r_,
+      a_ = simde_float64x1_to_private(a),
+      b_ = simde_float64x1_to_private(b);
+      r_.sv64 = __riscv_vfmacc_vf_f64m1(a_.sv64 , c , b_.sv64 , 1);
+    return simde_float64x1_from_private(r_);
   #else
     return simde_vfma_f64(a, b, simde_vdup_n_f64(c));
   #endif
@@ -95,8 +123,15 @@ simde_vfma_n_f64(simde_float64x1_t a, simde_float64x1_t b, simde_float64_t c) {
 SIMDE_FUNCTION_ATTRIBUTES
 simde_float32x4_t
 simde_vfmaq_n_f32(simde_float32x4_t a, simde_float32x4_t b, simde_float32_t c) {
-  #if defined(SIMDE_ARM_NEON_A32V7_NATIVE) && defined(SIMDE_ARCH_ARM_FMA) && (!defined(__clang__) || SIMDE_DETECT_CLANG_VERSION_CHECK(7,0,0)) && !defined(SIMDE_BUG_GCC_95399)
+  #if defined(SIMDE_ARM_NEON_A32V7_NATIVE) && (defined(__ARM_FEATURE_FMA) && __ARM_FEATURE_FMA) && (!defined(__clang__) || SIMDE_DETECT_CLANG_VERSION_CHECK(7,0,0)) && !defined(SIMDE_BUG_GCC_95399)
     return vfmaq_n_f32(a, b, c);
+  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE == 128)
+    simde_float32x4_private
+      r_,
+      a_ = simde_float32x4_to_private(a),
+      b_ = simde_float32x4_to_private(b);
+      r_.sv128 = __riscv_vfmacc_vf_f32m1(a_.sv128 , c , b_.sv128 , 4);
+    return simde_float32x4_from_private(r_);
   #else
     return simde_vfmaq_f32(a, b, simde_vdupq_n_f32(c));
   #endif
@@ -109,8 +144,15 @@ simde_vfmaq_n_f32(simde_float32x4_t a, simde_float32x4_t b, simde_float32_t c) {
 SIMDE_FUNCTION_ATTRIBUTES
 simde_float64x2_t
 simde_vfmaq_n_f64(simde_float64x2_t a, simde_float64x2_t b, simde_float64_t c) {
-  #if defined(SIMDE_ARM_NEON_A64V8_NATIVE) && defined(SIMDE_ARCH_ARM_FMA) && (!defined(__clang__) || SIMDE_DETECT_CLANG_VERSION_CHECK(7,0,0))
+  #if defined(SIMDE_ARM_NEON_A64V8_NATIVE) && (defined(__ARM_FEATURE_FMA) && __ARM_FEATURE_FMA) && (!defined(__clang__) || SIMDE_DETECT_CLANG_VERSION_CHECK(7,0,0))
     return vfmaq_n_f64(a, b, c);
+  #elif defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE == 128)
+    simde_float64x2_private
+      r_,
+      a_ = simde_float64x2_to_private(a),
+      b_ = simde_float64x2_to_private(b);
+      r_.sv128 = __riscv_vfmacc_vf_f64m1(a_.sv128 , c , b_.sv128 , 2);
+    return simde_float64x2_from_private(r_);
   #else
     return simde_vfmaq_f64(a, b, simde_vdupq_n_f64(c));
   #endif

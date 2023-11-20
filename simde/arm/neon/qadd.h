@@ -23,6 +23,7 @@
  * Copyright:
  *   2020      Evan Nemerson <evan@nemerson.com>
  *   2020      Sean Maher <seanptmaher@gmail.com> (Copyright owned by Google, LLC)
+ *   2023      Yung-Cheng Su <eric20607@gapp.nthu.edu.tw>
  */
 
 #if !defined(SIMDE_ARM_NEON_QADD_H)
@@ -420,7 +421,7 @@ simde_vqaddq_s8(simde_int8x16_t a, simde_int8x16_t b) {
     #elif defined(SIMDE_X86_SSE2_NATIVE)
       r_.m128i = _mm_adds_epi8(a_.m128i, b_.m128i);
     #elif defined(SIMDE_RISCV_V_NATIVE)
-      r_.sv128 = __riscv_vsadd_vv_i8m1(a_.sv128 , b_.sv128 , 16);
+      r_.sv128 = __riscv_vsadd_vv_i8m1(a_.sv128, b_.sv128, 16);
     #elif defined(SIMDE_VECTOR_SCALAR)
       uint8_t au SIMDE_VECTOR(16) = HEDLEY_REINTERPRET_CAST(__typeof__(au), a_.values);
       uint8_t bu SIMDE_VECTOR(16) = HEDLEY_REINTERPRET_CAST(__typeof__(bu), b_.values);
@@ -743,6 +744,8 @@ simde_vqaddq_u32(simde_uint32x4_t a, simde_uint32x4_t b) {
       const __m128i i32min = _mm_set1_epi32(INT32_MIN);
       a_.m128i = _mm_xor_si128(a_.m128i, i32min);
       r_.m128i = _mm_or_si128(_mm_cmpgt_epi32(a_.m128i, _mm_xor_si128(i32min, sum)), sum);
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv128 = __riscv_vsaddu_vv_u32m1(a_.sv128 , b_.sv128 , 4);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT)
       r_.values = a_.values + b_.values;
       r_.values |= HEDLEY_REINTERPRET_CAST(__typeof__(r_.values), r_.values < a_.values);

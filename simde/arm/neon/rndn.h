@@ -23,6 +23,7 @@
  * Copyright:
  *   2020-2021 Evan Nemerson <evan@nemerson.com>
  *   2023      Yi-Yen Chung <eric681@andestech.com> (Copyright owned by Andes Technology)
+ *   2023      Yung-Cheng Su <eric20607@gapp.nthu.edu.tw>
  */
 
 #if !defined(SIMDE_ARM_NEON_RNDN_H)
@@ -101,11 +102,14 @@ simde_vrndn_f32(simde_float32x2_t a) {
     simde_float32x2_private
       r_,
       a_ = simde_float32x2_to_private(a);
-
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      r_.values[i] = simde_vrndns_f32(a_.values[i]);
-    }
+    #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS) && HEDLEY_HAS_BUILTIN(__builtin_elementwise_roundeven)
+      r_.values = __builtin_elementwise_roundeven(a_.values);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        r_.values[i] = simde_vrndns_f32(a_.values[i]);
+      }
+    #endif
 
     return simde_float32x2_from_private(r_);
   #endif
@@ -126,10 +130,14 @@ simde_vrndn_f64(simde_float64x1_t a) {
       r_,
       a_ = simde_float64x1_to_private(a);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      r_.values[i] = simde_math_roundeven(a_.values[i]);
-    }
+    #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS) && HEDLEY_HAS_BUILTIN(__builtin_elementwise_roundeven)
+      r_.values = __builtin_elementwise_roundeven(a_.values);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        r_.values[i] = simde_math_roundeven(a_.values[i]);
+      }
+    #endif
 
     return simde_float64x1_from_private(r_);
   #endif
@@ -174,6 +182,8 @@ simde_vrndnq_f32(simde_float32x4_t a) {
 
     #if defined(SIMDE_X86_SSE4_1_NATIVE)
       r_.m128 = _mm_round_ps(a_.m128, _MM_FROUND_TO_NEAREST_INT);
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS) && HEDLEY_HAS_BUILTIN(__builtin_elementwise_roundeven)
+      r_.values = __builtin_elementwise_roundeven(a_.values);
     #else
       SIMDE_VECTORIZE
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
@@ -202,6 +212,8 @@ simde_vrndnq_f64(simde_float64x2_t a) {
 
     #if defined(SIMDE_X86_SSE4_1_NATIVE)
       r_.m128d = _mm_round_pd(a_.m128d, _MM_FROUND_TO_NEAREST_INT);
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS) && HEDLEY_HAS_BUILTIN(__builtin_elementwise_roundeven)
+      r_.values = __builtin_elementwise_roundeven(a_.values);
     #else
       SIMDE_VECTORIZE
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {

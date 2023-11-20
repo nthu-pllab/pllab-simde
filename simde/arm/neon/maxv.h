@@ -22,6 +22,7 @@
  *
  * Copyright:
  *   2020      Evan Nemerson <evan@nemerson.com>
+ *   2023      Yung-Cheng Su <eric20607@gapp.nthu.edu.tw>
  *   2023      Yi-Yen Chung <eric681@andestech.com> (Copyright owned by Andes Technology)
  */
 
@@ -82,6 +83,7 @@ simde_vmaxv_f32(simde_float32x2_t a) {
     for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
       r = a_.values[i] > r ? a_.values[i] : r;
     }
+
   #endif
 
   return r;
@@ -101,11 +103,16 @@ simde_vmaxv_s8(simde_int8x8_t a) {
   #else
     simde_int8x8_private a_ = simde_int8x8_to_private(a);
 
-    r = INT8_MIN;
-    SIMDE_VECTORIZE_REDUCTION(max:r)
-    for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
-      r = a_.values[i] > r ? a_.values[i] : r;
-    }
+    #if defined(SIMDE_VECTOR_SUBSCRIPT_SCALAR) && HEDLEY_HAS_BUILTIN(__builtin_reduce_max)
+      r = __builtin_reduce_max(a_.values);
+    #else
+      r = INT8_MIN;
+      SIMDE_VECTORIZE_REDUCTION(max:r)
+      for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
+        r = a_.values[i] > r ? a_.values[i] : r;
+      }
+    #endif
+
   #endif
 
   return r;
@@ -125,11 +132,16 @@ simde_vmaxv_s16(simde_int16x4_t a) {
   #else
     simde_int16x4_private a_ = simde_int16x4_to_private(a);
 
-    r = INT16_MIN;
-    SIMDE_VECTORIZE_REDUCTION(max:r)
-    for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
-      r = a_.values[i] > r ? a_.values[i] : r;
-    }
+    #if defined(SIMDE_VECTOR_SUBSCRIPT_SCALAR) && HEDLEY_HAS_BUILTIN(__builtin_reduce_max)
+      r = __builtin_reduce_max(a_.values);
+    #else
+      r = INT16_MIN;
+      SIMDE_VECTORIZE_REDUCTION(max:r)
+      for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
+        r = a_.values[i] > r ? a_.values[i] : r;
+      }
+    #endif
+
   #endif
 
   return r;
@@ -149,11 +161,16 @@ simde_vmaxv_s32(simde_int32x2_t a) {
   #else
     simde_int32x2_private a_ = simde_int32x2_to_private(a);
 
-    r = INT32_MIN;
-    SIMDE_VECTORIZE_REDUCTION(max:r)
-    for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
-      r = a_.values[i] > r ? a_.values[i] : r;
-    }
+    #if defined(SIMDE_VECTOR_SUBSCRIPT_SCALAR) && HEDLEY_HAS_BUILTIN(__builtin_reduce_max)
+      r = __builtin_reduce_max(a_.values);
+    #else
+      r = INT32_MIN;
+      SIMDE_VECTORIZE_REDUCTION(max:r)
+      for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
+        r = a_.values[i] > r ? a_.values[i] : r;
+      }
+    #endif
+
   #endif
 
   return r;
@@ -173,11 +190,16 @@ simde_vmaxv_u8(simde_uint8x8_t a) {
   #else
     simde_uint8x8_private a_ = simde_uint8x8_to_private(a);
 
-    r = 0;
-    SIMDE_VECTORIZE_REDUCTION(max:r)
-    for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
-      r = a_.values[i] > r ? a_.values[i] : r;
-    }
+    #if defined(SIMDE_VECTOR_SUBSCRIPT_SCALAR) && HEDLEY_HAS_BUILTIN(__builtin_reduce_max)
+      r = __builtin_reduce_max(a_.values);
+    #else
+      r = 0;
+      SIMDE_VECTORIZE_REDUCTION(max:r)
+      for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
+        r = a_.values[i] > r ? a_.values[i] : r;
+      }
+    #endif
+
   #endif
 
   return r;
@@ -197,11 +219,16 @@ simde_vmaxv_u16(simde_uint16x4_t a) {
   #else
     simde_uint16x4_private a_ = simde_uint16x4_to_private(a);
 
-    r = 0;
-    SIMDE_VECTORIZE_REDUCTION(max:r)
-    for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
-      r = a_.values[i] > r ? a_.values[i] : r;
-    }
+    #if defined(SIMDE_VECTOR_SUBSCRIPT_SCALAR) && HEDLEY_HAS_BUILTIN(__builtin_reduce_max)
+      r = __builtin_reduce_max(a_.values);
+    #else
+      r = 0;
+      SIMDE_VECTORIZE_REDUCTION(max:r)
+      for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
+        r = a_.values[i] > r ? a_.values[i] : r;
+      }
+    #endif
+
   #endif
 
   return r;
@@ -221,11 +248,16 @@ simde_vmaxv_u32(simde_uint32x2_t a) {
   #else
     simde_uint32x2_private a_ = simde_uint32x2_to_private(a);
 
-    r = 0;
-    SIMDE_VECTORIZE_REDUCTION(max:r)
-    for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
-      r = a_.values[i] > r ? a_.values[i] : r;
-    }
+    #if defined(SIMDE_VECTOR_SUBSCRIPT_SCALAR) && HEDLEY_HAS_BUILTIN(__builtin_reduce_max)
+      r = __builtin_reduce_max(a_.values);
+    #else
+      r = 0;
+      SIMDE_VECTORIZE_REDUCTION(max:r)
+      for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
+        r = a_.values[i] > r ? a_.values[i] : r;
+      }
+    #endif
+
   #endif
 
   return r;
@@ -325,11 +357,16 @@ simde_vmaxvq_s8(simde_int8x16_t a) {
   #else
     simde_int8x16_private a_ = simde_int8x16_to_private(a);
 
-    r = INT8_MIN;
-    SIMDE_VECTORIZE_REDUCTION(max:r)
-    for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
-      r = a_.values[i] > r ? a_.values[i] : r;
-    }
+    #if defined(SIMDE_VECTOR_SUBSCRIPT_SCALAR) && HEDLEY_HAS_BUILTIN(__builtin_reduce_max)
+      r = __builtin_reduce_max(a_.values);
+    #else
+      r = INT8_MIN;
+      SIMDE_VECTORIZE_REDUCTION(max:r)
+      for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
+        r = a_.values[i] > r ? a_.values[i] : r;
+      }
+    #endif
+
   #endif
 
   return r;
@@ -349,11 +386,16 @@ simde_vmaxvq_s16(simde_int16x8_t a) {
   #else
     simde_int16x8_private a_ = simde_int16x8_to_private(a);
 
-    r = INT16_MIN;
-    SIMDE_VECTORIZE_REDUCTION(max:r)
-    for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
-      r = a_.values[i] > r ? a_.values[i] : r;
-    }
+    #if defined(SIMDE_VECTOR_SUBSCRIPT_SCALAR) && HEDLEY_HAS_BUILTIN(__builtin_reduce_max)
+      r = __builtin_reduce_max(a_.values);
+    #else
+      r = INT16_MIN;
+      SIMDE_VECTORIZE_REDUCTION(max:r)
+      for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
+        r = a_.values[i] > r ? a_.values[i] : r;
+      }
+    #endif
+
   #endif
 
   return r;
@@ -373,11 +415,16 @@ simde_vmaxvq_s32(simde_int32x4_t a) {
   #else
     simde_int32x4_private a_ = simde_int32x4_to_private(a);
 
-    r = INT32_MIN;
-    SIMDE_VECTORIZE_REDUCTION(max:r)
-    for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
-      r = a_.values[i] > r ? a_.values[i] : r;
-    }
+    #if defined(SIMDE_VECTOR_SUBSCRIPT_SCALAR) && HEDLEY_HAS_BUILTIN(__builtin_reduce_max)
+      r = __builtin_reduce_max(a_.values);
+    #else
+      r = INT32_MIN;
+      SIMDE_VECTORIZE_REDUCTION(max:r)
+      for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
+        r = a_.values[i] > r ? a_.values[i] : r;
+      }
+    #endif
+
   #endif
 
   return r;
@@ -397,11 +444,16 @@ simde_vmaxvq_u8(simde_uint8x16_t a) {
   #else
     simde_uint8x16_private a_ = simde_uint8x16_to_private(a);
 
-    r = 0;
-    SIMDE_VECTORIZE_REDUCTION(max:r)
-    for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
-      r = a_.values[i] > r ? a_.values[i] : r;
-    }
+    #if defined(SIMDE_VECTOR_SUBSCRIPT_SCALAR) && HEDLEY_HAS_BUILTIN(__builtin_reduce_max)
+      r = __builtin_reduce_max(a_.values);
+    #else
+      r = 0;
+      SIMDE_VECTORIZE_REDUCTION(max:r)
+      for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
+        r = a_.values[i] > r ? a_.values[i] : r;
+      }
+    #endif
+
   #endif
 
   return r;
@@ -421,11 +473,16 @@ simde_vmaxvq_u16(simde_uint16x8_t a) {
   #else
     simde_uint16x8_private a_ = simde_uint16x8_to_private(a);
 
-    r = 0;
-    SIMDE_VECTORIZE_REDUCTION(max:r)
-    for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
-      r = a_.values[i] > r ? a_.values[i] : r;
-    }
+    #if defined(SIMDE_VECTOR_SUBSCRIPT_SCALAR) && HEDLEY_HAS_BUILTIN(__builtin_reduce_max)
+      r = __builtin_reduce_max(a_.values);
+    #else
+      r = 0;
+      SIMDE_VECTORIZE_REDUCTION(max:r)
+      for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
+        r = a_.values[i] > r ? a_.values[i] : r;
+      }
+    #endif
+
   #endif
 
   return r;
@@ -445,11 +502,16 @@ simde_vmaxvq_u32(simde_uint32x4_t a) {
   #else
     simde_uint32x4_private a_ = simde_uint32x4_to_private(a);
 
-    r = 0;
-    SIMDE_VECTORIZE_REDUCTION(max:r)
-    for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
-      r = a_.values[i] > r ? a_.values[i] : r;
-    }
+    #if defined(SIMDE_VECTOR_SUBSCRIPT_SCALAR) && HEDLEY_HAS_BUILTIN(__builtin_reduce_max)
+      r = __builtin_reduce_max(a_.values);
+    #else
+      r = 0;
+      SIMDE_VECTORIZE_REDUCTION(max:r)
+      for (size_t i = 0 ; i < (sizeof(a_.values) / sizeof(a_.values[0])) ; i++) {
+        r = a_.values[i] > r ? a_.values[i] : r;
+      }
+    #endif
+
   #endif
 
   return r;

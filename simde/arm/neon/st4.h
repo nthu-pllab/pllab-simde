@@ -75,7 +75,7 @@ simde_vst4_f32(simde_float32_t *ptr, simde_float32x2x4_t val) {
   #else
     simde_float32x2_private a_[4] = { simde_float32x2_to_private(val.val[0]), simde_float32x2_to_private(val.val[1]),
                                       simde_float32x2_to_private(val.val[2]), simde_float32x2_to_private(val.val[3]) };
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
       vfloat32m1x4_t dest = __riscv_vlseg4e32_v_f32m1x4(ptr, 2);
       dest = __riscv_vset_v_f32m1_f32m1x4 (dest, 0, a_[0].sv64);
       dest = __riscv_vset_v_f32m1_f32m1x4 (dest, 1, a_[1].sv64);
@@ -104,7 +104,7 @@ simde_vst4_f64(simde_float64_t *ptr, simde_float64x1x4_t val) {
   #else
     simde_float64x1_private a_[4] = { simde_float64x1_to_private(val.val[0]), simde_float64x1_to_private(val.val[1]),
                                       simde_float64x1_to_private(val.val[2]), simde_float64x1_to_private(val.val[3]) };
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
       vfloat64m1x4_t dest = __riscv_vlseg4e64_v_f64m1x4(ptr, 1);
       dest = __riscv_vset_v_f64m1_f64m1x4 (dest, 0, a_[0].sv64);
       dest = __riscv_vset_v_f64m1_f64m1x4 (dest, 1, a_[1].sv64);
@@ -133,7 +133,7 @@ simde_vst4_s8(int8_t *ptr, simde_int8x8x4_t val) {
   #else
     simde_int8x8_private a_[4] = { simde_int8x8_to_private(val.val[0]), simde_int8x8_to_private(val.val[1]),
                                    simde_int8x8_to_private(val.val[2]), simde_int8x8_to_private(val.val[3]) };
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
       vint8m1x4_t dest = __riscv_vlseg4e8_v_i8m1x4(ptr, 8);
       dest = __riscv_vset_v_i8m1_i8m1x4 (dest, 0, a_[0].sv64);
       dest = __riscv_vset_v_i8m1_i8m1x4 (dest, 1, a_[1].sv64);
@@ -162,7 +162,7 @@ simde_vst4_s16(int16_t *ptr, simde_int16x4x4_t val) {
   #else
     simde_int16x4_private a_[4] = { simde_int16x4_to_private(val.val[0]), simde_int16x4_to_private(val.val[1]),
                                     simde_int16x4_to_private(val.val[2]), simde_int16x4_to_private(val.val[3]) };
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
       vint16m1x4_t dest = __riscv_vlseg4e16_v_i16m1x4(ptr, 4);
       dest = __riscv_vset_v_i16m1_i16m1x4 (dest, 0, a_[0].sv64);
       dest = __riscv_vset_v_i16m1_i16m1x4 (dest, 1, a_[1].sv64);
@@ -191,7 +191,7 @@ simde_vst4_s32(int32_t *ptr, simde_int32x2x4_t val) {
   #else
     simde_int32x2_private a_[4] = { simde_int32x2_to_private(val.val[0]), simde_int32x2_to_private(val.val[1]),
                                     simde_int32x2_to_private(val.val[2]), simde_int32x2_to_private(val.val[3]) };
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
       vint32m1x4_t dest = __riscv_vlseg4e32_v_i32m1x4(ptr, 2);
       dest = __riscv_vset_v_i32m1_i32m1x4 (dest, 0, a_[0].sv64);
       dest = __riscv_vset_v_i32m1_i32m1x4 (dest, 1, a_[1].sv64);
@@ -220,7 +220,7 @@ simde_vst4_s64(int64_t *ptr, simde_int64x1x4_t val) {
   #else
     simde_int64x1_private a_[4] = { simde_int64x1_to_private(val.val[0]), simde_int64x1_to_private(val.val[1]),
                                     simde_int64x1_to_private(val.val[2]), simde_int64x1_to_private(val.val[3]) };
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
       vint64m1x4_t dest = __riscv_vlseg4e64_v_i64m1x4(ptr, 1);
       dest = __riscv_vset_v_i64m1_i64m1x4 (dest, 0, a_[0].sv64);
       dest = __riscv_vset_v_i64m1_i64m1x4 (dest, 1, a_[1].sv64);
@@ -249,7 +249,7 @@ simde_vst4_u8(uint8_t *ptr, simde_uint8x8x4_t val) {
   #else
     simde_uint8x8_private a_[4] = { simde_uint8x8_to_private(val.val[0]), simde_uint8x8_to_private(val.val[1]),
                                     simde_uint8x8_to_private(val.val[2]), simde_uint8x8_to_private(val.val[3]) };
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
       vuint8m1x4_t dest = __riscv_vlseg4e8_v_u8m1x4(ptr, 8);
       dest = __riscv_vset_v_u8m1_u8m1x4 (dest, 0, a_[0].sv64);
       dest = __riscv_vset_v_u8m1_u8m1x4 (dest, 1, a_[1].sv64);
@@ -278,7 +278,7 @@ simde_vst4_u16(uint16_t *ptr, simde_uint16x4x4_t val) {
   #else
     simde_uint16x4_private a_[4] = { simde_uint16x4_to_private(val.val[0]), simde_uint16x4_to_private(val.val[1]),
                                      simde_uint16x4_to_private(val.val[2]), simde_uint16x4_to_private(val.val[3]) };
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
       vuint16m1x4_t dest = __riscv_vlseg4e16_v_u16m1x4(ptr, 4);
       dest = __riscv_vset_v_u16m1_u16m1x4 (dest, 0, a_[0].sv64);
       dest = __riscv_vset_v_u16m1_u16m1x4 (dest, 1, a_[1].sv64);
@@ -307,7 +307,7 @@ simde_vst4_u32(uint32_t *ptr, simde_uint32x2x4_t val) {
   #else
     simde_uint32x2_private a_[4] = { simde_uint32x2_to_private(val.val[0]), simde_uint32x2_to_private(val.val[1]),
                                      simde_uint32x2_to_private(val.val[2]), simde_uint32x2_to_private(val.val[3]) };
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
       vuint32m1x4_t dest = __riscv_vlseg4e32_v_u32m1x4(ptr, 2);
       dest = __riscv_vset_v_u32m1_u32m1x4 (dest, 0, a_[0].sv64);
       dest = __riscv_vset_v_u32m1_u32m1x4 (dest, 1, a_[1].sv64);
@@ -336,7 +336,7 @@ simde_vst4_u64(uint64_t *ptr, simde_uint64x1x4_t val) {
   #else
     simde_uint64x1_private a_[4] = { simde_uint64x1_to_private(val.val[0]), simde_uint64x1_to_private(val.val[1]),
                                      simde_uint64x1_to_private(val.val[2]), simde_uint64x1_to_private(val.val[3]) };
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
       vuint64m1x4_t dest = __riscv_vlseg4e64_v_u64m1x4(ptr, 1);
       dest = __riscv_vset_v_u64m1_u64m1x4 (dest, 0, a_[0].sv64);
       dest = __riscv_vset_v_u64m1_u64m1x4 (dest, 1, a_[1].sv64);
@@ -394,7 +394,7 @@ simde_vst4q_f32(simde_float32_t *ptr, simde_float32x4x4_t val) {
   #else
     simde_float32x4_private a_[4] = { simde_float32x4_to_private(val.val[0]), simde_float32x4_to_private(val.val[1]),
                                       simde_float32x4_to_private(val.val[2]), simde_float32x4_to_private(val.val[3]) };
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
       vfloat32m1x4_t dest = __riscv_vlseg4e32_v_f32m1x4(ptr, 4);
       dest = __riscv_vset_v_f32m1_f32m1x4 (dest, 0, a_[0].sv128);
       dest = __riscv_vset_v_f32m1_f32m1x4 (dest, 1, a_[1].sv128);
@@ -423,7 +423,7 @@ simde_vst4q_f64(simde_float64_t *ptr, simde_float64x2x4_t val) {
   #else
     simde_float64x2_private a_[4] = { simde_float64x2_to_private(val.val[0]), simde_float64x2_to_private(val.val[1]),
                                       simde_float64x2_to_private(val.val[2]), simde_float64x2_to_private(val.val[3]) };
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
       vfloat64m1x4_t dest = __riscv_vlseg4e64_v_f64m1x4(ptr, 2);
       dest = __riscv_vset_v_f64m1_f64m1x4 (dest, 0, a_[0].sv128);
       dest = __riscv_vset_v_f64m1_f64m1x4 (dest, 1, a_[1].sv128);
@@ -452,7 +452,7 @@ simde_vst4q_s8(int8_t *ptr, simde_int8x16x4_t val) {
   #else
     simde_int8x16_private a_[4] = { simde_int8x16_to_private(val.val[0]), simde_int8x16_to_private(val.val[1]),
                                     simde_int8x16_to_private(val.val[2]), simde_int8x16_to_private(val.val[3]) };
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
       vint8m1x4_t dest = __riscv_vlseg4e8_v_i8m1x4(ptr, 16);
       dest = __riscv_vset_v_i8m1_i8m1x4 (dest, 0, a_[0].sv128);
       dest = __riscv_vset_v_i8m1_i8m1x4 (dest, 1, a_[1].sv128);
@@ -481,7 +481,7 @@ simde_vst4q_s16(int16_t *ptr, simde_int16x8x4_t val) {
   #else
     simde_int16x8_private a_[4] = { simde_int16x8_to_private(val.val[0]), simde_int16x8_to_private(val.val[1]),
                                     simde_int16x8_to_private(val.val[2]), simde_int16x8_to_private(val.val[3]) };
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
     vint16m1x4_t dest = __riscv_vlseg4e16_v_i16m1x4(ptr, 8);
       dest = __riscv_vset_v_i16m1_i16m1x4 (dest, 0, a_[0].sv128);
       dest = __riscv_vset_v_i16m1_i16m1x4 (dest, 1, a_[1].sv128);
@@ -510,7 +510,7 @@ simde_vst4q_s32(int32_t *ptr, simde_int32x4x4_t val) {
   #else
     simde_int32x4_private a_[4] = { simde_int32x4_to_private(val.val[0]), simde_int32x4_to_private(val.val[1]),
                                     simde_int32x4_to_private(val.val[2]), simde_int32x4_to_private(val.val[3]) };
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
       vint32m1x4_t dest = __riscv_vlseg4e32_v_i32m1x4(ptr, 4);
       dest = __riscv_vset_v_i32m1_i32m1x4 (dest, 0, a_[0].sv128);
       dest = __riscv_vset_v_i32m1_i32m1x4 (dest, 1, a_[1].sv128);
@@ -539,7 +539,7 @@ simde_vst4q_s64(int64_t *ptr, simde_int64x2x4_t val) {
   #else
     simde_int64x2_private a_[4] = { simde_int64x2_to_private(val.val[0]), simde_int64x2_to_private(val.val[1]),
                                     simde_int64x2_to_private(val.val[2]), simde_int64x2_to_private(val.val[3]) };
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
       vint64m1x4_t dest = __riscv_vlseg4e64_v_i64m1x4(ptr, 2);
       dest = __riscv_vset_v_i64m1_i64m1x4 (dest, 0, a_[0].sv128);
       dest = __riscv_vset_v_i64m1_i64m1x4 (dest, 1, a_[1].sv128);
@@ -569,7 +569,7 @@ simde_vst4q_u8(uint8_t *ptr, simde_uint8x16x4_t val) {
   #else
     simde_uint8x16_private a_[4] = { simde_uint8x16_to_private(val.val[0]), simde_uint8x16_to_private(val.val[1]),
                                      simde_uint8x16_to_private(val.val[2]), simde_uint8x16_to_private(val.val[3]) };
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
       vuint8m1x4_t dest = __riscv_vlseg4e8_v_u8m1x4(ptr, 16);
       dest = __riscv_vset_v_u8m1_u8m1x4 (dest, 0, a_[0].sv128);
       dest = __riscv_vset_v_u8m1_u8m1x4 (dest, 1, a_[1].sv128);
@@ -598,7 +598,7 @@ simde_vst4q_u16(uint16_t *ptr, simde_uint16x8x4_t val) {
   #else
     simde_uint16x8_private a_[4] = { simde_uint16x8_to_private(val.val[0]), simde_uint16x8_to_private(val.val[1]),
                                      simde_uint16x8_to_private(val.val[2]), simde_uint16x8_to_private(val.val[3]) };
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
       vuint16m1x4_t dest = __riscv_vlseg4e16_v_u16m1x4(ptr, 8);
       dest = __riscv_vset_v_u16m1_u16m1x4 (dest, 0, a_[0].sv128);
       dest = __riscv_vset_v_u16m1_u16m1x4 (dest, 1, a_[1].sv128);
@@ -627,7 +627,7 @@ simde_vst4q_u32(uint32_t *ptr, simde_uint32x4x4_t val) {
   #else
     simde_uint32x4_private a_[4] = { simde_uint32x4_to_private(val.val[0]), simde_uint32x4_to_private(val.val[1]),
                                      simde_uint32x4_to_private(val.val[2]), simde_uint32x4_to_private(val.val[3]) };
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
       vuint32m1x4_t dest = __riscv_vlseg4e32_v_u32m1x4(ptr, 4);
       dest = __riscv_vset_v_u32m1_u32m1x4 (dest, 0, a_[0].sv128);
       dest = __riscv_vset_v_u32m1_u32m1x4 (dest, 1, a_[1].sv128);
@@ -656,7 +656,7 @@ simde_vst4q_u64(uint64_t *ptr, simde_uint64x2x4_t val) {
   #else
     simde_uint64x2_private a_[4] = { simde_uint64x2_to_private(val.val[0]), simde_uint64x2_to_private(val.val[1]),
                                      simde_uint64x2_to_private(val.val[2]), simde_uint64x2_to_private(val.val[3]) };
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
       vuint64m1x4_t dest = __riscv_vlseg4e64_v_u64m1x4(ptr, 2);
       dest = __riscv_vset_v_u64m1_u64m1x4 (dest, 0, a_[0].sv128);
       dest = __riscv_vset_v_u64m1_u64m1x4 (dest, 1, a_[1].sv128);

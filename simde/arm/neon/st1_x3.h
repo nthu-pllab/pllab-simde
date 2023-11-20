@@ -24,6 +24,7 @@
  *   2020      Evan Nemerson <evan@nemerson.com>
  *   2021      Décio Luiz Gazzoni Filho <decio@decpp.net>
  *   2023      Yi-Yen Chung <eric681@andestech.com> (Copyright owned by Andes Technology)
+ *   2023      Chi-Wei Chu <wewe5215@gapp.nthu.edu.tw>
  */
 
 #if !defined(SIMDE_ARM_NEON_ST1_X3_H)
@@ -46,11 +47,17 @@ simde_vst1_f16_x3(simde_float16_t ptr[HEDLEY_ARRAY_PARAM(12)], simde_float16x4x3
     simde_float16x4_private a[3] = { simde_float16x4_to_private(val.val[0]),
                                       simde_float16x4_to_private(val.val[1]),
                                       simde_float16x4_to_private(val.val[2]) };
-    simde_float16_t buf[12];
-    for (size_t i = 0; i < 12 ; i++) {
-      buf[i] = a[i / 4].values[i % 4];
-    }
-    simde_memcpy(ptr, buf, sizeof(buf));
+    #if defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH
+      __riscv_vse16_v_f16m1((_Float16 *)ptr , a[0].sv64 , 4);
+      __riscv_vse16_v_f16m1((_Float16 *)ptr+4 , a[1].sv64 , 4);
+      __riscv_vse16_v_f16m1((_Float16 *)ptr+8 , a[2].sv64 , 4);
+    #else
+      simde_float16_t buf[12];
+      for (size_t i = 0; i < 12 ; i++) {
+        buf[i] = a[i / 4].values[i % 4];
+      }
+      simde_memcpy(ptr, buf, sizeof(buf));
+    #endif
   #endif
 }
 #if defined(SIMDE_ARM_NEON_A32V7_ENABLE_NATIVE_ALIASES)

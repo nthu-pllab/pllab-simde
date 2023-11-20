@@ -59,10 +59,16 @@ simde_vrnd_f16(simde_float16x4_t a) {
       r_,
       a_ = simde_float16x4_to_private(a);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      r_.values[i] = simde_vrndh_f16(a_.values[i]);
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE) && defined(SIMDE_ARCH_RISCV_ZVFH)
+      r_.sv64 = __riscv_vfcvt_f_x_v_f16m1(
+        __riscv_vfcvt_x_f_v_i16m1_rm(a_.sv64, 1, 4)
+        , 4);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        r_.values[i] = simde_vrndh_f16(a_.values[i]);
+      }
+    #endif
 
     return simde_float16x4_from_private(r_);
   #endif
@@ -82,7 +88,11 @@ simde_vrnd_f32(simde_float32x2_t a) {
       r_,
       a_ = simde_float32x2_to_private(a);
 
-    #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS) && HEDLEY_HAS_BUILTIN(__builtin_elementwise_trunc)
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv64 = __riscv_vfcvt_f_x_v_f32m1(
+        __riscv_vfcvt_x_f_v_i32m1_rm(a_.sv64, 1, 2)
+        , 2);
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS) && HEDLEY_HAS_BUILTIN(__builtin_elementwise_trunc)
       r_.values = __builtin_elementwise_trunc(a_.values);
     #else
       SIMDE_VECTORIZE
@@ -109,7 +119,11 @@ simde_vrnd_f64(simde_float64x1_t a) {
       r_,
       a_ = simde_float64x1_to_private(a);
 
-    #if defined(SIMDE_VECTOR_SUBSCRIPT_OPS) && HEDLEY_HAS_BUILTIN(__builtin_elementwise_trunc)
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv64 = __riscv_vfcvt_f_x_v_f64m1(
+        __riscv_vfcvt_x_f_v_i64m1_rm(a_.sv64, 1, 1)
+        , 1);
+    #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS) && HEDLEY_HAS_BUILTIN(__builtin_elementwise_trunc)
       r_.values = __builtin_elementwise_trunc(a_.values);
     #else
       SIMDE_VECTORIZE
@@ -136,10 +150,16 @@ simde_vrndq_f16(simde_float16x8_t a) {
       r_,
       a_ = simde_float16x8_to_private(a);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      r_.values[i] = simde_vrndh_f16(a_.values[i]);
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE) && defined(SIMDE_ARCH_RISCV_ZVFH)
+      r_.sv64 = __riscv_vfcvt_f_x_v_f16m1(
+        __riscv_vfcvt_x_f_v_i16m1_rm(a_.sv64, 1, 8)
+        , 8);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        r_.values[i] = simde_vrndh_f16(a_.values[i]);
+      }
+    #endif
 
     return simde_float16x8_from_private(r_);
   #endif
@@ -165,6 +185,10 @@ simde_vrndq_f32(simde_float32x4_t a) {
       r_.m128 = _mm_round_ps(a_.m128, _MM_FROUND_TO_ZERO);
     #elif defined(SIMDE_X86_SVML_NATIVE) && defined(SIMDE_X86_SSE_NATIVE)
       r_.m128 = _mm_trunc_ps(a_.m128);
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv64 = __riscv_vfcvt_f_x_v_f32m1(
+        __riscv_vfcvt_x_f_v_i32m1_rm(a_.sv64, 1, 4)
+        , 4);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS) && HEDLEY_HAS_BUILTIN(__builtin_elementwise_trunc)
       r_.values = __builtin_elementwise_trunc(a_.values);
     #else
@@ -198,6 +222,10 @@ simde_vrndq_f64(simde_float64x2_t a) {
       r_.m128d = _mm_round_pd(a_.m128d, _MM_FROUND_TO_ZERO);
     #elif defined(SIMDE_X86_SVML_NATIVE) && defined(SIMDE_X86_SSE_NATIVE)
       r_.m128d = _mm_trunc_pd(a_.m128d);
+    #elif defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv64 = __riscv_vfcvt_f_x_v_f64m1(
+        __riscv_vfcvt_x_f_v_i64m1_rm(a_.sv64, 1, 2)
+        , 2);
     #elif defined(SIMDE_VECTOR_SUBSCRIPT_OPS) && HEDLEY_HAS_BUILTIN(__builtin_elementwise_trunc)
       r_.values = __builtin_elementwise_trunc(a_.values);
     #else

@@ -116,10 +116,10 @@ simde_vld3_f64(simde_float64 const *ptr) {
   #else
     simde_float64x1_private r_[3];
     #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
-      vfloat64m1x3_t dest = __riscv_vlseg3e64_v_f64m1x3(&ptr[0], 1);
-      r_[0].sv64 = __riscv_vget_v_f64m1x3_f64m1(dest, 0);
-      r_[1].sv64 = __riscv_vget_v_f64m1x3_f64m1(dest, 1);
-      r_[2].sv64 = __riscv_vget_v_f64m1x3_f64m1(dest, 2);
+      vfloat64mf2x3_t dest = __riscv_vlseg3e64_v_f64mf2x3(&ptr[0], 1);
+      r_[0].sv64 = __riscv_vget_v_f64mf2x3_f64mf2(dest, 0);
+      r_[1].sv64 = __riscv_vget_v_f64mf2x3_f64mf2(dest, 1);
+      r_[2].sv64 = __riscv_vget_v_f64mf2x3_f64mf2(dest, 2);
     #else
       for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
         for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
@@ -248,10 +248,10 @@ simde_vld3_s64(int64_t const *ptr) {
   #else
     simde_int64x1_private r_[3];
     #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
-      vint64m1x3_t dest = __riscv_vlseg3e64_v_i64m1x3(&ptr[0], 1);
-      r_[0].sv64 = __riscv_vget_v_i64m1x3_i64m1(dest, 0);
-      r_[1].sv64 = __riscv_vget_v_i64m1x3_i64m1(dest, 1);
-      r_[2].sv64 = __riscv_vget_v_i64m1x3_i64m1(dest, 2);
+      vint64mf2x3_t dest = __riscv_vlseg3e64_v_i64mf2x3(&ptr[0], 1);
+      r_[0].sv64 = __riscv_vget_v_i64mf2x3_i64mf2(dest, 0);
+      r_[1].sv64 = __riscv_vget_v_i64mf2x3_i64mf2(dest, 1);
+      r_[2].sv64 = __riscv_vget_v_i64mf2x3_i64mf2(dest, 2);
     #else
       for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
         for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
@@ -380,10 +380,10 @@ simde_vld3_u64(uint64_t const *ptr) {
   #else
     simde_uint64x1_private r_[3];
     #if defined(SIMDE_RISCV_V_NATIVE) && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
-      vuint64m1x3_t dest = __riscv_vlseg3e64_v_u64m1x3(&ptr[0], 1);
-      r_[0].sv64 = __riscv_vget_v_u64m1x3_u64m1(dest, 0);
-      r_[1].sv64 = __riscv_vget_v_u64m1x3_u64m1(dest, 1);
-      r_[2].sv64 = __riscv_vget_v_u64m1x3_u64m1(dest, 2);
+      vuint64mf2x3_t dest = __riscv_vlseg3e64_v_u64mf2x3(&ptr[0], 1);
+      r_[0].sv64 = __riscv_vget_v_u64mf2x3_u64mf2(dest, 0);
+      r_[1].sv64 = __riscv_vget_v_u64mf2x3_u64mf2(dest, 1);
+      r_[2].sv64 = __riscv_vget_v_u64mf2x3_u64mf2(dest, 2);
     #else
       for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
         for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {

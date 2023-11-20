@@ -46,7 +46,7 @@ simde_vst4_f16(simde_float16_t *ptr, simde_float16x4x4_t val) {
   #else
     simde_float16x4_private a_[4] = { simde_float16x4_to_private(val.val[0]), simde_float16x4_to_private(val.val[1]),
                                       simde_float16x4_to_private(val.val[2]), simde_float16x4_to_private(val.val[3]) };
-    #if defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    #if defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH
       vfloat16m1x4_t dest = __riscv_vlseg4e16_v_f16m1x4((_Float16 *)ptr, 4);
       dest = __riscv_vset_v_f16m1_f16m1x4 (dest, 0, a_[0].sv64);
       dest = __riscv_vset_v_f16m1_f16m1x4 (dest, 1, a_[1].sv64);
@@ -365,7 +365,7 @@ simde_vst4q_f16(simde_float16_t *ptr, simde_float16x8x4_t val) {
   #else
     simde_float16x8_private a_[4] = { simde_float16x8_to_private(val.val[0]), simde_float16x8_to_private(val.val[1]),
                                       simde_float16x8_to_private(val.val[2]), simde_float16x8_to_private(val.val[3]) };
-    #if defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    #if defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH
       vfloat16m1x4_t dest = __riscv_vlseg4e16_v_f16m1x4((_Float16 *)ptr, 8);
       dest = __riscv_vset_v_f16m1_f16m1x4 (dest, 0, a_[0].sv128);
       dest = __riscv_vset_v_f16m1_f16m1x4 (dest, 1, a_[1].sv128);

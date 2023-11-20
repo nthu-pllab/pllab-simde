@@ -47,14 +47,14 @@ simde_vst2_f16(simde_float16_t *ptr, simde_float16x4x2_t val) {
   #else
     simde_float16x4_private a_[2] = {simde_float16x4_to_private(val.val[0]),
                                      simde_float16x4_to_private(val.val[1])};
-    #if defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    #if defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH
       vfloat16m1x2_t dest = __riscv_vlseg2e16_v_f16m1x2((_Float16 *)ptr, 4);
       dest = __riscv_vset_v_f16m1_f16m1x2 (dest, 0, a_[0].sv64);
       dest = __riscv_vset_v_f16m1_f16m1x2 (dest, 1, a_[1].sv64);
       __riscv_vsseg2e16_v_f16m1x2 ((_Float16 *)ptr, dest, 4);
     #else
       simde_float16_t buf[8];
-      for (size_t i = 0; i < 8 ; i++) {
+      for (size_t i = 0; i < (sizeof(val.val[0]) / sizeof(*ptr)) * 2 ; i++) {
         buf[i] = a_[i % 2].values[i / 2];
       }
       simde_memcpy(ptr, buf, sizeof(buf));
@@ -341,7 +341,7 @@ void
 simde_vst2q_f16(simde_float16_t *ptr, simde_float16x8x2_t val) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE) && defined(SIMDE_ARM_NEON_FP16)
     vst2q_f16(ptr, val);
-  #elif defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+  #elif defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH
     simde_float16x8_private a_[2] = {simde_float16x8_to_private(val.val[0]),
                                      simde_float16x8_to_private(val.val[1])};
     vfloat16m1x2_t dest = __riscv_vlseg2e16_v_f16m1x2((_Float16 *)ptr, 8);

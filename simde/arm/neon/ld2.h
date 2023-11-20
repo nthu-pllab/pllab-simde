@@ -75,7 +75,7 @@ simde_vld2_s8(int8_t const ptr[HEDLEY_ARRAY_PARAM(16)]) {
     simde_int8x16_private a_ = simde_int8x16_to_private(simde_vld1q_s8(ptr));
     a_.values = SIMDE_SHUFFLE_VECTOR_(8, 16, a_.values, a_.values, 0, 2, 4, 6, 8, 10, 12, 14, 1, 3, 5, 7, 9, 11, 13, 15);
     simde_int8x8x2_t r;
-    simde_memcpy(&r, &a_, 16);
+    simde_memcpy(&r, &a_, sizeof(r));
     return r;
   #else
     simde_int8x8_private r_[2];
@@ -118,7 +118,7 @@ simde_vld2_s16(int16_t const ptr[HEDLEY_ARRAY_PARAM(8)]) {
     simde_int16x8_private a_ = simde_int16x8_to_private(simde_vld1q_s16(ptr));
     a_.values = SIMDE_SHUFFLE_VECTOR_(16, 16, a_.values, a_.values, 0, 2, 4, 6, 1, 3, 5, 7);
     simde_int16x4x2_t r;
-    simde_memcpy(&r, &a_, 16);
+    simde_memcpy(&r, &a_, sizeof(r));
     return r;
   #else
     #if defined(SIMDE_DIAGNOSTIC_DISABLE_UNINITIALIZED_) && HEDLEY_GCC_VERSION_CHECK(12,0,0)
@@ -168,7 +168,7 @@ simde_vld2_s32(int32_t const ptr[HEDLEY_ARRAY_PARAM(4)]) {
     simde_int32x4_private a_ = simde_int32x4_to_private(simde_vld1q_s32(ptr));
     a_.values = SIMDE_SHUFFLE_VECTOR_(32, 16, a_.values, a_.values, 0, 2, 1, 3);
     simde_int32x2x2_t r;
-    simde_memcpy(&r, &a_, 16);
+    simde_memcpy(&r, &a_, sizeof(r));
     return r;
   #else
     simde_int32x2_private r_[2];
@@ -211,7 +211,7 @@ simde_vld2_s64(int64_t const ptr[HEDLEY_ARRAY_PARAM(2)]) {
     simde_int64x2_private a_ = simde_int64x2_to_private(simde_vld1q_s64(ptr));
     a_.values = SIMDE_SHUFFLE_VECTOR_(64, 16, a_.values, a_.values, 0, 1);
     simde_int64x1x2_t r;
-    simde_memcpy(&r, &a_, 16);
+    simde_memcpy(&r, &a_, sizeof(r));
     return r;
   #else
     simde_int64x1_private r_[2];
@@ -265,7 +265,7 @@ simde_vld2_u8(uint8_t const ptr[HEDLEY_ARRAY_PARAM(16)]) {
     simde_uint8x16_private a_ = simde_uint8x16_to_private(simde_vld1q_u8(ptr));
     a_.values = SIMDE_SHUFFLE_VECTOR_(8, 16, a_.values, a_.values, 0, 2, 4, 6, 8, 10, 12, 14, 1, 3, 5, 7, 9, 11, 13, 15);
     simde_uint8x8x2_t r;
-    simde_memcpy(&r, &a_, 16);
+    simde_memcpy(&r, &a_, sizeof(r));
     return r;
   #else
     simde_uint8x8_private r_[2];
@@ -308,7 +308,7 @@ simde_vld2_u16(uint16_t const ptr[HEDLEY_ARRAY_PARAM(8)]) {
     simde_uint16x8_private a_ = simde_uint16x8_to_private(simde_vld1q_u16(ptr));
     a_.values = SIMDE_SHUFFLE_VECTOR_(16, 16, a_.values, a_.values, 0, 2, 4, 6, 1, 3, 5, 7);
     simde_uint16x4x2_t r;
-    simde_memcpy(&r, &a_, 16);
+    simde_memcpy(&r, &a_, sizeof(r));
     return r;
   #else
     #if defined(SIMDE_DIAGNOSTIC_DISABLE_UNINITIALIZED_) && HEDLEY_GCC_VERSION_CHECK(12,0,0)
@@ -358,7 +358,7 @@ simde_vld2_u32(uint32_t const ptr[HEDLEY_ARRAY_PARAM(4)]) {
     simde_uint32x4_private a_ = simde_uint32x4_to_private(simde_vld1q_u32(ptr));
     a_.values = SIMDE_SHUFFLE_VECTOR_(32, 16, a_.values, a_.values, 0, 2, 1, 3);
     simde_uint32x2x2_t r;
-    simde_memcpy(&r, &a_, 16);
+    simde_memcpy(&r, &a_, sizeof(r));
     return r;
   #else
     simde_uint32x2_private r_[2];
@@ -401,7 +401,7 @@ simde_vld2_u64(uint64_t const ptr[HEDLEY_ARRAY_PARAM(2)]) {
     simde_uint64x2_private a_ = simde_uint64x2_to_private(simde_vld1q_u64(ptr));
     a_.values = SIMDE_SHUFFLE_VECTOR_(64, 16, a_.values, a_.values, 0, 1);
     simde_uint64x1x2_t r;
-    simde_memcpy(&r, &a_, 16);
+    simde_memcpy(&r, &a_, sizeof(r));
     return r;
   #else
     simde_uint64x1_private r_[2];
@@ -430,7 +430,7 @@ simde_float16x4x2_t
 simde_vld2_f16(simde_float16_t const ptr[HEDLEY_ARRAY_PARAM(8)]) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE) && defined(SIMDE_ARM_NEON_FP16)
     return vld2_f16(ptr);
-  #elif defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+  #elif defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH
     simde_float16x4_private r_[2];
     vfloat16m1x2_t dest = __riscv_vlseg2e16_v_f16m1x2((_Float16 *)&ptr[0], 4);
     r_[0].sv64 = __riscv_vget_v_f16m1x2_f16m1(dest, 0);
@@ -481,7 +481,7 @@ simde_vld2_f32(simde_float32_t const ptr[HEDLEY_ARRAY_PARAM(4)]) {
     simde_float32x4_private a_ = simde_float32x4_to_private(simde_vld1q_f32(ptr));
     a_.values = SIMDE_SHUFFLE_VECTOR_(32, 16, a_.values, a_.values, 0, 2, 1, 3);
     simde_float32x2x2_t r;
-    simde_memcpy(&r, &a_, 16);
+    simde_memcpy(&r, &a_, sizeof(r));
     return r;
   #else
     simde_float32x2_private r_[2];
@@ -524,7 +524,7 @@ simde_vld2_f64(simde_float64_t const ptr[HEDLEY_ARRAY_PARAM(2)]) {
     simde_float64x2_private a_ = simde_float64x2_to_private(simde_vld1q_f64(ptr));
     a_.values = SIMDE_SHUFFLE_VECTOR_(64, 16, a_.values, a_.values, 0, 1);
     simde_float64x1x2_t r;
-    simde_memcpy(&r, &a_, 16);
+    simde_memcpy(&r, &a_, sizeof(r));
     return r;
   #else
     simde_float64x1_private r_[2];
@@ -927,7 +927,7 @@ simde_float16x8x2_t
 simde_vld2q_f16(simde_float16_t const ptr[HEDLEY_ARRAY_PARAM(16)]) {
   #if defined(SIMDE_ARM_NEON_A32V7_NATIVE) && defined(SIMDE_ARM_NEON_FP16)
     return vld2q_f16(ptr);
-  #elif defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+  #elif defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH
     simde_float16x8_private r_[2];
     vfloat16m1x2_t dest = __riscv_vlseg2e16_v_f16m1x2((_Float16 *)&ptr[0], 8);
     r_[0].sv128 = __riscv_vget_v_f16m1x2_f16m1(dest, 0);

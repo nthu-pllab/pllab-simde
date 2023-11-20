@@ -59,7 +59,7 @@ simde_vrnd_f16(simde_float16x4_t a) {
       r_,
       a_ = simde_float16x4_to_private(a);
 
-    #if defined(SIMDE_RISCV_V_NATIVE) && defined(SIMDE_ARCH_RISCV_ZVFH)
+    #if defined(SIMDE_RISCV_V_NATIVE) && defined(SIMDE_ARCH_RISCV_ZVFH) && defined(SIMDE_FAST_NANS)
       r_.sv64 = __riscv_vfcvt_f_x_v_f16m1(
         __riscv_vfcvt_x_f_v_i16m1_rm(a_.sv64, 1, 4)
         , 4);
@@ -88,7 +88,7 @@ simde_vrnd_f32(simde_float32x2_t a) {
       r_,
       a_ = simde_float32x2_to_private(a);
 
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && defined(SIMDE_FAST_NANS)
       r_.sv64 = __riscv_vfcvt_f_x_v_f32m1(
         __riscv_vfcvt_x_f_v_i32m1_rm(a_.sv64, 1, 2)
         , 2);
@@ -119,7 +119,7 @@ simde_vrnd_f64(simde_float64x1_t a) {
       r_,
       a_ = simde_float64x1_to_private(a);
 
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && defined(SIMDE_FAST_NANS)
       r_.sv64 = __riscv_vfcvt_f_x_v_f64m1(
         __riscv_vfcvt_x_f_v_i64m1_rm(a_.sv64, 1, 1)
         , 1);
@@ -150,7 +150,7 @@ simde_vrndq_f16(simde_float16x8_t a) {
       r_,
       a_ = simde_float16x8_to_private(a);
 
-    #if defined(SIMDE_RISCV_V_NATIVE) && defined(SIMDE_ARCH_RISCV_ZVFH)
+    #if defined(SIMDE_RISCV_V_NATIVE) && defined(SIMDE_ARCH_RISCV_ZVFH) && defined(SIMDE_FAST_NANS)
       r_.sv128 = __riscv_vfcvt_f_x_v_f16m1(
         __riscv_vfcvt_x_f_v_i16m1_rm(a_.sv128, 1, 8)
         , 8);
@@ -185,7 +185,7 @@ simde_vrndq_f32(simde_float32x4_t a) {
       r_.m128 = _mm_round_ps(a_.m128, _MM_FROUND_TO_ZERO);
     #elif defined(SIMDE_X86_SVML_NATIVE) && defined(SIMDE_X86_SSE_NATIVE)
       r_.m128 = _mm_trunc_ps(a_.m128);
-    #elif defined(SIMDE_RISCV_V_NATIVE)
+    #elif defined(SIMDE_RISCV_V_NATIVE) && defined(SIMDE_FAST_NANS)
       r_.sv128 = __riscv_vfcvt_f_x_v_f32m1(
         __riscv_vfcvt_x_f_v_i32m1_rm(a_.sv128, 1, 4)
         , 4);
@@ -222,7 +222,7 @@ simde_vrndq_f64(simde_float64x2_t a) {
       r_.m128d = _mm_round_pd(a_.m128d, _MM_FROUND_TO_ZERO);
     #elif defined(SIMDE_X86_SVML_NATIVE) && defined(SIMDE_X86_SSE_NATIVE)
       r_.m128d = _mm_trunc_pd(a_.m128d);
-    #elif defined(SIMDE_RISCV_V_NATIVE)
+    #elif defined(SIMDE_RISCV_V_NATIVE) && defined(SIMDE_FAST_NANS)
       r_.sv128 = __riscv_vfcvt_f_x_v_f64m1(
         __riscv_vfcvt_x_f_v_i64m1_rm(a_.sv128, 1, 2)
         , 2);

@@ -22,6 +22,7 @@
  *
  * Copyright:
  *   2023      Yi-Yen Chung <eric681@andestech.com> (Copyright owned by Andes Technology)
+ *   2023      Yung-Cheng Su <eric20607@gapp.nthu.edu.tw>
  */
 
 #if !defined(SIMDE_ARM_NEON_RAX_H)
@@ -44,11 +45,21 @@ simde_vrax1q_u64(simde_uint64x2_t a, simde_uint64x2_t b) {
       a_ = simde_uint64x2_to_private(a),
       b_ = simde_uint64x2_to_private(b);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      b_.values[i] = (b_.values[i] >> 63) | (b_.values[i] << 1);
-      r_.values[i] = a_.values[i] ^ b_.values[i];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv128 = __riscv_vxor_vv_u64m1 (
+                  a_.sv128,
+                  __riscv_vor_vv_u64m1(
+                    __riscv_vsrl_vx_u64m1(b_.sv128, 63, 4),
+                    __riscv_vsll_vx_u64m1(b_.sv128, 1, 4),
+                    4),
+                  4);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        b_.values[i] = (b_.values[i] >> 63) | (b_.values[i] << 1);
+        r_.values[i] = a_.values[i] ^ b_.values[i];
+      }
+    #endif
 
     return simde_uint64x2_from_private(r_);
   #endif

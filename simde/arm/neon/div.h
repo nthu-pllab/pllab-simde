@@ -22,6 +22,7 @@
  *
  * Copyright:
  *   2023      Yi-Yen Chung <eric681@andestech.com> (Copyright owned by Andes Technology)
+ *   2023      Yung-Cheng Su <eric20607@gapp.nthu.edu.tw>
  */
 
 #if !defined(SIMDE_ARM_NEON_DIV_H)
@@ -60,10 +61,14 @@ simde_vdiv_f16(simde_float16x4_t a, simde_float16x4_t b) {
       a_ = simde_float16x4_to_private(a),
       b_ = simde_float16x4_to_private(b);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      r_.values[i] = simde_vdivh_f16(a_.values[i], b_.values[i]);
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE) && defined(SIMDE_ARCH_RISCV_ZVFH)
+      r_.sv64 = __riscv_vfdiv_vv_f16m1(a_.sv64, b_.sv64, 4);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        r_.values[i] = simde_vdivh_f16(a_.values[i], b_.values[i]);
+      }
+    #endif
 
     return simde_float16x4_from_private(r_);
   #endif
@@ -84,10 +89,14 @@ simde_vdivq_f16(simde_float16x8_t a, simde_float16x8_t b) {
       a_ = simde_float16x8_to_private(a),
       b_ = simde_float16x8_to_private(b);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      r_.values[i] = simde_vdivh_f16(a_.values[i], b_.values[i]);
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE) && defined(SIMDE_ARCH_RISCV_ZVFH)
+      r_.sv128 = __riscv_vfdiv_vv_f16m1(a_.sv128, b_.sv128, 8);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        r_.values[i] = simde_vdivh_f16(a_.values[i], b_.values[i]);
+      }
+    #endif
 
     return simde_float16x8_from_private(r_);
   #endif
@@ -108,10 +117,14 @@ simde_vdiv_f32(simde_float32x2_t a, simde_float32x2_t b) {
       a_ = simde_float32x2_to_private(a),
       b_ = simde_float32x2_to_private(b);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      r_.values[i] = a_.values[i] / b_.values[i];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv64 = __riscv_vfdiv_vv_f32m1 (a_.sv64, b_.sv64, 2);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        r_.values[i] = a_.values[i] / b_.values[i];
+      }
+    #endif
 
     return simde_float32x2_from_private(r_);
   #endif
@@ -132,10 +145,14 @@ simde_vdivq_f32(simde_float32x4_t a, simde_float32x4_t b) {
       a_ = simde_float32x4_to_private(a),
       b_ = simde_float32x4_to_private(b);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      r_.values[i] = a_.values[i] / b_.values[i];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv128 = __riscv_vfdiv_vv_f32m1 (a_.sv128, b_.sv128, 4);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        r_.values[i] = a_.values[i] / b_.values[i];
+      }
+    #endif
 
     return simde_float32x4_from_private(r_);
   #endif
@@ -156,10 +173,14 @@ simde_vdiv_f64(simde_float64x1_t a, simde_float64x1_t b) {
       a_ = simde_float64x1_to_private(a),
       b_ = simde_float64x1_to_private(b);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      r_.values[i] = a_.values[i] / b_.values[i];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv64 = __riscv_vfdiv_vv_f64m1 (a_.sv64, b_.sv64, 1);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        r_.values[i] = a_.values[i] / b_.values[i];
+      }
+    #endif
 
     return simde_float64x1_from_private(r_);
   #endif
@@ -180,10 +201,14 @@ simde_vdivq_f64(simde_float64x2_t a, simde_float64x2_t b) {
       a_ = simde_float64x2_to_private(a),
       b_ = simde_float64x2_to_private(b);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      r_.values[i] = a_.values[i] / b_.values[i];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv128 = __riscv_vfdiv_vv_f64m1 (a_.sv128, b_.sv128, 2);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        r_.values[i] = a_.values[i] / b_.values[i];
+      }
+    #endif
 
     return simde_float64x2_from_private(r_);
   #endif

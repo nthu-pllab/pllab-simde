@@ -85,7 +85,14 @@ simde_vrnda_f32(simde_float32x2_t a) {
       a_ = simde_float32x2_to_private(a);
 
     #if defined(SIMDE_RISCV_V_NATIVE)
-      r_.sv64 = __riscv_vfcvt_f_x_v_f32m1(__riscv_vfcvt_x_f_v_i32m1_rm(a_.sv64, 0, 2), 2);
+      #if defined(SIMDE_FAST_NANS)
+        r_.sv64 = __riscv_vfcvt_f_x_v_f32m1(__riscv_vfcvt_x_f_v_i32m1_rm(a_.sv64, 0, 2), 2);
+      #else
+        simde_float32 nan = SIMDE_MATH_NAN;
+        vbool32_t mask = __riscv_vmseq_vx_u32m1_b32(__riscv_vfclass_v_u32m1(a_.sv64 , 2) , 512 , 2);
+        r_.sv64 = __riscv_vfmerge_vfm_f32m1(__riscv_vfcvt_f_x_v_f32m1(__riscv_vfcvt_x_f_v_i32m1_rm(a_.sv64, 0, 2), 2), \
+                  nan, mask, 2);
+      #endif
     #else
       SIMDE_VECTORIZE
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {

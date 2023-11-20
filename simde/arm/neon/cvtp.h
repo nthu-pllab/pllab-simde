@@ -22,6 +22,7 @@
  *
  * Copyright:
  *   2023      Yi-Yen Chung <eric681@andestech.com> (Copyright owned by Andes Technology)
+ *   2023      Chi-Wei Chu <wewe5215@gapp.nthu.edu.tw>
  */
 
 #if !defined(SIMDE_ARM_NEON_CVTP_H)
@@ -29,6 +30,7 @@
 
 #include "types.h"
 #include "cvt.h"
+#include "rndp.h"
 
 HEDLEY_DIAGNOSTIC_PUSH
 SIMDE_DISABLE_UNWANTED_DIAGNOSTICS
@@ -297,6 +299,8 @@ simde_int16x8_t
 simde_vcvtpq_s16_f16(simde_float16x8_t a) {
   #if defined(SIMDE_ARM_NEON_A32V8_NATIVE) && defined(SIMDE_ARM_NEON_FP16)
     return vcvtpq_s16_f16(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH
+      return simde_vcvtq_s16_f16(simde_vrndpq_f16(a));
   #else
     simde_float16x8_private a_ = simde_float16x8_to_private(a);
     simde_int16x8_private r_;
@@ -319,6 +323,8 @@ simde_int32x4_t
 simde_vcvtpq_s32_f32(simde_float32x4_t a) {
   #if defined(SIMDE_ARM_NEON_A32V8_NATIVE)
     return vcvtpq_s32_f32(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE)
+      return simde_vcvtq_s32_f32(simde_vrndpq_f32(a));
   #else
     simde_float32x4_private a_ = simde_float32x4_to_private(a);
     simde_int32x4_private r_;
@@ -341,6 +347,8 @@ simde_int64x2_t
 simde_vcvtpq_s64_f64(simde_float64x2_t a) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
     return vcvtpq_s64_f64(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE)
+      return simde_vcvtq_s64_f64(simde_vrndpq_f64(a));
   #else
     simde_float64x2_private a_ = simde_float64x2_to_private(a);
     simde_int64x2_private r_;
@@ -363,6 +371,8 @@ simde_uint16x8_t
 simde_vcvtpq_u16_f16(simde_float16x8_t a) {
   #if defined(SIMDE_ARM_NEON_A32V8_NATIVE) && defined(SIMDE_ARM_NEON_FP16)
     return vcvtpq_u16_f16(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH
+      return simde_vcvtq_u16_f16(simde_vrndpq_f16(a));
   #else
     simde_float16x8_private a_ = simde_float16x8_to_private(a);
     simde_uint16x8_private r_;
@@ -386,6 +396,8 @@ simde_uint32x4_t
 simde_vcvtpq_u32_f32(simde_float32x4_t a) {
   #if defined(SIMDE_ARM_NEON_A32V8_NATIVE) && !defined(SIMDE_BUG_CLANG_46844)
     return vcvtpq_u32_f32(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE)
+      return simde_vcvtq_u32_f32(simde_vrndpq_f32(a));
   #else
     simde_float32x4_private a_ = simde_float32x4_to_private(a);
     simde_uint32x4_private r_;
@@ -421,6 +433,8 @@ simde_uint64x2_t
 simde_vcvtpq_u64_f64(simde_float64x2_t a) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
     return vcvtpq_u64_f64(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE)
+    return simde_vcvtq_u64_f64(simde_vrndpq_f64(a));
   #else
     simde_float64x2_private a_ = simde_float64x2_to_private(a);
     simde_uint64x2_private r_;
@@ -455,6 +469,8 @@ simde_int16x4_t
 simde_vcvtp_s16_f16(simde_float16x4_t a) {
   #if defined(SIMDE_ARM_NEON_A32V8_NATIVE) && defined(SIMDE_ARM_NEON_FP16)
     return vcvtp_s16_f16(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH
+      return simde_vcvt_s16_f16(simde_vrndp_f16(a));
   #else
     simde_float16x4_private a_ = simde_float16x4_to_private(a);
     simde_int16x4_private r_;
@@ -477,6 +493,8 @@ simde_uint16x4_t
 simde_vcvtp_u16_f16(simde_float16x4_t a) {
   #if defined(SIMDE_ARM_NEON_A32V8_NATIVE) && defined(SIMDE_ARM_NEON_FP16)
     return vcvtp_u16_f16(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH
+      return simde_vcvt_u16_f16(simde_vrndp_f16(a));
   #else
     simde_float16x4_private a_ = simde_float16x4_to_private(a);
     simde_uint16x4_private r_;
@@ -499,6 +517,8 @@ simde_uint32x2_t
 simde_vcvtp_u32_f32(simde_float32x2_t a) {
   #if defined(SIMDE_ARM_NEON_A32V8_NATIVE)
     return vcvtp_u32_f32(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE)
+      return simde_vcvt_u32_f32(simde_vrndp_f32(a));
   #else
     simde_float32x2_private a_ = simde_float32x2_to_private(a);
     simde_uint32x2_private r_;
@@ -521,6 +541,8 @@ simde_int32x2_t
 simde_vcvtp_s32_f32(simde_float32x2_t a) {
   #if defined(SIMDE_ARM_NEON_A32V8_NATIVE)
     return vcvtp_s32_f32(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE)
+      return simde_vcvt_s32_f32(simde_vrndp_f32(a));
   #else
     simde_float32x2_private a_ = simde_float32x2_to_private(a);
     simde_int32x2_private r_;
@@ -543,6 +565,8 @@ simde_int64x1_t
 simde_vcvtp_s64_f64(simde_float64x1_t a) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
     return vcvtp_s64_f64(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE)
+      return simde_vcvt_s64_f64(simde_vrndp_f64(a));
   #else
     simde_float64x1_private a_ = simde_float64x1_to_private(a);
     simde_int64x1_private r_;
@@ -565,6 +589,8 @@ simde_uint64x1_t
 simde_vcvtp_u64_f64(simde_float64x1_t a) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
     return vcvtp_u64_f64(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE)
+      return simde_vcvt_u64_f64(simde_vrndp_f64(a));
   #else
     simde_float64x1_private a_ = simde_float64x1_to_private(a);
     simde_uint64x1_private r_;

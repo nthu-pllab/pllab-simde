@@ -61,7 +61,7 @@ simde_vdiv_f16(simde_float16x4_t a, simde_float16x4_t b) {
       a_ = simde_float16x4_to_private(a),
       b_ = simde_float16x4_to_private(b);
 
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && defined(SIMDE_ARCH_RISCV_ZVFH)
       r_.sv64 = __riscv_vfdiv_vv_f16m1(a_.sv64, b_.sv64, 4);
     #else
       SIMDE_VECTORIZE
@@ -89,7 +89,7 @@ simde_vdivq_f16(simde_float16x8_t a, simde_float16x8_t b) {
       a_ = simde_float16x8_to_private(a),
       b_ = simde_float16x8_to_private(b);
 
-    #if defined(SIMDE_RISCV_V_NATIVE)
+    #if defined(SIMDE_RISCV_V_NATIVE) && defined(SIMDE_ARCH_RISCV_ZVFH)
       r_.sv128 = __riscv_vfdiv_vv_f16m1(a_.sv128, b_.sv128, 8);
     #else
       SIMDE_VECTORIZE

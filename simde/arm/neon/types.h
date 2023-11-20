@@ -741,6 +741,41 @@ typedef union {
     #define SIMDE_ARM_NEON_NEED_PORTABLE_U64X2
     #define SIMDE_ARM_NEON_NEED_PORTABLE_F64X2
   #endif
+#elif defined(SIMDE_RISCV_V_NATIVE)
+
+  typedef fixed_vint8m1_t    simde_int8x8_t;
+  typedef fixed_vint16m1_t   simde_int16x4_t;
+  typedef fixed_vint32m1_t   simde_int32x2_t;
+  typedef fixed_vint64m1_t   simde_int64x1_t;
+  typedef fixed_vuint8m1_t   simde_uint8x8_t;
+  typedef fixed_vuint16m1_t  simde_uint16x4_t;
+  typedef fixed_vuint32m1_t  simde_uint32x2_t;
+  typedef fixed_vuint64m1_t  simde_uint64x1_t;
+  typedef fixed_vfloat32m1_t simde_float32x2_t;
+  typedef fixed_vfloat64m1_t simde_float64x1_t;
+
+  typedef fixed_vint8m1_t    simde_int8x16_t;
+  typedef fixed_vint16m1_t   simde_int16x8_t;
+  typedef fixed_vint32m1_t   simde_int32x4_t;
+  typedef fixed_vint64m1_t   simde_int64x2_t;
+  typedef fixed_vuint8m1_t   simde_uint8x16_t;
+  typedef fixed_vuint16m1_t  simde_uint16x8_t;
+  typedef fixed_vuint32m1_t  simde_uint32x4_t;
+  typedef fixed_vuint64m1_t  simde_uint64x2_t;
+  typedef fixed_vfloat32m1_t simde_float32x4_t;
+  typedef fixed_vfloat64m1_t simde_float64x2_t;
+
+  #define SIMDE_ARM_NEON_NEED_PORTABLE_F16
+  #define SIMDE_ARM_NEON_NEED_PORTABLE_F32
+  #define SIMDE_ARM_NEON_NEED_PORTABLE_F64
+  #define SIMDE_ARM_NEON_NEED_PORTABLE_POLY_128_BIT
+  #define SIMDE_ARM_NEON_NEED_PORTABLE_POLY_64_BIT
+  #define SIMDE_ARM_NEON_NEED_PORTABLE_POLY
+  #define SIMDE_ARM_NEON_NEED_PORTABLE_F64X1XN
+  #define SIMDE_ARM_NEON_NEED_PORTABLE_F64X2XN
+  #define SIMDE_ARM_NEON_NEED_PORTABLE_POLY_VXN
+  #define SIMDE_ARM_NEON_NEED_PORTABLE_VXN
+
 #elif defined(SIMDE_VECTOR)
   typedef simde_float32 simde_float32_t;
   typedef simde_float64 simde_float64_t;

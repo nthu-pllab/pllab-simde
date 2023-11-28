@@ -295,18 +295,29 @@ simde_vmull_p8(simde_poly8x8_t a, simde_poly8x8_t b) {
       b_ = simde_uint8x8_to_private(simde_vreinterpret_u8_p8(b));
     simde_uint16x8_private r_;
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      uint16_t extend_op2 = HEDLEY_STATIC_CAST(uint16_t, b_.values[i]);
-      uint16_t result = 0;
-      for(size_t j = 0; j < 8; ++j) {
-        if (a_.values[i] & (1 << j)) {
-          result = HEDLEY_STATIC_CAST(uint16_t, result ^ (extend_op2 << j));
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint16m2_t a_temp16 = __riscv_vwcvtu_x_x_v_u16m2(a_.sv64, 8), b_temp16 = __riscv_vwcvtu_x_x_v_u16m2(b_.sv64, 8);
+      vuint32m4_t a_temp32 = __riscv_vwcvtu_x_x_v_u32m4(a_temp16, 8), b_temp32 = __riscv_vwcvtu_x_x_v_u32m4(b_temp16, 8);
+      vuint64m8_t a_temp64 = __riscv_vwcvtu_x_x_v_u64m8(a_temp32, 8), b_temp64 = __riscv_vwcvtu_x_x_v_u64m8(b_temp32, 8);
+   
+      vuint64m8_t temp64 = __riscv_vclmul_vv_u64m8(a_temp64, b_temp64, 8);
+      vuint32m4_t temp32 = __riscv_vncvt_x_x_w_u32m4(temp64, 8);
+      vuint16m2_t temp16 = __riscv_vncvt_x_x_w_u16m2(temp32, 8);
+      r_.sv128 =  __riscv_vlmul_trunc_v_u16m2_u16m1(temp16);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        uint16_t extend_op2 = HEDLEY_STATIC_CAST(uint16_t, b_.values[i]);
+        uint16_t result = 0;
+        for(size_t j = 0; j < 8; ++j) {
+          if (a_.values[i] & (1 << j)) {
+            result = HEDLEY_STATIC_CAST(uint16_t, result ^ (extend_op2 << j));
+          }
         }
+        r_.values[i] = result;
       }
-      r_.values[i] = result;
-    }
-
+    #endif
+      
     return simde_vreinterpretq_p16_u16(simde_uint16x8_from_private(r_));
   #endif
 }
@@ -324,12 +335,14 @@ simde_vmull_p64(simde_poly64_t a, simde_poly64_t b) {
   #else
     simde_poly128_t extend_op2 = HEDLEY_STATIC_CAST(simde_poly128_t, b);
     simde_poly128_t result = 0;
+
     SIMDE_VECTORIZE
     for(size_t j = 0; j < 64; ++j) {
       if (a & (1ull << j)) {
         result = result ^ (extend_op2 << j);
       }
     }
+
     return result;
   #endif
 }

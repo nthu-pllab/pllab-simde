@@ -1021,11 +1021,17 @@ simde_vext_p8(simde_poly8x8_t a, simde_poly8x8_t b, const int n)
       a_ = simde_poly8x8_to_private(a),
       b_ = simde_poly8x8_to_private(b),
       r_ = a_;
-    const size_t n_ = HEDLEY_STATIC_CAST(size_t, n);
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      size_t src = i + n_;
-      r_.values[i] = (src < (sizeof(r_.values) / sizeof(r_.values[0]))) ? a_.values[src] : b_.values[src & 7];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      a_.sv64 = __riscv_vslidedown_vx_u8m1(a_.sv64, n, 8);
+      r_.sv64 = __riscv_vslideup_vx_u8m1(a_.sv64, b_.sv64, 8-n, 8);
+    #else
+      const size_t n_ = HEDLEY_STATIC_CAST(size_t, n);
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        size_t src = i + n_;
+        r_.values[i] = (src < (sizeof(r_.values) / sizeof(r_.values[0]))) ? a_.values[src] : b_.values[src & 7];
+      }
+    #endif
+
     return simde_poly8x8_from_private(r_);
   #endif
 }
@@ -1047,11 +1053,17 @@ simde_vext_p16(simde_poly16x4_t a, simde_poly16x4_t b, const int n)
       a_ = simde_poly16x4_to_private(a),
       b_ = simde_poly16x4_to_private(b),
       r_ = a_;
-    const size_t n_ = HEDLEY_STATIC_CAST(size_t, n);
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      size_t src = i + n_;
-      r_.values[i] = (src < (sizeof(r_.values) / sizeof(r_.values[0]))) ? a_.values[src] : b_.values[src & 3];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      a_.sv64 = __riscv_vslidedown_vx_u16m1(a_.sv64, n, 4);
+      r_.sv64 = __riscv_vslideup_vx_u16m1(a_.sv64, b_.sv64, 4-n, 4);
+    #else
+      const size_t n_ = HEDLEY_STATIC_CAST(size_t, n);
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        size_t src = i + n_;
+        r_.values[i] = (src < (sizeof(r_.values) / sizeof(r_.values[0]))) ? a_.values[src] : b_.values[src & 3];
+      }
+    #endif
+
     return simde_poly16x4_from_private(r_);
   #endif
 }
@@ -1072,11 +1084,17 @@ simde_vext_p64(simde_poly64x1_t a, simde_poly64x1_t b, const int n)
       a_ = simde_poly64x1_to_private(a),
       b_ = simde_poly64x1_to_private(b),
       r_ = a_;
-    const size_t n_ = HEDLEY_STATIC_CAST(size_t, n);
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      size_t src = i + n_;
-      r_.values[i] = (src < (sizeof(r_.values) / sizeof(r_.values[0]))) ? a_.values[src] : b_.values[src & 0];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      a_.sv64 = __riscv_vslidedown_vx_u64m1(a_.sv64, n, 1);
+      r_.sv64 = __riscv_vslideup_vx_u64m1(a_.sv64, b_.sv64, 1-n, 1);
+    #else
+      const size_t n_ = HEDLEY_STATIC_CAST(size_t, n);
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        size_t src = i + n_;
+        r_.values[i] = (src < (sizeof(r_.values) / sizeof(r_.values[0]))) ? a_.values[src] : b_.values[src & 0];
+      }
+    #endif
+
     return simde_poly64x1_from_private(r_);
   #endif
 }
@@ -1098,11 +1116,17 @@ simde_vextq_p8(simde_poly8x16_t a, simde_poly8x16_t b, const int n)
       a_ = simde_poly8x16_to_private(a),
       b_ = simde_poly8x16_to_private(b),
       r_ = a_;
-    const size_t n_ = HEDLEY_STATIC_CAST(size_t, n);
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      size_t src = i + n_;
-      r_.values[i] = (src < (sizeof(r_.values) / sizeof(r_.values[0]))) ? a_.values[src] : b_.values[src & 15];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      a_.sv128 = __riscv_vslidedown_vx_u8m1(a_.sv128, n, 16);
+      r_.sv128 = __riscv_vslideup_vx_u8m1(a_.sv128, b_.sv128, 16-n, 16);
+    #else
+      const size_t n_ = HEDLEY_STATIC_CAST(size_t, n);
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        size_t src = i + n_;
+        r_.values[i] = (src < (sizeof(r_.values) / sizeof(r_.values[0]))) ? a_.values[src] : b_.values[src & 15];
+      }
+    #endif
+
     return simde_poly8x16_from_private(r_);
   #endif
 }
@@ -1124,11 +1148,17 @@ simde_vextq_p16(simde_poly16x8_t a, simde_poly16x8_t b, const int n)
       a_ = simde_poly16x8_to_private(a),
       b_ = simde_poly16x8_to_private(b),
       r_ = a_;
-    const size_t n_ = HEDLEY_STATIC_CAST(size_t, n);
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      size_t src = i + n_;
-      r_.values[i] = (src < (sizeof(r_.values) / sizeof(r_.values[0]))) ? a_.values[src] : b_.values[src & 7];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      a_.sv128 = __riscv_vslidedown_vx_u16m1(a_.sv128, n, 8);
+      r_.sv128 = __riscv_vslideup_vx_u16m1(a_.sv128, b_.sv128, 8-n, 8);
+    #else
+      const size_t n_ = HEDLEY_STATIC_CAST(size_t, n);
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        size_t src = i + n_;
+        r_.values[i] = (src < (sizeof(r_.values) / sizeof(r_.values[0]))) ? a_.values[src] : b_.values[src & 7];
+      }
+    #endif
+
     return simde_poly16x8_from_private(r_);
   #endif
 }
@@ -1150,11 +1180,17 @@ simde_vextq_p64(simde_poly64x2_t a, simde_poly64x2_t b, const int n)
       a_ = simde_poly64x2_to_private(a),
       b_ = simde_poly64x2_to_private(b),
       r_ = a_;
-    const size_t n_ = HEDLEY_STATIC_CAST(size_t, n);
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      size_t src = i + n_;
-      r_.values[i] = (src < (sizeof(r_.values) / sizeof(r_.values[0]))) ? a_.values[src] : b_.values[src & 1];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      a_.sv128 = __riscv_vslidedown_vx_u64m1(a_.sv128, n, 2);
+      r_.sv128 = __riscv_vslideup_vx_u64m1(a_.sv128, b_.sv128, 2-n, 2);
+    #else
+      const size_t n_ = HEDLEY_STATIC_CAST(size_t, n);
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        size_t src = i + n_;
+        r_.values[i] = (src < (sizeof(r_.values) / sizeof(r_.values[0]))) ? a_.values[src] : b_.values[src & 1];
+      }
+    #endif
+
     return simde_poly64x2_from_private(r_);
   #endif
 }

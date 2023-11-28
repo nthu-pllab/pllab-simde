@@ -115,10 +115,16 @@ simde_vshll_high_n_u8 (const simde_uint8x16_t a, const int n)
   simde_uint16x8_private r_;
   simde_uint8x16_private a_ = simde_uint8x16_to_private(a);
 
-  SIMDE_VECTORIZE
-  for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-    r_.values[i] = HEDLEY_STATIC_CAST(uint16_t, HEDLEY_STATIC_CAST(uint16_t, a_.values[i+(sizeof(r_.values) / sizeof(r_.values[0]))]) << n);
-  }
+  #if defined(SIMDE_RISCV_V_NATIVE)
+    vuint8m1_t temp = __riscv_vslidedown_vx_u8m1(a_.sv128, 8, 16);
+    vuint16m2_t r = __riscv_vwsll_vx_u16m2(temp, n, 8);
+    r_.sv128 =  __riscv_vlmul_trunc_v_u16m2_u16m1(r);
+  #else
+    SIMDE_VECTORIZE
+    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+      r_.values[i] = HEDLEY_STATIC_CAST(uint16_t, HEDLEY_STATIC_CAST(uint16_t, a_.values[i+(sizeof(r_.values) / sizeof(r_.values[0]))]) << n);
+    }
+  #endif
 
   return simde_uint16x8_from_private(r_);
 }
@@ -137,10 +143,16 @@ simde_vshll_high_n_u16 (const simde_uint16x8_t a, const int n)
   simde_uint32x4_private r_;
   simde_uint16x8_private a_ = simde_uint16x8_to_private(a);
 
-  SIMDE_VECTORIZE
-  for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-    r_.values[i] = HEDLEY_STATIC_CAST(uint32_t, a_.values[i+(sizeof(r_.values) / sizeof(r_.values[0]))]) << n;
-  }
+  #if defined(SIMDE_RISCV_V_NATIVE)
+    vuint16m1_t temp = __riscv_vslidedown_vx_u16m1(a_.sv128, 4, 8);
+    vuint32m2_t r = __riscv_vwsll_vx_u32m2(temp, n, 4);
+    r_.sv128 =  __riscv_vlmul_trunc_v_u32m2_u32m1(r);
+  #else
+    SIMDE_VECTORIZE
+    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+      r_.values[i] = HEDLEY_STATIC_CAST(uint32_t, a_.values[i+(sizeof(r_.values) / sizeof(r_.values[0]))]) << n;
+    }
+  #endif
 
   return simde_uint32x4_from_private(r_);
 }
@@ -159,10 +171,16 @@ simde_vshll_high_n_u32 (const simde_uint32x4_t a, const int n)
   simde_uint64x2_private r_;
   simde_uint32x4_private a_ = simde_uint32x4_to_private(a);
 
-  SIMDE_VECTORIZE
-  for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-    r_.values[i] = HEDLEY_STATIC_CAST(uint64_t, a_.values[i+(sizeof(r_.values) / sizeof(r_.values[0]))]) << n;
-  }
+  #if defined(SIMDE_RISCV_V_NATIVE)
+    vuint32m1_t temp = __riscv_vslidedown_vx_u32m1(a_.sv128, 2, 4);
+    vuint64m2_t r = __riscv_vwsll_vx_u64m2(temp, n, 2);
+    r_.sv128 =  __riscv_vlmul_trunc_v_u64m2_u64m1(r);
+  #else
+    SIMDE_VECTORIZE
+    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+      r_.values[i] = HEDLEY_STATIC_CAST(uint64_t, a_.values[i+(sizeof(r_.values) / sizeof(r_.values[0]))]) << n;
+    }
+  #endif
 
   return simde_uint64x2_from_private(r_);
 }

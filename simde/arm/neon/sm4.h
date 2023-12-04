@@ -81,24 +81,30 @@ simde_vsm4eq_u32(simde_uint32x4_t a, simde_uint32x4_t b) {
       b_ = simde_uint32x4_to_private(b);
     uint32_t intval, roundkey;
     uint8_t _intval[4];
-    for(int index = 0; index < 4; ++index) {
-      roundkey = b_.values[index];
 
-      intval = a_.values[3] ^ a_.values[2] ^ a_.values[1] ^ roundkey;
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      a_.sv128 = __riscv_vsm4r_vv_u32m1(a_.sv128, b_.sv128, 4);
+    #else
+      for(int index = 0; index < 4; ++index) {
+        roundkey = b_.values[index];
 
-      simde_u32_to_u8x4(intval, _intval);
-      for(int i = 0; i < 4; ++i) {
-        _intval[i] = simde_sbox_sm4[_intval[i]];
+        intval = a_.values[3] ^ a_.values[2] ^ a_.values[1] ^ roundkey;
+
+        simde_u32_to_u8x4(intval, _intval);
+        for(int i = 0; i < 4; ++i) {
+          _intval[i] = simde_sbox_sm4[_intval[i]];
+        }
+        simde_u32_from_u8x4(_intval, &intval);
+        intval = intval ^ ROL32(intval, 2) ^ ROL32(intval, 10) ^ ROL32(intval, 18) ^ ROL32(intval, 24);
+        intval = intval ^ a_.values[0];
+
+        a_.values[0] = a_.values[1];
+        a_.values[1] = a_.values[2];
+        a_.values[2] = a_.values[3];
+        a_.values[3] = intval;
       }
-      simde_u32_from_u8x4(_intval, &intval);
-      intval = intval ^ ROL32(intval, 2) ^ ROL32(intval, 10) ^ ROL32(intval, 18) ^ ROL32(intval, 24);
-      intval = intval ^ a_.values[0];
+    #endif
 
-      a_.values[0] = a_.values[1];
-      a_.values[1] = a_.values[2];
-      a_.values[2] = a_.values[3];
-      a_.values[3] = intval;
-    }
     return simde_uint32x4_from_private(a_);
   #endif
 }

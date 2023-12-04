@@ -155,25 +155,7 @@ simde_vclz_s8(simde_int8x8_t a) {
       r_;
 
     #if defined(SIMDE_RISCV_V_NATIVE)
-      vint8m1_t vsign;
-      vuint8m1_t vx, vn;
-      vbool8_t eq_zero_mask, neq_zero_mask, sle_mask;
-      vsign = a_.sv64;
-      vx = __riscv_vreinterpret_v_i8m1_u8m1(vsign);
-      eq_zero_mask = __riscv_vmseq_vx_u8m1_b8(vx, 0, 8);
-      neq_zero_mask = __riscv_vmnot_m_b8(eq_zero_mask, 8);
-      vn = __riscv_vmv_v_x_u8m1(0, 8);
-      sle_mask = __riscv_vmsleu_vx_u8m1_b8_mu(neq_zero_mask, neq_zero_mask, vx, 0x0F, 8);
-      vn = __riscv_vadd_vx_u8m1_mu(sle_mask, vn, vn, 4, 8);
-      vx = __riscv_vsll_vx_u8m1_mu(sle_mask, vx, vx, 4, 8);
-      sle_mask = __riscv_vmsleu_vx_u8m1_b8_mu(neq_zero_mask, neq_zero_mask, vx, 0x3F, 8);
-      vn = __riscv_vadd_vx_u8m1_mu(sle_mask, vn, vn, 2, 8);
-      vx = __riscv_vsll_vx_u8m1_mu(sle_mask, vx, vx, 2, 8);
-      sle_mask = __riscv_vmsleu_vx_u8m1_b8_mu(neq_zero_mask, neq_zero_mask, vx, 0x7F, 8);
-      vn = __riscv_vadd_vx_u8m1_mu(sle_mask, vn, vn, 1, 8);
-      vx = __riscv_vsll_vx_u8m1_mu(sle_mask, vx, vx, 1, 8);
-      vn = __riscv_vmerge_vxm_u8m1(vn, 8, eq_zero_mask, 8);
-      r_.sv64 = __riscv_vreinterpret_v_u8m1_i8m1(vn);
+      r_.sv64 = __riscv_vclz_v_u8m1(a_.sv64, 8);
     #else
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
         r_.values[i] = simde_x_vclzb_s8(a_.values[i]);
@@ -199,27 +181,7 @@ simde_vclz_s16(simde_int16x4_t a) {
       r_;
 
     #if defined(SIMDE_RISCV_V_NATIVE)
-      vint16m1_t vsign;
-      vuint16m1_t vx, vn;
-      vbool16_t eq_zero_mask, neq_zero_mask, sle_mask;
-      vsign = a_.sv64;
-      vx = __riscv_vreinterpret_v_i16m1_u16m1(vsign);
-      eq_zero_mask = __riscv_vmseq_vx_u16m1_b16(vx, 0, 4);
-      neq_zero_mask = __riscv_vmnot_m_b16(eq_zero_mask, 4);
-      vn = __riscv_vmv_v_x_u16m1(0, 4);
-      sle_mask = __riscv_vmsleu_vx_u16m1_b16_mu(neq_zero_mask, neq_zero_mask, vx, 0x00FF, 4);
-      vn = __riscv_vadd_vx_u16m1_mu(sle_mask, vn, vn, 8, 4);
-      vx = __riscv_vsll_vx_u16m1_mu(sle_mask, vx, vx, 8, 4);
-      sle_mask = __riscv_vmsleu_vx_u16m1_b16_mu(neq_zero_mask, neq_zero_mask, vx, 0x0FFF, 4);
-      vn = __riscv_vadd_vx_u16m1_mu(sle_mask, vn, vn, 4, 4);
-      vx = __riscv_vsll_vx_u16m1_mu(sle_mask, vx, vx, 4, 4);
-      sle_mask = __riscv_vmsleu_vx_u16m1_b16_mu(neq_zero_mask, neq_zero_mask, vx, 0x3FFF, 4);
-      vn = __riscv_vadd_vx_u16m1_mu(sle_mask, vn, vn, 2, 4);
-      vx = __riscv_vsll_vx_u16m1_mu(sle_mask, vx, vx, 2, 4);
-      sle_mask = __riscv_vmsleu_vx_u16m1_b16_mu(neq_zero_mask, neq_zero_mask, vx, 0x7FFF, 4);
-      vn = __riscv_vadd_vx_u16m1_mu(sle_mask, vn, vn, 1, 4);
-      vn = __riscv_vmerge_vxm_u16m1(vn, 16, eq_zero_mask, 4);
-      r_.sv64 = __riscv_vreinterpret_v_u16m1_i16m1(vn);
+      r_.sv64 = __riscv_vclz_v_u16m1(a_.sv64, 4);
     #else
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
         r_.values[i] = simde_x_vclzh_s16(a_.values[i]);
@@ -245,30 +207,7 @@ simde_vclz_s32(simde_int32x2_t a) {
       r_;
 
     #if defined(SIMDE_RISCV_V_NATIVE)
-      vint32m1_t vsign;
-      vuint32m1_t vx, vn;
-      vbool32_t eq_zero_mask, neq_zero_mask, sle_mask;
-      vsign = a_.sv64;
-      vx = __riscv_vreinterpret_v_i32m1_u32m1(vsign);
-      eq_zero_mask = __riscv_vmseq_vx_u32m1_b32(vx, 0, 2);
-      neq_zero_mask = __riscv_vmnot_m_b32(eq_zero_mask, 2);
-      vn = __riscv_vmv_v_x_u32m1(0, 2);
-      sle_mask = __riscv_vmsleu_vx_u32m1_b32_mu(neq_zero_mask, neq_zero_mask, vx, 0x0000FFFF, 2);
-      vn = __riscv_vadd_vx_u32m1_mu(sle_mask, vn, vn, 16, 2);
-      vx = __riscv_vsll_vx_u32m1_mu(sle_mask, vx, vx, 16, 2);
-      sle_mask = __riscv_vmsleu_vx_u32m1_b32_mu(neq_zero_mask, neq_zero_mask, vx, 0x00FFFFFF, 2);
-      vn = __riscv_vadd_vx_u32m1_mu(sle_mask, vn, vn, 8, 2);
-      vx = __riscv_vsll_vx_u32m1_mu(sle_mask, vx, vx, 8, 2);
-      sle_mask = __riscv_vmsleu_vx_u32m1_b32_mu(neq_zero_mask, neq_zero_mask, vx, 0x0FFFFFFF, 2);
-      vn = __riscv_vadd_vx_u32m1_mu(sle_mask, vn, vn, 4, 2);
-      vx = __riscv_vsll_vx_u32m1_mu(sle_mask, vx, vx, 4, 2);
-      sle_mask = __riscv_vmsleu_vx_u32m1_b32_mu(neq_zero_mask, neq_zero_mask, vx, 0x3FFFFFFF, 2);
-      vn = __riscv_vadd_vx_u32m1_mu(sle_mask, vn, vn, 2, 2);
-      vx = __riscv_vsll_vx_u32m1_mu(sle_mask, vx, vx, 2, 2);
-      sle_mask = __riscv_vmsleu_vx_u32m1_b32_mu(neq_zero_mask, neq_zero_mask, vx, 0x7FFFFFFF, 2);
-      vn = __riscv_vadd_vx_u32m1_mu(sle_mask, vn, vn, 1, 2);
-      vn = __riscv_vmerge_vxm_u32m1(vn, 32, eq_zero_mask, 2);
-      r_.sv64 = __riscv_vreinterpret_v_u32m1_i32m1(vn);
+      r_.sv64 = __riscv_vclz_v_u32m1(a_.sv64, 2);
     #else
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
         r_.values[i] = simde_x_vclzs_s32(a_.values[i]);
@@ -294,22 +233,7 @@ simde_vclz_u8(simde_uint8x8_t a) {
       r_;
 
     #if defined(SIMDE_RISCV_V_NATIVE)
-      vuint8m1_t vx, vn;
-      vbool8_t eq_zero_mask, neq_zero_mask, sle_mask;
-      vx = a_.sv64;
-      eq_zero_mask = __riscv_vmseq_vx_u8m1_b8(vx, 0, 8);
-      neq_zero_mask = __riscv_vmnot_m_b8(eq_zero_mask, 8);
-      vn = __riscv_vmv_v_x_u8m1(0, 8);
-      sle_mask = __riscv_vmsleu_vx_u8m1_b8_mu(neq_zero_mask, neq_zero_mask, vx, 0x0F, 8);
-      vn = __riscv_vadd_vx_u8m1_mu(sle_mask, vn, vn, 4, 8);
-      vx = __riscv_vsll_vx_u8m1_mu(sle_mask, vx, vx, 4, 8);
-      sle_mask = __riscv_vmsleu_vx_u8m1_b8_mu(neq_zero_mask, neq_zero_mask, vx, 0x3F, 8);
-      vn = __riscv_vadd_vx_u8m1_mu(sle_mask, vn, vn, 2, 8);
-      vx = __riscv_vsll_vx_u8m1_mu(sle_mask, vx, vx, 2, 8);
-      sle_mask = __riscv_vmsleu_vx_u8m1_b8_mu(neq_zero_mask, neq_zero_mask, vx, 0x7F, 8);
-      vn = __riscv_vadd_vx_u8m1_mu(sle_mask, vn, vn, 1, 8);
-      vx = __riscv_vsll_vx_u8m1_mu(sle_mask, vx, vx, 1, 8);
-      r_.sv64 = __riscv_vmerge_vxm_u8m1(vn, 8, eq_zero_mask, 8);
+      r_.sv64 = __riscv_vclz_v_u8m1(a_.sv64, 8);
     #else
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
         r_.values[i] = simde_x_vclzb_u8(a_.values[i]);
@@ -335,25 +259,7 @@ simde_vclz_u16(simde_uint16x4_t a) {
       r_;
 
     #if defined(SIMDE_RISCV_V_NATIVE)
-      vuint16m1_t vx, vn;
-      vbool16_t eq_zero_mask, neq_zero_mask, sle_mask;
-      vx = a_.sv64;
-      eq_zero_mask = __riscv_vmseq_vx_u16m1_b16(vx, 0, 4);
-      neq_zero_mask = __riscv_vmnot_m_b16(eq_zero_mask, 4);
-      vn = __riscv_vmv_v_x_u16m1(0, 4);
-      sle_mask = __riscv_vmsleu_vx_u16m1_b16_mu(neq_zero_mask, neq_zero_mask, vx, 0x00FF, 4);
-      vn = __riscv_vadd_vx_u16m1_mu(sle_mask, vn, vn, 8, 4);
-      vx = __riscv_vsll_vx_u16m1_mu(sle_mask, vx, vx, 8, 4);
-      sle_mask = __riscv_vmsleu_vx_u16m1_b16_mu(neq_zero_mask, neq_zero_mask, vx, 0x0FFF, 4);
-      vn = __riscv_vadd_vx_u16m1_mu(sle_mask, vn, vn, 4, 4);
-      vx = __riscv_vsll_vx_u16m1_mu(sle_mask, vx, vx, 4, 4);
-      sle_mask = __riscv_vmsleu_vx_u16m1_b16_mu(neq_zero_mask, neq_zero_mask, vx, 0x3FFF, 4);
-      vn = __riscv_vadd_vx_u16m1_mu(sle_mask, vn, vn, 2, 4);
-      vx = __riscv_vsll_vx_u16m1_mu(sle_mask, vx, vx, 2, 4);
-      sle_mask = __riscv_vmsleu_vx_u16m1_b16_mu(neq_zero_mask, neq_zero_mask, vx, 0x7FFF, 4);
-      vn = __riscv_vadd_vx_u16m1_mu(sle_mask, vn, vn, 1, 4);
-      vx = __riscv_vsll_vx_u16m1_mu(sle_mask, vx, vx, 1, 4);
-      r_.sv64 = __riscv_vmerge_vxm_u16m1(vn, 16, eq_zero_mask, 4);
+      r_.sv64 = __riscv_vclz_v_u16m1(a_.sv64, 4);
     #else
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
         r_.values[i] = simde_x_vclzh_u16(a_.values[i]);
@@ -379,27 +285,7 @@ simde_vclz_u32(simde_uint32x2_t a) {
       r_;
 
     #if defined(SIMDE_RISCV_V_NATIVE)
-      vuint32m1_t vx, vn;
-      vbool32_t eq_zero_mask, neq_zero_mask, sle_mask;
-      vx = a_.sv64;
-      eq_zero_mask = __riscv_vmseq_vx_u32m1_b32(vx, 0, 2);
-      neq_zero_mask = __riscv_vmnot_m_b32(eq_zero_mask, 2);
-      vn = __riscv_vmv_v_x_u32m1(0, 2);
-      sle_mask = __riscv_vmsleu_vx_u32m1_b32_mu(neq_zero_mask, neq_zero_mask, vx, 0x0000FFFF, 2);
-      vn = __riscv_vadd_vx_u32m1_mu(sle_mask, vn, vn, 16, 2);
-      vx = __riscv_vsll_vx_u32m1_mu(sle_mask, vx, vx, 16, 2);
-      sle_mask = __riscv_vmsleu_vx_u32m1_b32_mu(neq_zero_mask, neq_zero_mask, vx, 0x00FFFFFF, 2);
-      vn = __riscv_vadd_vx_u32m1_mu(sle_mask, vn, vn, 8, 2);
-      vx = __riscv_vsll_vx_u32m1_mu(sle_mask, vx, vx, 8, 2);
-      sle_mask = __riscv_vmsleu_vx_u32m1_b32_mu(neq_zero_mask, neq_zero_mask, vx, 0x0FFFFFFF, 2);
-      vn = __riscv_vadd_vx_u32m1_mu(sle_mask, vn, vn, 4, 2);
-      vx = __riscv_vsll_vx_u32m1_mu(sle_mask, vx, vx, 4, 2);
-      sle_mask = __riscv_vmsleu_vx_u32m1_b32_mu(neq_zero_mask, neq_zero_mask, vx, 0x3FFFFFFF, 2);
-      vn = __riscv_vadd_vx_u32m1_mu(sle_mask, vn, vn, 2, 2);
-      vx = __riscv_vsll_vx_u32m1_mu(sle_mask, vx, vx, 2, 2);
-      sle_mask = __riscv_vmsleu_vx_u32m1_b32_mu(neq_zero_mask, neq_zero_mask, vx, 0x7FFFFFFF, 2);
-      vn = __riscv_vadd_vx_u32m1_mu(sle_mask, vn, vn, 1, 2);
-      r_.sv64 = __riscv_vmerge_vxm_u32m1(vn, 32, eq_zero_mask, 2);
+      r_.sv64 = __riscv_vclz_v_u32m1(a_.sv64, 2);
     #else
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
         r_.values[i] = simde_x_vclzs_u32(a_.values[i]);
@@ -430,25 +316,7 @@ simde_vclzq_s8(simde_int8x16_t a) {
       a_.m128i = _mm_andnot_si128(_mm_add_epi8(a_.m128i, _mm_set1_epi8(HEDLEY_STATIC_CAST(int8_t, 0xff))), a_.m128i);
       r_.m128i = _mm_gf2p8affine_epi64_epi8(a_.m128i, _mm_set_epi32(HEDLEY_STATIC_CAST(int32_t, 0xaaccf0ff), 0, HEDLEY_STATIC_CAST(int32_t, 0xaaccf0ff), 0), 8);
     #elif defined(SIMDE_RISCV_V_NATIVE)
-      vint8m1_t vsign;
-      vuint8m1_t vx, vn;
-      vbool8_t eq_zero_mask, neq_zero_mask, sle_mask;
-      vsign = a_.sv128;
-      vx = __riscv_vreinterpret_v_i8m1_u8m1(vsign);
-      eq_zero_mask = __riscv_vmseq_vx_u8m1_b8(vx, 0, 16);
-      neq_zero_mask = __riscv_vmnot_m_b8(eq_zero_mask, 16);
-      vn = __riscv_vmv_v_x_u8m1(0, 16);
-      sle_mask = __riscv_vmsleu_vx_u8m1_b8_mu(neq_zero_mask, neq_zero_mask, vx, 0x0F, 16);
-      vn = __riscv_vadd_vx_u8m1_mu(sle_mask, vn, vn, 4, 16);
-      vx = __riscv_vsll_vx_u8m1_mu(sle_mask, vx, vx, 4, 16);
-      sle_mask = __riscv_vmsleu_vx_u8m1_b8_mu(neq_zero_mask, neq_zero_mask, vx, 0x3F, 16);
-      vn = __riscv_vadd_vx_u8m1_mu(sle_mask, vn, vn, 2, 16);
-      vx = __riscv_vsll_vx_u8m1_mu(sle_mask, vx, vx, 2, 16);
-      sle_mask = __riscv_vmsleu_vx_u8m1_b8_mu(neq_zero_mask, neq_zero_mask, vx, 0x7F, 16);
-      vn = __riscv_vadd_vx_u8m1_mu(sle_mask, vn, vn, 1, 16);
-      vx = __riscv_vsll_vx_u8m1_mu(sle_mask, vx, vx, 1, 16);
-      vn = __riscv_vmerge_vxm_u8m1(vn, 8, eq_zero_mask, 16);
-      r_.sv128 = __riscv_vreinterpret_v_u8m1_i8m1(vn);
+      r_.sv128 = __riscv_vclz_v_u8m1(a_.sv128, 16);
     #else
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
         r_.values[i] = simde_x_vclzb_s8(a_.values[i]);
@@ -474,27 +342,7 @@ simde_vclzq_s16(simde_int16x8_t a) {
       r_;
 
     #if defined(SIMDE_RISCV_V_NATIVE)
-      vint16m1_t vsign;
-      vuint16m1_t vx, vn;
-      vbool16_t eq_zero_mask, neq_zero_mask, sle_mask;
-      vsign = a_.sv128;
-      vx = __riscv_vreinterpret_v_i16m1_u16m1(vsign);
-      eq_zero_mask = __riscv_vmseq_vx_u16m1_b16(vx, 0, 8);
-      neq_zero_mask = __riscv_vmnot_m_b16(eq_zero_mask, 8);
-      vn = __riscv_vmv_v_x_u16m1(0, 8);
-      sle_mask = __riscv_vmsleu_vx_u16m1_b16_mu(neq_zero_mask, neq_zero_mask, vx, 0x00FF, 8);
-      vn = __riscv_vadd_vx_u16m1_mu(sle_mask, vn, vn, 8, 8);
-      vx = __riscv_vsll_vx_u16m1_mu(sle_mask, vx, vx, 8, 8);
-      sle_mask = __riscv_vmsleu_vx_u16m1_b16_mu(neq_zero_mask, neq_zero_mask, vx, 0x0FFF, 8);
-      vn = __riscv_vadd_vx_u16m1_mu(sle_mask, vn, vn, 4, 8);
-      vx = __riscv_vsll_vx_u16m1_mu(sle_mask, vx, vx, 4, 8);
-      sle_mask = __riscv_vmsleu_vx_u16m1_b16_mu(neq_zero_mask, neq_zero_mask, vx, 0x3FFF, 8);
-      vn = __riscv_vadd_vx_u16m1_mu(sle_mask, vn, vn, 2, 8);
-      vx = __riscv_vsll_vx_u16m1_mu(sle_mask, vx, vx, 2, 8);
-      sle_mask = __riscv_vmsleu_vx_u16m1_b16_mu(neq_zero_mask, neq_zero_mask, vx, 0x7FFF, 8);
-      vn = __riscv_vadd_vx_u16m1_mu(sle_mask, vn, vn, 1, 8);
-      vn = __riscv_vmerge_vxm_u16m1(vn, 16, eq_zero_mask, 8);
-      r_.sv128 = __riscv_vreinterpret_v_u16m1_i16m1(vn);
+      r_.sv128 = __riscv_vclz_v_u16m1(a_.sv128, 8);
     #else
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
         r_.values[i] = simde_x_vclzh_s16(a_.values[i]);
@@ -520,30 +368,7 @@ simde_vclzq_s32(simde_int32x4_t a) {
       r_;
 
     #if defined(SIMDE_RISCV_V_NATIVE)
-      vint32m1_t vsign;
-      vuint32m1_t vx, vn;
-      vbool32_t eq_zero_mask, neq_zero_mask, sle_mask;
-      vsign = a_.sv128;
-      vx = __riscv_vreinterpret_v_i32m1_u32m1(vsign);
-      eq_zero_mask = __riscv_vmseq_vx_u32m1_b32(vx, 0, 4);
-      neq_zero_mask = __riscv_vmnot_m_b32(eq_zero_mask, 4);
-      vn = __riscv_vmv_v_x_u32m1(0, 4);
-      sle_mask = __riscv_vmsleu_vx_u32m1_b32_mu(neq_zero_mask, neq_zero_mask, vx, 0x0000FFFF, 4);
-      vn = __riscv_vadd_vx_u32m1_mu(sle_mask, vn, vn, 16, 4);
-      vx = __riscv_vsll_vx_u32m1_mu(sle_mask, vx, vx, 16, 4);
-      sle_mask = __riscv_vmsleu_vx_u32m1_b32_mu(neq_zero_mask, neq_zero_mask, vx, 0x00FFFFFF, 4);
-      vn = __riscv_vadd_vx_u32m1_mu(sle_mask, vn, vn, 8, 4);
-      vx = __riscv_vsll_vx_u32m1_mu(sle_mask, vx, vx, 8, 4);
-      sle_mask = __riscv_vmsleu_vx_u32m1_b32_mu(neq_zero_mask, neq_zero_mask, vx, 0x0FFFFFFF, 4);
-      vn = __riscv_vadd_vx_u32m1_mu(sle_mask, vn, vn, 4, 4);
-      vx = __riscv_vsll_vx_u32m1_mu(sle_mask, vx, vx, 4, 4);
-      sle_mask = __riscv_vmsleu_vx_u32m1_b32_mu(neq_zero_mask, neq_zero_mask, vx, 0x3FFFFFFF, 4);
-      vn = __riscv_vadd_vx_u32m1_mu(sle_mask, vn, vn, 2, 4);
-      vx = __riscv_vsll_vx_u32m1_mu(sle_mask, vx, vx, 2, 4);
-      sle_mask = __riscv_vmsleu_vx_u32m1_b32_mu(neq_zero_mask, neq_zero_mask, vx, 0x7FFFFFFF, 4);
-      vn = __riscv_vadd_vx_u32m1_mu(sle_mask, vn, vn, 1, 4);
-      vn = __riscv_vmerge_vxm_u32m1(vn, 32, eq_zero_mask, 4);
-      r_.sv128 = __riscv_vreinterpret_v_u32m1_i32m1(vn);
+      r_.sv128 = __riscv_vclz_v_u32m1(a_.sv128, 4);
     #else
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
         r_.values[i] = simde_x_vclzs_s32(a_.values[i]);
@@ -573,22 +398,7 @@ simde_vclzq_u8(simde_uint8x16_t a) {
       a_.m128i = _mm_andnot_si128(_mm_add_epi8(a_.m128i, _mm_set1_epi8(HEDLEY_STATIC_CAST(int8_t, 0xff))), a_.m128i);
       r_.m128i = _mm_gf2p8affine_epi64_epi8(a_.m128i, _mm_set_epi32(HEDLEY_STATIC_CAST(int32_t, 0xaaccf0ff), 0, HEDLEY_STATIC_CAST(int32_t, 0xaaccf0ff), 0), 8);
     #elif defined(SIMDE_RISCV_V_NATIVE)
-      vuint8m1_t vx, vn;
-      vbool8_t eq_zero_mask, neq_zero_mask, sle_mask;
-      vx = a_.sv128;
-      eq_zero_mask = __riscv_vmseq_vx_u8m1_b8(vx, 0, 16);
-      neq_zero_mask = __riscv_vmnot_m_b8(eq_zero_mask, 16);
-      vn = __riscv_vmv_v_x_u8m1(0, 16);
-      sle_mask = __riscv_vmsleu_vx_u8m1_b8_mu(neq_zero_mask, neq_zero_mask, vx, 0x0F, 16);
-      vn = __riscv_vadd_vx_u8m1_mu(sle_mask, vn, vn, 4, 16);
-      vx = __riscv_vsll_vx_u8m1_mu(sle_mask, vx, vx, 4, 16);
-      sle_mask = __riscv_vmsleu_vx_u8m1_b8_mu(neq_zero_mask, neq_zero_mask, vx, 0x3F, 16);
-      vn = __riscv_vadd_vx_u8m1_mu(sle_mask, vn, vn, 2, 16);
-      vx = __riscv_vsll_vx_u8m1_mu(sle_mask, vx, vx, 2, 16);
-      sle_mask = __riscv_vmsleu_vx_u8m1_b8_mu(neq_zero_mask, neq_zero_mask, vx, 0x7F, 16);
-      vn = __riscv_vadd_vx_u8m1_mu(sle_mask, vn, vn, 1, 16);
-      vx = __riscv_vsll_vx_u8m1_mu(sle_mask, vx, vx, 1, 16);
-      r_.sv128 = __riscv_vmerge_vxm_u8m1(vn, 8, eq_zero_mask, 16);
+      r_.sv128 = __riscv_vclz_v_u8m1(a_.sv128, 16);
     #else
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
         r_.values[i] = simde_x_vclzb_u8(a_.values[i]);
@@ -614,25 +424,7 @@ simde_vclzq_u16(simde_uint16x8_t a) {
       r_;
 
     #if defined(SIMDE_RISCV_V_NATIVE)
-      vuint16m1_t vx, vn;
-      vbool16_t eq_zero_mask, neq_zero_mask, sle_mask;
-      vx = a_.sv128;
-      eq_zero_mask = __riscv_vmseq_vx_u16m1_b16(vx, 0, 8);
-      neq_zero_mask = __riscv_vmnot_m_b16(eq_zero_mask, 8);
-      vn = __riscv_vmv_v_x_u16m1(0, 8);
-      sle_mask = __riscv_vmsleu_vx_u16m1_b16_mu(neq_zero_mask, neq_zero_mask, vx, 0x00FF, 8);
-      vn = __riscv_vadd_vx_u16m1_mu(sle_mask, vn, vn, 8, 8);
-      vx = __riscv_vsll_vx_u16m1_mu(sle_mask, vx, vx, 8, 8);
-      sle_mask = __riscv_vmsleu_vx_u16m1_b16_mu(neq_zero_mask, neq_zero_mask, vx, 0x0FFF, 8);
-      vn = __riscv_vadd_vx_u16m1_mu(sle_mask, vn, vn, 4, 8);
-      vx = __riscv_vsll_vx_u16m1_mu(sle_mask, vx, vx, 4, 8);
-      sle_mask = __riscv_vmsleu_vx_u16m1_b16_mu(neq_zero_mask, neq_zero_mask, vx, 0x3FFF, 8);
-      vn = __riscv_vadd_vx_u16m1_mu(sle_mask, vn, vn, 2, 8);
-      vx = __riscv_vsll_vx_u16m1_mu(sle_mask, vx, vx, 2, 8);
-      sle_mask = __riscv_vmsleu_vx_u16m1_b16_mu(neq_zero_mask, neq_zero_mask, vx, 0x7FFF, 8);
-      vn = __riscv_vadd_vx_u16m1_mu(sle_mask, vn, vn, 1, 8);
-      vx = __riscv_vsll_vx_u16m1_mu(sle_mask, vx, vx, 1, 8);
-      r_.sv128 = __riscv_vmerge_vxm_u16m1(vn, 16, eq_zero_mask, 8);
+      r_.sv128 = __riscv_vclz_v_u16m1(a_.sv128, 8);
     #else
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
         r_.values[i] = simde_x_vclzh_u16(a_.values[i]);
@@ -658,27 +450,7 @@ simde_vclzq_u32(simde_uint32x4_t a) {
       r_;
 
     #if defined(SIMDE_RISCV_V_NATIVE)
-      vuint32m1_t vx, vn;
-      vbool32_t eq_zero_mask, neq_zero_mask, sle_mask;
-      vx = a_.sv128;
-      eq_zero_mask = __riscv_vmseq_vx_u32m1_b32(vx, 0, 4);
-      neq_zero_mask = __riscv_vmnot_m_b32(eq_zero_mask, 4);
-      vn = __riscv_vmv_v_x_u32m1(0, 4);
-      sle_mask = __riscv_vmsleu_vx_u32m1_b32_mu(neq_zero_mask, neq_zero_mask, vx, 0x0000FFFF, 4);
-      vn = __riscv_vadd_vx_u32m1_mu(sle_mask, vn, vn, 16, 4);
-      vx = __riscv_vsll_vx_u32m1_mu(sle_mask, vx, vx, 16, 4);
-      sle_mask = __riscv_vmsleu_vx_u32m1_b32_mu(neq_zero_mask, neq_zero_mask, vx, 0x00FFFFFF, 4);
-      vn = __riscv_vadd_vx_u32m1_mu(sle_mask, vn, vn, 8, 4);
-      vx = __riscv_vsll_vx_u32m1_mu(sle_mask, vx, vx, 8, 4);
-      sle_mask = __riscv_vmsleu_vx_u32m1_b32_mu(neq_zero_mask, neq_zero_mask, vx, 0x0FFFFFFF, 4);
-      vn = __riscv_vadd_vx_u32m1_mu(sle_mask, vn, vn, 4, 4);
-      vx = __riscv_vsll_vx_u32m1_mu(sle_mask, vx, vx, 4, 4);
-      sle_mask = __riscv_vmsleu_vx_u32m1_b32_mu(neq_zero_mask, neq_zero_mask, vx, 0x3FFFFFFF, 4);
-      vn = __riscv_vadd_vx_u32m1_mu(sle_mask, vn, vn, 2, 4);
-      vx = __riscv_vsll_vx_u32m1_mu(sle_mask, vx, vx, 2, 4);
-      sle_mask = __riscv_vmsleu_vx_u32m1_b32_mu(neq_zero_mask, neq_zero_mask, vx, 0x7FFFFFFF, 4);
-      vn = __riscv_vadd_vx_u32m1_mu(sle_mask, vn, vn, 1, 4);
-      r_.sv128 = __riscv_vmerge_vxm_u32m1(vn, 32, eq_zero_mask, 4);
+      r_.sv128 = __riscv_vclz_v_u32m1(a_.sv128, 4);
     #else
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
         r_.values[i] = simde_x_vclzs_u32(a_.values[i]);

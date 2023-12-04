@@ -51,36 +51,46 @@ simde_vaeseq_u8(simde_uint8x16_t data, simde_uint8x16_t key) {
       a_ = simde_uint8x16_to_private(data),
       b_ = simde_uint8x16_to_private(key);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      r_.values[i] = a_.values[i] ^ b_.values[i];
-    }
-    // AESShiftRows
-    uint8_t tmp;
-    tmp = r_.values[1];
-    r_.values[1] = r_.values[5];
-    r_.values[5] = r_.values[9];
-    r_.values[9] = r_.values[13];
-    r_.values[13] = tmp;
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint32m1_t block32 = __riscv_vreinterpret_v_u8m1_u32m1(a_.sv128);
+      vuint32m1_t key32 = __riscv_vreinterpret_v_u8m1_u32m1(b_.sv128);
 
-    tmp = r_.values[2];
-    r_.values[2] = r_.values[10];
-    r_.values[10] = tmp;
+      block32 = __riscv_vaesz_vs_u32m1_u32m1(block32, key32, 4);
+      block32 = __riscv_vaesef_vv_u32m1(block32, key32, 4);
+      r_.sv128 = __riscv_vaesz_vs_u32m1_u32m1(block32, key32, 4);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        r_.values[i] = a_.values[i] ^ b_.values[i];
+      }
+      // AESShiftRows
+      uint8_t tmp;
+      tmp = r_.values[1];
+      r_.values[1] = r_.values[5];
+      r_.values[5] = r_.values[9];
+      r_.values[9] = r_.values[13];
+      r_.values[13] = tmp;
 
-    tmp = r_.values[6];
-    r_.values[6] = r_.values[14];
-    r_.values[14] = tmp;
+      tmp = r_.values[2];
+      r_.values[2] = r_.values[10];
+      r_.values[10] = tmp;
 
-    tmp = r_.values[3];
-    r_.values[3] = r_.values[15];
-    r_.values[15] = r_.values[11];
-    r_.values[11] = r_.values[7];
-    r_.values[7] = tmp;
+      tmp = r_.values[6];
+      r_.values[6] = r_.values[14];
+      r_.values[14] = tmp;
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      r_.values[i] = simde_x_aes_s_box[r_.values[i]];
-    }
+      tmp = r_.values[3];
+      r_.values[3] = r_.values[15];
+      r_.values[15] = r_.values[11];
+      r_.values[11] = r_.values[7];
+      r_.values[7] = tmp;
+
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        r_.values[i] = simde_x_aes_s_box[r_.values[i]];
+      }
+    #endif
+
     return simde_uint8x16_from_private(r_);
   #endif
 }
@@ -101,34 +111,44 @@ simde_vaesdq_u8(simde_uint8x16_t data, simde_uint8x16_t key) {
       a_ = simde_uint8x16_to_private(data),
       b_ = simde_uint8x16_to_private(key);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      r_.values[i] = a_.values[i] ^ b_.values[i];
-    }
-    // AESInvShiftRows
-    uint8_t tmp;
-    tmp = r_.values[13];
-    r_.values[13] = r_.values[9];
-    r_.values[9] = r_.values[5];
-    r_.values[5] = r_.values[1];
-    r_.values[1] = tmp;
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint32m1_t block32 = __riscv_vreinterpret_v_u8m1_u32m1(a_.sv128);
+      vuint32m1_t key32 = __riscv_vreinterpret_v_u8m1_u32m1(b_.sv128);
 
-    tmp = r_.values[2];
-    r_.values[2] = r_.values[10];
-    r_.values[10] = tmp;
+      block32 = __riscv_vaesz_vs_u32m1_u32m1(block32, key32, 4);
+      block32 = __riscv_vaesdf_vv_u32m1(block32, key32, 4);
+      r_.sv128 = __riscv_vaesz_vs_u32m1_u32m1(block32, key32, 4);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        r_.values[i] = a_.values[i] ^ b_.values[i];
+      }
+      // AESInvShiftRows
+      uint8_t tmp;
+      tmp = r_.values[13];
+      r_.values[13] = r_.values[9];
+      r_.values[9] = r_.values[5];
+      r_.values[5] = r_.values[1];
+      r_.values[1] = tmp;
 
-    tmp = r_.values[6];
-    r_.values[6] = r_.values[14];
-    r_.values[14] = tmp;
+      tmp = r_.values[2];
+      r_.values[2] = r_.values[10];
+      r_.values[10] = tmp;
 
-    tmp = r_.values[3];
-    r_.values[3] = r_.values[7];
-    r_.values[7] = r_.values[11];
-    r_.values[11] = r_.values[15];
-    r_.values[15] = tmp;
-    for(int i = 0; i < 16; ++i) {
-      r_.values[i] = simde_x_aes_inv_s_box[r_.values[i]];
-    }
+      tmp = r_.values[6];
+      r_.values[6] = r_.values[14];
+      r_.values[14] = tmp;
+
+      tmp = r_.values[3];
+      r_.values[3] = r_.values[7];
+      r_.values[7] = r_.values[11];
+      r_.values[11] = r_.values[15];
+      r_.values[15] = tmp;
+      for(int i = 0; i < 16; ++i) {
+        r_.values[i] = simde_x_aes_inv_s_box[r_.values[i]];
+      }
+    #endif
+
     return simde_uint8x16_from_private(r_);
   #endif
 }

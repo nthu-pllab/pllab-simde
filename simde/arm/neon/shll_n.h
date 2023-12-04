@@ -129,9 +129,8 @@ simde_vshll_n_u8 (const simde_uint8x8_t a, const int n)
   simde_uint16x8_private r_;
   simde_uint8x8_private a_ = simde_uint8x8_to_private(a);
   #if defined(SIMDE_RISCV_V_NATIVE)
-    vuint16m2_t va_wide = __riscv_vwcvtu_x_x_v_u16m2 (a_.sv64, 8);
-    vuint16m2_t rst = __riscv_vsll_vx_u16m2 (va_wide, n, 8);
-    r_.sv128 =  __riscv_vlmul_trunc_v_u16m2_u16m1 (rst);
+    vuint16m2_t r = __riscv_vwsll_vx_u16m2(a_.sv64, n, 8);
+    r_.sv128 =  __riscv_vlmul_trunc_v_u16m2_u16m1(r);
   #else
     SIMDE_VECTORIZE
     for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
@@ -155,9 +154,8 @@ simde_vshll_n_u16 (const simde_uint16x4_t a, const int n)
   simde_uint32x4_private r_;
   simde_uint16x4_private a_ = simde_uint16x4_to_private(a);
   #if defined(SIMDE_RISCV_V_NATIVE)
-    vuint32m2_t va_wide = __riscv_vwcvtu_x_x_v_u32m2 (a_.sv64, 4);
-    vuint32m2_t rst = __riscv_vsll_vx_u32m2 (va_wide, n, 4);
-    r_.sv128 =  __riscv_vlmul_trunc_v_u32m2_u32m1 (rst);
+    vuint32m2_t r = __riscv_vwsll_vx_u32m2(a_.sv64, n, 4);
+    r_.sv128 =  __riscv_vlmul_trunc_v_u32m2_u32m1(r);
   #else
     SIMDE_VECTORIZE
     for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
@@ -181,9 +179,8 @@ simde_vshll_n_u32 (const simde_uint32x2_t a, const int n)
   simde_uint64x2_private r_;
   simde_uint32x2_private a_ = simde_uint32x2_to_private(a);
   #if defined(SIMDE_RISCV_V_NATIVE)
-    vuint64m2_t va_wide = __riscv_vwcvtu_x_x_v_u64m2 (a_.sv64, 2);
-    vuint64m2_t rst = __riscv_vsll_vx_u64m2 (va_wide, n, 2);
-    r_.sv128 =  __riscv_vlmul_trunc_v_u64m2_u64m1 (rst);
+    vuint64m2_t r = __riscv_vwsll_vx_u64m2(a_.sv64, n, 2);
+    r_.sv128 =  __riscv_vlmul_trunc_v_u64m2_u64m1(r);
   #else
     SIMDE_VECTORIZE
     for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {

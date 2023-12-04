@@ -296,6 +296,7 @@ simde_vmull_p8(simde_poly8x8_t a, simde_poly8x8_t b) {
     simde_uint16x8_private r_;
 
     #if defined(SIMDE_RISCV_V_NATIVE)
+      /*
       vuint16m2_t a_temp16 = __riscv_vwcvtu_x_x_v_u16m2(a_.sv64, 8), b_temp16 = __riscv_vwcvtu_x_x_v_u16m2(b_.sv64, 8);
       vuint32m4_t a_temp32 = __riscv_vwcvtu_x_x_v_u32m4(a_temp16, 8), b_temp32 = __riscv_vwcvtu_x_x_v_u32m4(b_temp16, 8);
       vuint64m8_t a_temp64 = __riscv_vwcvtu_x_x_v_u64m8(a_temp32, 8), b_temp64 = __riscv_vwcvtu_x_x_v_u64m8(b_temp32, 8);
@@ -304,6 +305,36 @@ simde_vmull_p8(simde_poly8x8_t a, simde_poly8x8_t b) {
       vuint32m4_t temp32 = __riscv_vncvt_x_x_w_u32m4(temp64, 8);
       vuint16m2_t temp16 = __riscv_vncvt_x_x_w_u16m2(temp32, 8);
       r_.sv128 =  __riscv_vlmul_trunc_v_u16m2_u16m1(temp16);
+      */
+
+      uint8_t p1 = UINT8_C(0x11), p2 = UINT8_C(0x22), p4 = UINT8_C(0x44), p8 = UINT8_C(0x88);
+      uint16_t q1 = UINT16_C(0x1111), q2 = UINT16_C(0x2222), q4 = UINT16_C(0x4444), q8 = UINT16_C(0x8888);
+      vuint8m1_t
+        x0 = __riscv_vand_vx_u8m1(a_.sv64, p1, 8), x1 = __riscv_vand_vx_u8m1(a_.sv64, p2, 8),
+        x2 = __riscv_vand_vx_u8m1(a_.sv64, p4, 8), x3 = __riscv_vand_vx_u8m1(a_.sv64, p8, 8),
+        y0 = __riscv_vand_vx_u8m1(b_.sv64, p1, 8), y1 = __riscv_vand_vx_u8m1(b_.sv64, p2, 8),
+        y2 = __riscv_vand_vx_u8m1(b_.sv64, p4, 8), y3 = __riscv_vand_vx_u8m1(b_.sv64, p8, 8);
+    
+      vuint16m2_t
+        a0 = __riscv_vwmulu_vv_u16m2(x0, y0, 8), a1 = __riscv_vwmulu_vv_u16m2(x0, y1, 8),
+        a2 = __riscv_vwmulu_vv_u16m2(x0, y2, 8), a3 = __riscv_vwmulu_vv_u16m2(x0, y3, 8),
+        b0 = __riscv_vwmulu_vv_u16m2(x1, y3, 8), b1 = __riscv_vwmulu_vv_u16m2(x1, y0, 8),
+        b2 = __riscv_vwmulu_vv_u16m2(x1, y1, 8), b3 = __riscv_vwmulu_vv_u16m2(x1, y2, 8),
+        c0 = __riscv_vwmulu_vv_u16m2(x2, y2, 8), c1 = __riscv_vwmulu_vv_u16m2(x2, y3, 8),
+        c2 = __riscv_vwmulu_vv_u16m2(x2, y0, 8), c3 = __riscv_vwmulu_vv_u16m2(x2, y1, 8),
+        d0 = __riscv_vwmulu_vv_u16m2(x3, y1, 8), d1 = __riscv_vwmulu_vv_u16m2(x3, y2, 8),
+        d2 = __riscv_vwmulu_vv_u16m2(x3, y3, 8), d3 = __riscv_vwmulu_vv_u16m2(x3, y0, 8);
+    
+      vuint16m2_t
+        z0 = __riscv_vxor_vv_u16m2(__riscv_vxor_vv_u16m2(a0, b0, 8), __riscv_vxor_vv_u16m2(c0, d0, 8), 8),
+        z1 = __riscv_vxor_vv_u16m2(__riscv_vxor_vv_u16m2(a1, b1, 8), __riscv_vxor_vv_u16m2(c1, d1, 8), 8),
+        z2 = __riscv_vxor_vv_u16m2(__riscv_vxor_vv_u16m2(a2, b2, 8), __riscv_vxor_vv_u16m2(c2, d2, 8), 8),
+        z3 = __riscv_vxor_vv_u16m2(__riscv_vxor_vv_u16m2(a3, b3, 8), __riscv_vxor_vv_u16m2(c3, d3, 8), 8);
+    
+        z0 = __riscv_vand_vx_u16m2(z0, q1, 8), z1 = __riscv_vand_vx_u16m2(z1, q2, 8),
+        z2 = __riscv_vand_vx_u16m2(z2, q4, 8), z3 = __riscv_vand_vx_u16m2(z3, q8, 8);
+    
+      r_.sv128 = __riscv_vlmul_trunc_v_u16m2_u16m1(__riscv_vor_vv_u16m2(__riscv_vor_vv_u16m2(z0, z1, 8), __riscv_vor_vv_u16m2(z2, z3, 8), 8));
     #else
       SIMDE_VECTORIZE
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {

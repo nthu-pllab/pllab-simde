@@ -348,10 +348,14 @@ simde_vget_high_p8(simde_poly8x16_t a) {
     simde_poly8x8_private r_;
     simde_poly8x16_private a_ = simde_poly8x16_to_private(a);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      r_.values[i] = a_.values[i + (sizeof(r_.values) / sizeof(r_.values[0]))];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv64 = __riscv_vslidedown_vx_u8m1(a_.sv128 , 8 , 16);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        r_.values[i] = a_.values[i + (sizeof(r_.values) / sizeof(r_.values[0]))];
+      }
+    #endif
 
     return simde_poly8x8_from_private(r_);
   #endif
@@ -370,10 +374,14 @@ simde_vget_high_p16(simde_poly16x8_t a) {
     simde_poly16x4_private r_;
     simde_poly16x8_private a_ = simde_poly16x8_to_private(a);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      r_.values[i] = a_.values[i + (sizeof(r_.values) / sizeof(r_.values[0]))];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv64 = __riscv_vslidedown_vx_u16m1(a_.sv128 , 4 , 8);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        r_.values[i] = a_.values[i + (sizeof(r_.values) / sizeof(r_.values[0]))];
+      }
+    #endif
 
     return simde_poly16x4_from_private(r_);
   #endif
@@ -392,10 +400,14 @@ simde_vget_high_p64(simde_poly64x2_t a) {
     simde_poly64x1_private r_;
     simde_poly64x2_private a_ = simde_poly64x2_to_private(a);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      r_.values[i] = a_.values[i + (sizeof(r_.values) / sizeof(r_.values[0]))];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv64 = __riscv_vslidedown_vx_u64m1(a_.sv128 , 1 , 2);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        r_.values[i] = a_.values[i + (sizeof(r_.values) / sizeof(r_.values[0]))];
+      }
+    #endif
 
     return simde_poly64x1_from_private(r_);
   #endif

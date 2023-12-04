@@ -576,6 +576,13 @@ simde_uint8x8_t
 simde_vceqz_p8(simde_poly8x8_t a) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
     return vceqz_p8(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE)
+    simde_uint8x8_private r_;
+    simde_poly8x8_private a_ = simde_poly8x8_to_private(a);
+    vuint8m1_t vs_0 = __riscv_vmv_v_x_u8m1(UINT8_C(0), 8);
+    vbool8_t mask = __riscv_vmseq_vx_u8m1_b8(a_.sv64, 0, 8);
+    r_.sv64 = __riscv_vmerge_vxm_u8m1(vs_0, -1, mask, 8);
+    return simde_uint8x8_from_private(r_);
   #else
     return simde_vceq_p8(a, simde_vdup_n_p8(0));
   #endif
@@ -590,6 +597,13 @@ simde_uint8x16_t
 simde_vceqzq_p8(simde_poly8x16_t a) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
     return vceqzq_p8(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE)
+    simde_uint8x16_private r_;
+    simde_poly8x16_private a_ = simde_poly8x16_to_private(a);
+    vuint8m1_t vs_0 = __riscv_vmv_v_x_u8m1(UINT8_C(0), 16);
+    vbool8_t mask = __riscv_vmseq_vx_u8m1_b8(a_.sv128, 0, 16);
+    r_.sv128 = __riscv_vmerge_vxm_u8m1(vs_0, -1, mask, 16);
+    return simde_uint8x16_from_private(r_);
   #else
     return simde_vceqq_p8(a, simde_vdupq_n_p8(0));
   #endif
@@ -604,6 +618,13 @@ simde_uint64x1_t
 simde_vceqz_p64(simde_poly64x1_t a) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
     return vceqz_p64(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE)
+    simde_uint64x1_private r_;
+    simde_poly64x1_private a_ = simde_poly64x1_to_private(a);
+    vuint64m1_t vs_0 = __riscv_vmv_v_x_u64m1(UINT64_C(0), 1);
+    vbool64_t mask = __riscv_vmseq_vx_u64m1_b64(a_.sv64, 0, 1);
+    r_.sv64 = __riscv_vmerge_vxm_u64m1(vs_0, -1, mask, 1);
+    return simde_uint64x1_from_private(r_);
   #else
     return simde_vceq_p64(a, simde_vdup_n_p64(0));
   #endif
@@ -618,6 +639,13 @@ simde_uint64x2_t
 simde_vceqzq_p64(simde_poly64x2_t a) {
   #if defined(SIMDE_ARM_NEON_A64V8_NATIVE)
     return vceqzq_p64(a);
+  #elif defined(SIMDE_RISCV_V_NATIVE)
+    simde_uint64x2_private r_;
+    simde_poly64x2_private a_ = simde_poly64x2_to_private(a);
+    vuint64m1_t vs_0 = __riscv_vmv_v_x_u64m1(UINT64_C(0), 2);
+    vbool64_t mask = __riscv_vmseq_vx_u64m1_b64(a_.sv128, 0, 2);
+    r_.sv128 = __riscv_vmerge_vxm_u64m1(vs_0, -1, mask, 2);
+    return simde_uint64x2_from_private(r_);
   #else
     return simde_vceqq_p64(a, simde_vdupq_n_p64(0));
   #endif

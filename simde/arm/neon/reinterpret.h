@@ -1764,7 +1764,7 @@ simde_vreinterpret_u16_s16(simde_int16x4_t a) {
     simde_uint16x4_private r_;
     simde_int16x4_private a_ = simde_int16x4_to_private(a);
     #if defined(SIMDE_RISCV_V_NATIVE)
-      r_.sv64 = __riscv_vreinterpret_v_u16m1_i16m1(a_.sv64);
+      r_.sv64 = __riscv_vreinterpret_v_i16m1_u16m1(a_.sv64);
     #else
       simde_memcpy(&r_, &a_, sizeof(r_));
     #endif
@@ -1954,7 +1954,7 @@ simde_vreinterpretq_u16_s16(simde_int16x8_t a) {
     simde_uint16x8_private r_;
     simde_int16x8_private a_ = simde_int16x8_to_private(a);
     #if defined(SIMDE_RISCV_V_NATIVE)
-      r_.sv128 = __riscv_vreinterpret_v_u16m1_i16m1(a_.sv128);
+      r_.sv128 = __riscv_vreinterpret_v_i16m1_u16m1(a_.sv128);
     #else
       simde_memcpy(&r_, &a_, sizeof(r_));
     #endif

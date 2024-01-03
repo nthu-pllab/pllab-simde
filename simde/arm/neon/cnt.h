@@ -56,15 +56,17 @@ simde_vcnt_s8(simde_int8x8_t a) {
       a_ = simde_int8x8_to_private(a);
 
     #if defined(SIMDE_RISCV_V_NATIVE)
-      vuint8m1_t tmp = __riscv_vand_vv_u8m1(__riscv_vsrl_vx_u8m1(a_.sv64 , 1 , 8) , __riscv_vmv_v_x_u8m1(0x55 , 8) , 8);
-      a_.sv64 = __riscv_vsub_vv_u8m1(a_.sv64 , tmp , 8);
-      tmp = a_.sv64;
-      a_.sv64 = __riscv_vand_vv_u8m1(a_.sv64 , __riscv_vmv_v_x_u8m1(0x33 , 8) , 8);
+      vuint8m1_t p = __riscv_vreinterpret_v_i8m1_u8m1(a_.sv64);
+      vuint8m1_t tmp = __riscv_vand_vv_u8m1(__riscv_vsrl_vx_u8m1(p , 1 , 8) , __riscv_vmv_v_x_u8m1(0x55 , 8) , 8);
+      p = __riscv_vsub_vv_u8m1(p , tmp , 8);
+      tmp = p;
+      p = __riscv_vand_vv_u8m1(p , __riscv_vmv_v_x_u8m1(0x33 , 8) , 8);
       tmp = __riscv_vand_vv_u8m1(__riscv_vsrl_vx_u8m1(tmp , 2 , 8) , __riscv_vmv_v_x_u8m1(0x33 , 8) , 8);
-      a_.sv64 = __riscv_vadd_vv_u8m1(a_.sv64 , tmp , 8);
-      tmp = __riscv_vsrl_vx_u8m1(a_.sv64, 4 , 8);
-      a_.sv64 = __riscv_vadd_vv_u8m1(a_.sv64 , tmp , 8);
-      r_.sv64 = __riscv_vand_vv_u8m1(a_.sv64 , __riscv_vmv_v_x_u8m1(0xf , 8) , 8);
+      p = __riscv_vadd_vv_u8m1(p , tmp , 8);
+      tmp = __riscv_vsrl_vx_u8m1(p, 4 , 8);
+      p = __riscv_vadd_vv_u8m1(p , tmp , 8);
+      p = __riscv_vand_vv_u8m1(p , __riscv_vmv_v_x_u8m1(0xf , 8) , 8);
+      r_.sv64 = __riscv_vreinterpret_v_u8m1_i8m1(p);
     #else
       SIMDE_VECTORIZE
       for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {

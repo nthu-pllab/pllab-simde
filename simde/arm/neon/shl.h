@@ -145,7 +145,7 @@ simde_vshl_s8 (const simde_int8x8_t a, const simde_int8x8_t b) {
     #else
       #if defined(SIMDE_RISCV_V_NATIVE)
         vint8m1_t bit_shift_rst = __riscv_vmerge_vxm_i8m1(
-         __riscv_vsll_vv_i8m1 (a_.sv64, b_.sv64, 8), 0, __riscv_vmsge_vx_i8m1_b8(b_.sv64, 8, 8), 8);
+         __riscv_vsll_vv_i8m1 (a_.sv64, __riscv_vreinterpret_v_i8m1_u8m1(b_.sv64), 8), 0, __riscv_vmsge_vx_i8m1_b8(b_.sv64, 8, 8), 8);
         vint8m1_t b_abs =  __riscv_vmax_vv_i8m1 (b_.sv64, __riscv_vneg_v_i8m1 (b_.sv64, 8), 8);
         vuint8m1_t u_b_abs = __riscv_vreinterpret_v_i8m1_u8m1 (b_abs);
         vint8m1_t scal_shift_rst = __riscv_vmerge_vvm_i8m1(__riscv_vsra_vv_i8m1 (a_.sv64, u_b_abs, 8), \
@@ -192,7 +192,7 @@ simde_vshl_s16 (const simde_int16x4_t a, const simde_int16x4_t b) {
     #else
       #if defined(SIMDE_RISCV_V_NATIVE)
         vint8mf2_t b_8mf2 = __riscv_vncvt_x_x_w_i8mf2 (b_.sv64, 4);
-        vint16m1_t bit_shift_rst = __riscv_vmerge_vxm_i16m1(__riscv_vsll_vv_i16m1 (a_.sv64, b_.sv64, 4), 0 \
+        vint16m1_t bit_shift_rst = __riscv_vmerge_vxm_i16m1(__riscv_vsll_vv_i16m1 (a_.sv64, __riscv_vreinterpret_v_i16m1_u16m1(b_.sv64), 4), 0 \
           , __riscv_vmsge_vx_i8mf2_b16(b_8mf2, 16, 8), 4);
         vint16m1_t b_abs =  __riscv_vmax_vv_i16m1 (b_.sv64, __riscv_vneg_v_i16m1 (b_.sv64, 4), 4);
         vuint16m1_t u_b_abs = __riscv_vreinterpret_v_i16m1_u16m1 (b_abs);
@@ -241,7 +241,7 @@ simde_vshl_s32 (const simde_int32x2_t a, const simde_int32x2_t b) {
     #else
       #if defined(SIMDE_RISCV_V_NATIVE)
         vint8mf4_t b_8mf4 = __riscv_vncvt_x_x_w_i8mf4 (__riscv_vncvt_x_x_w_i16mf2 (b_.sv64, 2), 4);
-        vint32m1_t bit_shift_rst = __riscv_vmerge_vxm_i32m1(__riscv_vsll_vv_i32m1 (a_.sv64, b_.sv64, 2), 0
+        vint32m1_t bit_shift_rst = __riscv_vmerge_vxm_i32m1(__riscv_vsll_vv_i32m1 (a_.sv64, __riscv_vreinterpret_v_i32m1_u32m1(b_.sv64), 2), 0
           , __riscv_vmsge_vx_i8mf4_b32(b_8mf4, 32, 2), 2);
         vint32m1_t b_abs =  __riscv_vmax_vv_i32m1 (b_.sv64, __riscv_vneg_v_i32m1 (b_.sv64, 2), 2);
         vuint32m1_t u_b_abs = __riscv_vreinterpret_v_i32m1_u32m1 (b_abs);
@@ -301,7 +301,7 @@ simde_vshl_s64 (const simde_int64x1_t a, const simde_int64x1_t b) {
     #else
       #if defined(SIMDE_RISCV_V_NATIVE)
         vint8mf8_t b_8mf8 = __riscv_vncvt_x_x_w_i8mf8 (__riscv_vncvt_x_x_w_i16mf4 (__riscv_vncvt_x_x_w_i32mf2 (b_.sv64, 1), 2), 4);
-        vint64m1_t bit_shift_rst = __riscv_vmerge_vxm_i64m1(__riscv_vsll_vv_i64m1 (a_.sv64, b_.sv64, 1), 0
+        vint64m1_t bit_shift_rst = __riscv_vmerge_vxm_i64m1(__riscv_vsll_vv_i64m1 (a_.sv64, __riscv_vreinterpret_v_i64m1_u64m1(b_.sv64), 1), 0
           , __riscv_vmsge_vx_i8mf8_b64(b_8mf8, 64, 1), 1);
         vint64m1_t b_abs =  __riscv_vmax_vv_i64m1 (b_.sv64, __riscv_vneg_v_i64m1 (b_.sv64, 1), 1);
         vuint64m1_t u_b_abs = __riscv_vreinterpret_v_i64m1_u64m1 (b_abs);
@@ -568,7 +568,7 @@ simde_vshlq_s8 (const simde_int8x16_t a, const simde_int8x16_t b) {
       r_.m128i = _mm256_cvtepi16_epi8(r256);
     #else
       #if defined(SIMDE_RISCV_V_NATIVE)
-        vint8m1_t bit_shift_rst = __riscv_vmerge_vxm_i8m1(__riscv_vsll_vv_i8m1 (a_.sv128, b_.sv128, 16), \
+        vint8m1_t bit_shift_rst = __riscv_vmerge_vxm_i8m1(__riscv_vsll_vv_i8m1 (a_.sv128, __riscv_vreinterpret_v_i8m1_u8m1(b_.sv128), 16), \
           0, __riscv_vmsge_vx_i8m1_b8(b_.sv128, 8, 16), 16);
         vint8m1_t b_abs =  __riscv_vmax_vv_i8m1 (b_.sv128, __riscv_vneg_v_i8m1 (b_.sv128, 16), 16);
         vuint8m1_t u_b_abs = __riscv_vreinterpret_v_i8m1_u8m1 (b_abs);
@@ -641,7 +641,7 @@ simde_vshlq_s16 (const simde_int16x8_t a, const simde_int16x8_t b) {
         vint8mf2_t b_8mf2_abs = __riscv_vmax_vv_i8mf2 (b_8mf2, __riscv_vneg_v_i8mf2 (b_8mf2, 16), 16);
         vuint8mf2_t u_b_8mf2_abs = __riscv_vreinterpret_v_i8mf2_u8mf2(b_8mf2_abs);
         vuint16m1_t u_b_abs = __riscv_vwcvtu_x_x_v_u16m1 (u_b_8mf2_abs, 16);
-        vint16m1_t bit_shift_rst = __riscv_vmerge_vxm_i16m1(__riscv_vsll_vv_i16m1 (a_.sv128, b_.sv128, 8), 0, \
+        vint16m1_t bit_shift_rst = __riscv_vmerge_vxm_i16m1(__riscv_vsll_vv_i16m1 (a_.sv128, __riscv_vreinterpret_v_i16m1_u16m1(b_.sv128), 8), 0, \
           __riscv_vmsge_vx_i8mf2_b16(b_8mf2, 16, 16), 8);
         vint16m1_t scal_shift_rst = __riscv_vmerge_vvm_i16m1(__riscv_vsra_vv_i16m1 (a_.sv128, u_b_abs, 8),
           __riscv_vsra_vx_i16m1(a_.sv128, 15, 8), __riscv_vmsle_vx_i8mf2_b16(b_8mf2, -16, 16), 8);
@@ -705,7 +705,7 @@ simde_vshlq_s32 (const simde_int32x4_t a, const simde_int32x4_t b) {
         vint8mf4_t b_8mf4_abs =  __riscv_vmax_vv_i8mf4 (b_8mf4, __riscv_vneg_v_i8mf4 (b_8mf4, 16), 16);
         vuint8mf4_t u_b_8mf4_abs = __riscv_vreinterpret_v_i8mf4_u8mf4 (b_8mf4_abs);
         vuint32m1_t u_b_abs = __riscv_vwcvtu_x_x_v_u32m1 (__riscv_vwcvtu_x_x_v_u16mf2 (u_b_8mf4_abs, 16), 8);
-        vint32m1_t bit_shift_rst = __riscv_vmerge_vxm_i32m1(__riscv_vsll_vv_i32m1 (a_.sv128, b_.sv128, 4), 0,
+        vint32m1_t bit_shift_rst = __riscv_vmerge_vxm_i32m1(__riscv_vsll_vv_i32m1 (a_.sv128, __riscv_vreinterpret_v_i32m1_u32m1(b_.sv128), 4), 0,
           __riscv_vmsge_vx_i8mf4_b32(b_8mf4, 32, 16), 4);
         vint32m1_t scal_shift_rst = __riscv_vmerge_vvm_i32m1(__riscv_vsra_vv_i32m1 (a_.sv128, u_b_abs, 4), \
           __riscv_vsra_vx_i32m1(a_.sv128, 31, 4), __riscv_vmsle_vx_i8mf4_b32(b_8mf4, -32, 4), 4);
@@ -778,7 +778,7 @@ simde_vshlq_s64 (const simde_int64x2_t a, const simde_int64x2_t b) {
         vint8mf8_t b_8mf8_abs =  __riscv_vmax_vv_i8mf8 (b_8mf8, __riscv_vneg_v_i8mf8 (b_8mf8, 16), 16);
         vuint8mf8_t u_b_8mf8_abs = __riscv_vreinterpret_v_i8mf8_u8mf8 (b_8mf8_abs);
         vuint64m1_t u_b_abs = __riscv_vwcvtu_x_x_v_u64m1(__riscv_vwcvtu_x_x_v_u32mf2 (__riscv_vwcvtu_x_x_v_u16mf4(u_b_8mf8_abs, 16), 8), 4);
-        vint64m1_t bit_shift_rst = __riscv_vmerge_vxm_i64m1(__riscv_vsll_vv_i64m1 (a_.sv128, b_.sv128, 2), 0, __riscv_vmsge_vx_i8mf8_b64(b_8mf8, 64, 2), 2);
+        vint64m1_t bit_shift_rst = __riscv_vmerge_vxm_i64m1(__riscv_vsll_vv_i64m1 (a_.sv128, __riscv_vreinterpret_v_i64m1_u64m1(b_.sv128), 2), 0, __riscv_vmsge_vx_i8mf8_b64(b_8mf8, 64, 2), 2);
         vint64m1_t scal_shift_rst = __riscv_vmerge_vvm_i64m1(__riscv_vsra_vv_i64m1 (a_.sv128, u_b_abs, 2)
           , __riscv_vsra_vx_i64m1(a_.sv128, 63, 2), __riscv_vmsle_vx_i8mf8_b64(b_8mf8, -64, 2), 2);
         r_.sv128 = __riscv_vmerge_vvm_i64m1 (bit_shift_rst, scal_shift_rst, __riscv_vmslt_vx_i8mf8_b64 (b_8mf8, 0, 16), 2);

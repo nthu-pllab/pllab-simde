@@ -44,7 +44,7 @@ simde_vst1_f16(simde_float16_t ptr[HEDLEY_ARRAY_PARAM(4)], simde_float16x4_t val
     #if defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH
       __riscv_vse16_v_f16m1((_Float16 *)ptr , val_.sv64 , 4);
     #else
-      simde_memcpy(ptr, &val_, sizeof(val_));
+      simde_memcpy(ptr, &val_, 8);
     #endif
   #endif
 }
@@ -256,7 +256,7 @@ simde_vst1q_f16(simde_float16_t ptr[HEDLEY_ARRAY_PARAM(8)], simde_float16x8_t va
     #elif defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH
       __riscv_vse16_v_f16m1((_Float16 *)ptr , val_.sv128 , 8);
     #else
-      simde_memcpy(ptr, &val_, sizeof(val_));
+      simde_memcpy(ptr, &val_, 16);
     #endif
   #endif
 }

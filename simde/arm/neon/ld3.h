@@ -56,7 +56,7 @@ simde_vld3_f16(simde_float16_t const *ptr) {
       r_[2].sv64 = __riscv_vget_v_f16m1x3_f16m1(dest, 2);
     #else
       for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
-        for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
+        for (size_t j = 0 ; j < 4 ; j++) {
           r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
         }
       }
@@ -419,7 +419,7 @@ simde_vld3q_f16(simde_float16_t const *ptr) {
       r_[2].sv128 = __riscv_vget_v_f16m1x3_f16m1(dest, 2);
     #else
       for (size_t i = 0; i < (sizeof(r_) / sizeof(r_[0])); i++) {
-        for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
+        for (size_t j = 0 ; j < 8 ; j++) {
           r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
         }
       }

@@ -444,7 +444,7 @@ simde_vld2_f16(simde_float16_t const ptr[HEDLEY_ARRAY_PARAM(8)]) {
     simde_float16x4_private r_[2];
 
     for (size_t i = 0 ; i < (sizeof(r_) / sizeof(r_[0])) ; i++) {
-      for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
+      for (size_t j = 0 ; j < 4 ; j++) {
         r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
       }
     }
@@ -945,7 +945,7 @@ simde_vld2q_f16(simde_float16_t const ptr[HEDLEY_ARRAY_PARAM(16)]) {
     simde_float16x8_private r_[2];
 
     for (size_t i = 0 ; i < (sizeof(r_) / sizeof(r_[0])); i++) {
-      for (size_t j = 0 ; j < (sizeof(r_[0].values) / sizeof(r_[0].values[0])) ; j++) {
+      for (size_t j = 0 ; j < 8 ; j++) {
         r_[i].values[j] = ptr[i + (j * (sizeof(r_) / sizeof(r_[0])))];
       }
     }

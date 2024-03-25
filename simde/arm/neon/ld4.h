@@ -48,14 +48,14 @@ simde_vld4_f16(simde_float16_t const ptr[HEDLEY_ARRAY_PARAM(16)]) {
     return vld4_f16(ptr);
   #else
     simde_float16x4_private a_[4];
-    #if defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    #if defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH
       vfloat16m1x4_t dest = __riscv_vlseg4e16_v_f16m1x4((_Float16 *)&ptr[0], 4);
       a_[0].sv64 = __riscv_vget_v_f16m1x4_f16m1(dest, 0);
       a_[1].sv64 = __riscv_vget_v_f16m1x4_f16m1(dest, 1);
       a_[2].sv64 = __riscv_vget_v_f16m1x4_f16m1(dest, 2);
       a_[3].sv64 = __riscv_vget_v_f16m1x4_f16m1(dest, 3);
     #else
-      for (size_t i = 0; i < (sizeof(simde_float16x4_t) / sizeof(*ptr)) * 4 ; i++) {
+      for (size_t i = 0; i < 16 ; i++) {
         a_[i % 4].values[i / 4] = ptr[i];
       }
     #endif
@@ -356,14 +356,14 @@ simde_vld4q_f16(simde_float16_t const ptr[HEDLEY_ARRAY_PARAM(32)]) {
     return vld4q_f16(ptr);
   #else
     simde_float16x8_private a_[4];
-    #if defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH && (SIMDE_NATURAL_VECTOR_SIZE >= 128)
+    #if defined(SIMDE_RISCV_V_NATIVE) && SIMDE_ARCH_RISCV_ZVFH
       vfloat16m1x4_t dest = __riscv_vlseg4e16_v_f16m1x4((_Float16 *)&ptr[0], 8);
       a_[0].sv128 = __riscv_vget_v_f16m1x4_f16m1(dest, 0);
       a_[1].sv128 = __riscv_vget_v_f16m1x4_f16m1(dest, 1);
       a_[2].sv128 = __riscv_vget_v_f16m1x4_f16m1(dest, 2);
       a_[3].sv128 = __riscv_vget_v_f16m1x4_f16m1(dest, 3);
     #else
-      for (size_t i = 0; i < (sizeof(simde_float16x8_t) / sizeof(*ptr)) * 4 ; i++) {
+      for (size_t i = 0; i < 32 ; i++) {
         a_[i % 4].values[i / 4] = ptr[i];
       }
     #endif

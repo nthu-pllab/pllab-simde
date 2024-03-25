@@ -22,6 +22,7 @@
  *
  * Copyright:
  *   2023      Yi-Yen Chung <eric681@andestech.com> (Copyright owned by Andes Technology)
+ *   2023      Chi-Wei Chu <wewe5215@gapp.nthu.edu.tw>
  */
 
 #if !defined(SIMDE_ARM_NEON_QSHRUN_HIGH_N_H)
@@ -30,6 +31,7 @@
 #include "combine.h"
 #include "qmovn.h"
 #include "types.h"
+#include "qshrun_n.h"
 
 HEDLEY_DIAGNOSTIC_PUSH
 SIMDE_DISABLE_UNWANTED_DIAGNOSTICS
@@ -53,6 +55,8 @@ simde_vqshrun_high_n_s16(simde_uint8x8_t r, simde_int16x8_t a, const int n)
 }
 #if defined(SIMDE_ARM_NEON_A64V8_NATIVE) && !defined(SIMDE_BUG_CLANG_71365)
   #define simde_vqshrun_high_n_s16(r, a, n) vqshrun_high_n_s16((r), (a), (n))
+#else
+  #define simde_vqshrun_high_n_s16(r, a, n) simde_vcombine_u8(r, simde_vqshrun_n_s16(a, n))
 #endif
 #if defined(SIMDE_ARM_NEON_A64V8_ENABLE_NATIVE_ALIASES)
   #undef vqshrun_high_n_s16
@@ -77,6 +81,8 @@ simde_vqshrun_high_n_s32(simde_uint16x4_t r, simde_int32x4_t a, const int n)
 }
 #if defined(SIMDE_ARM_NEON_A64V8_NATIVE) && !defined(SIMDE_BUG_CLANG_71365)
   #define simde_vqshrun_high_n_s32(r, a, n) vqshrun_high_n_s32((r), (a), (n))
+#else
+  #define simde_vqshrun_high_n_s32(r, a, n) simde_vcombine_u16(r, simde_vqshrun_n_s32(a, n))
 #endif
 #if defined(SIMDE_ARM_NEON_A64V8_ENABLE_NATIVE_ALIASES)
   #undef vqshrun_high_n_s32
@@ -101,6 +107,8 @@ simde_vqshrun_high_n_s64(simde_uint32x2_t r, simde_int64x2_t a, const int n)
 }
 #if defined(SIMDE_ARM_NEON_A64V8_NATIVE) && !defined(SIMDE_BUG_CLANG_71365)
   #define simde_vqshrun_high_n_s64(r, a, n) vqshrun_high_n_s64((r), (a), (n))
+#else
+  #define simde_vqshrun_high_n_s64(r, a, n) simde_vcombine_u32(r, simde_vqshrun_n_s64(a, n))
 #endif
 #if defined(SIMDE_ARM_NEON_A64V8_ENABLE_NATIVE_ALIASES)
   #undef vqshrun_high_n_s64

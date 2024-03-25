@@ -67,7 +67,7 @@ simde_vld1_f32(simde_float32 const ptr[HEDLEY_ARRAY_PARAM(2)]) {
     #if defined(SIMDE_RISCV_V_NATIVE)
       r_.sv64 = __riscv_vle32_v_f32m1(ptr , 2);
     #else
-      simde_memcpy(&r_, ptr, 8);
+      simde_memcpy(&r_, ptr, sizeof(r_));
     #endif
     return simde_float32x2_from_private(r_);
   #endif
@@ -87,7 +87,7 @@ simde_vld1_f64(simde_float64 const ptr[HEDLEY_ARRAY_PARAM(1)]) {
     #if defined(SIMDE_RISCV_V_NATIVE)
       r_.sv64 = __riscv_vle64_v_f64m1(ptr , 1);
     #else
-      simde_memcpy(&r_, ptr, 8);
+      simde_memcpy(&r_, ptr, sizeof(r_));
     #endif
     return simde_float64x1_from_private(r_);
   #endif
@@ -107,7 +107,7 @@ simde_vld1_s8(int8_t const ptr[HEDLEY_ARRAY_PARAM(8)]) {
     #if defined(SIMDE_RISCV_V_NATIVE)
       r_.sv64 = __riscv_vle8_v_i8m1(ptr , 8);
     #else
-      simde_memcpy(&r_, ptr, 8);
+      simde_memcpy(&r_, ptr, sizeof(r_));
     #endif
     return simde_int8x8_from_private(r_);
   #endif
@@ -127,7 +127,7 @@ simde_vld1_s16(int16_t const ptr[HEDLEY_ARRAY_PARAM(4)]) {
     #if defined(SIMDE_RISCV_V_NATIVE)
       r_.sv64 = __riscv_vle16_v_i16m1(ptr , 4);
     #else
-      simde_memcpy(&r_, ptr, 8);
+      simde_memcpy(&r_, ptr, sizeof(r_));
     #endif
     return simde_int16x4_from_private(r_);
   #endif
@@ -147,7 +147,7 @@ simde_vld1_s32(int32_t const ptr[HEDLEY_ARRAY_PARAM(2)]) {
     #if defined(SIMDE_RISCV_V_NATIVE)
       r_.sv64 = __riscv_vle32_v_i32m1(ptr , 2);
     #else
-      simde_memcpy(&r_, ptr, 8);
+      simde_memcpy(&r_, ptr, sizeof(r_));
     #endif
     return simde_int32x2_from_private(r_);
   #endif
@@ -167,7 +167,7 @@ simde_vld1_s64(int64_t const ptr[HEDLEY_ARRAY_PARAM(1)]) {
     #if defined(SIMDE_RISCV_V_NATIVE)
       r_.sv64 = __riscv_vle64_v_i64m1(ptr , 1);
     #else
-      simde_memcpy(&r_, ptr, 8);
+      simde_memcpy(&r_, ptr, sizeof(r_));
     #endif
     return simde_int64x1_from_private(r_);
   #endif
@@ -187,7 +187,7 @@ simde_vld1_u8(uint8_t const ptr[HEDLEY_ARRAY_PARAM(8)]) {
     #if defined(SIMDE_RISCV_V_NATIVE)
       r_.sv64 = __riscv_vle8_v_u8m1(ptr , 8);
     #else
-      simde_memcpy(&r_, ptr, 8);
+      simde_memcpy(&r_, ptr, sizeof(r_));
     #endif
     return simde_uint8x8_from_private(r_);
   #endif
@@ -207,7 +207,7 @@ simde_vld1_u16(uint16_t const ptr[HEDLEY_ARRAY_PARAM(4)]) {
     #if defined(SIMDE_RISCV_V_NATIVE)
       r_.sv64 = __riscv_vle16_v_u16m1(ptr , 4);
     #else
-      simde_memcpy(&r_, ptr, 8);
+      simde_memcpy(&r_, ptr, sizeof(r_));
     #endif
     return simde_uint16x4_from_private(r_);
   #endif
@@ -227,7 +227,7 @@ simde_vld1_u32(uint32_t const ptr[HEDLEY_ARRAY_PARAM(2)]) {
     #if defined(SIMDE_RISCV_V_NATIVE)
       r_.sv64 = __riscv_vle32_v_u32m1(ptr , 2);
     #else
-      simde_memcpy(&r_, ptr, 8);
+      simde_memcpy(&r_, ptr, sizeof(r_));
     #endif
     return simde_uint32x2_from_private(r_);
   #endif
@@ -247,7 +247,7 @@ simde_vld1_u64(uint64_t const ptr[HEDLEY_ARRAY_PARAM(1)]) {
     #if defined(SIMDE_RISCV_V_NATIVE)
       r_.sv64 = __riscv_vle64_v_u64m1(ptr , 1);
     #else
-      simde_memcpy(&r_, ptr, 8);
+      simde_memcpy(&r_, ptr, sizeof(r_));
     #endif
     return simde_uint64x1_from_private(r_);
   #endif
@@ -291,7 +291,7 @@ simde_vld1q_f32(simde_float32 const ptr[HEDLEY_ARRAY_PARAM(4)]) {
     #elif defined(SIMDE_RISCV_V_NATIVE)
       r_.sv128 = __riscv_vle32_v_f32m1(ptr , 4);
     #else
-      simde_memcpy(&r_, ptr, 16);
+      simde_memcpy(&r_, ptr, sizeof(r_));
     #endif
     return simde_float32x4_from_private(r_);
   #endif
@@ -313,7 +313,7 @@ simde_vld1q_f64(simde_float64 const ptr[HEDLEY_ARRAY_PARAM(2)]) {
     #elif defined(SIMDE_RISCV_V_NATIVE)
       r_.sv128 = __riscv_vle64_v_f64m1(ptr , 2);
     #else
-      simde_memcpy(&r_, ptr, 16);
+      simde_memcpy(&r_, ptr, sizeof(r_));
     #endif
     return simde_float64x2_from_private(r_);
   #endif
@@ -335,7 +335,7 @@ simde_vld1q_s8(int8_t const ptr[HEDLEY_ARRAY_PARAM(16)]) {
     #elif defined(SIMDE_RISCV_V_NATIVE)
       r_.sv128 = __riscv_vle8_v_i8m1(ptr , 16);
     #else
-      simde_memcpy(&r_, ptr, 16);
+      simde_memcpy(&r_, ptr, sizeof(r_));
     #endif
     return simde_int8x16_from_private(r_);
   #endif
@@ -357,7 +357,7 @@ simde_vld1q_s16(int16_t const ptr[HEDLEY_ARRAY_PARAM(8)]) {
     #elif defined(SIMDE_RISCV_V_NATIVE)
       r_.sv128 = __riscv_vle16_v_i16m1(ptr , 8);
     #else
-      simde_memcpy(&r_, ptr, 16);
+      simde_memcpy(&r_, ptr, sizeof(r_));
     #endif
     return simde_int16x8_from_private(r_);
   #endif
@@ -379,7 +379,7 @@ simde_vld1q_s32(int32_t const ptr[HEDLEY_ARRAY_PARAM(4)]) {
     #elif defined(SIMDE_RISCV_V_NATIVE)
       r_.sv128 = __riscv_vle32_v_i32m1(ptr , 4);
     #else
-      simde_memcpy(&r_, ptr, 16);
+      simde_memcpy(&r_, ptr, sizeof(r_));
     #endif
     return simde_int32x4_from_private(r_);
   #endif
@@ -401,7 +401,7 @@ simde_vld1q_s64(int64_t const ptr[HEDLEY_ARRAY_PARAM(2)]) {
     #elif defined(SIMDE_RISCV_V_NATIVE)
       r_.sv128 = __riscv_vle64_v_i64m1(ptr , 2);
     #else
-      simde_memcpy(&r_, ptr, 16);
+      simde_memcpy(&r_, ptr, sizeof(r_));
     #endif
     return simde_int64x2_from_private(r_);
   #endif
@@ -423,7 +423,7 @@ simde_vld1q_u8(uint8_t const ptr[HEDLEY_ARRAY_PARAM(16)]) {
     #elif defined(SIMDE_RISCV_V_NATIVE)
       r_.sv128 = __riscv_vle8_v_u8m1(ptr , 16);
     #else
-      simde_memcpy(&r_, ptr, 16);
+      simde_memcpy(&r_, ptr, sizeof(r_));
     #endif
     return simde_uint8x16_from_private(r_);
   #endif
@@ -445,7 +445,7 @@ simde_vld1q_u16(uint16_t const ptr[HEDLEY_ARRAY_PARAM(8)]) {
     #elif defined(SIMDE_RISCV_V_NATIVE)
       r_.sv128 = __riscv_vle16_v_u16m1(ptr , 8);
     #else
-      simde_memcpy(&r_, ptr, 16);
+      simde_memcpy(&r_, ptr, sizeof(r_));
     #endif
     return simde_uint16x8_from_private(r_);
   #endif
@@ -467,7 +467,7 @@ simde_vld1q_u32(uint32_t const ptr[HEDLEY_ARRAY_PARAM(4)]) {
     #elif defined(SIMDE_RISCV_V_NATIVE)
       r_.sv128 = __riscv_vle32_v_u32m1(ptr , 4);
     #else
-      simde_memcpy(&r_, ptr, 16);
+      simde_memcpy(&r_, ptr, sizeof(r_));
     #endif
     return simde_uint32x4_from_private(r_);
   #endif
@@ -489,7 +489,7 @@ simde_vld1q_u64(uint64_t const ptr[HEDLEY_ARRAY_PARAM(2)]) {
     #elif defined(SIMDE_RISCV_V_NATIVE)
       r_.sv128 = __riscv_vle64_v_u64m1(ptr , 2);
     #else
-      simde_memcpy(&r_, ptr, 16);
+      simde_memcpy(&r_, ptr, sizeof(r_));
     #endif
     return simde_uint64x2_from_private(r_);
   #endif

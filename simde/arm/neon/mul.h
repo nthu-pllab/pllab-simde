@@ -717,17 +717,56 @@ simde_vmul_p8(simde_poly8x8_t a, simde_poly8x8_t b) {
       a_ = simde_uint8x8_to_private(simde_vreinterpret_u8_p8(a)),
       b_ = simde_uint8x8_to_private(simde_vreinterpret_u8_p8(b));
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      uint16_t extend_op2 = HEDLEY_STATIC_CAST(uint16_t, b_.values[i]);
-      uint16_t result = 0;
-      for(uint16_t j = 0; j < 8; ++j) {
-        if (a_.values[i] & (1 << j)) {
-          result = HEDLEY_STATIC_CAST(uint16_t, result ^ (extend_op2 << j));
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      /*
+      vuint16m2_t a_temp16 = __riscv_vwcvtu_x_x_v_u16m2(a_.sv64, 8), b_temp16 = __riscv_vwcvtu_x_x_v_u16m2(b_.sv64, 8);
+      vuint32m4_t a_temp32 = __riscv_vwcvtu_x_x_v_u32m4(a_temp16, 8), b_temp32 = __riscv_vwcvtu_x_x_v_u32m4(b_temp16, 8);
+      vuint64m8_t a_temp64 = __riscv_vwcvtu_x_x_v_u64m8(a_temp32, 8), b_temp64 = __riscv_vwcvtu_x_x_v_u64m8(b_temp32, 8);
+    
+      vuint64m8_t temp64 = __riscv_vclmul_vv_u64m8(a_temp64, b_temp64, 8);
+      vuint32m4_t temp32 = __riscv_vncvt_x_x_w_u32m4(temp64, 8);
+      vuint16m2_t temp16 = __riscv_vncvt_x_x_w_u16m2(temp32, 8);
+      r_.sv64 =  __riscv_vncvt_x_x_w_u8m1(temp16, 8);
+      */
+    
+      uint8_t p1 = UINT8_C(0x11), p2 = UINT8_C(0x22), p4 = UINT8_C(0x44), p8 = UINT8_C(0x88);
+      vuint8m1_t
+        x0 = __riscv_vand_vx_u8m1(a_.sv64, p1, 8), x1 = __riscv_vand_vx_u8m1(a_.sv64, p2, 8),
+        x2 = __riscv_vand_vx_u8m1(a_.sv64, p4, 8), x3 = __riscv_vand_vx_u8m1(a_.sv64, p8, 8),
+        y0 = __riscv_vand_vx_u8m1(b_.sv64, p1, 8), y1 = __riscv_vand_vx_u8m1(b_.sv64, p2, 8),
+        y2 = __riscv_vand_vx_u8m1(b_.sv64, p4, 8), y3 = __riscv_vand_vx_u8m1(b_.sv64, p8, 8);
+      vuint8m1_t
+        a0 = __riscv_vmul_vv_u8m1(x0, y0, 8), a1 = __riscv_vmul_vv_u8m1(x0, y1, 8),
+        a2 = __riscv_vmul_vv_u8m1(x0, y2, 8), a3 = __riscv_vmul_vv_u8m1(x0, y3, 8),
+        b0 = __riscv_vmul_vv_u8m1(x1, y3, 8), b1 = __riscv_vmul_vv_u8m1(x1, y0, 8),
+        b2 = __riscv_vmul_vv_u8m1(x1, y1, 8), b3 = __riscv_vmul_vv_u8m1(x1, y2, 8),
+        c0 = __riscv_vmul_vv_u8m1(x2, y2, 8), c1 = __riscv_vmul_vv_u8m1(x2, y3, 8),
+        c2 = __riscv_vmul_vv_u8m1(x2, y0, 8), c3 = __riscv_vmul_vv_u8m1(x2, y1, 8),
+        d0 = __riscv_vmul_vv_u8m1(x3, y1, 8), d1 = __riscv_vmul_vv_u8m1(x3, y2, 8),
+        d2 = __riscv_vmul_vv_u8m1(x3, y3, 8), d3 = __riscv_vmul_vv_u8m1(x3, y0, 8);
+      vuint8m1_t
+        z0 = __riscv_vxor_vv_u8m1(__riscv_vxor_vv_u8m1(a0, b0, 8), __riscv_vxor_vv_u8m1(c0, d0, 8), 8),
+        z1 = __riscv_vxor_vv_u8m1(__riscv_vxor_vv_u8m1(a1, b1, 8), __riscv_vxor_vv_u8m1(c1, d1, 8), 8),
+        z2 = __riscv_vxor_vv_u8m1(__riscv_vxor_vv_u8m1(a2, b2, 8), __riscv_vxor_vv_u8m1(c2, d2, 8), 8),
+        z3 = __riscv_vxor_vv_u8m1(__riscv_vxor_vv_u8m1(a3, b3, 8), __riscv_vxor_vv_u8m1(c3, d3, 8), 8);
+
+        z0 = __riscv_vand_vx_u8m1(z0, p1, 8), z1 = __riscv_vand_vx_u8m1(z1, p2, 8),
+        z2 = __riscv_vand_vx_u8m1(z2, p4, 8), z3 = __riscv_vand_vx_u8m1(z3, p8, 8);
+    
+      r_.sv64 = __riscv_vor_vv_u8m1(__riscv_vor_vv_u8m1(z0, z1, 8), __riscv_vor_vv_u8m1(z2, z3, 8), 8);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        uint16_t extend_op2 = HEDLEY_STATIC_CAST(uint16_t, b_.values[i]);
+        uint16_t result = 0;
+        for(uint16_t j = 0; j < 8; ++j) {
+          if (a_.values[i] & (1 << j)) {
+            result = HEDLEY_STATIC_CAST(uint16_t, result ^ (extend_op2 << j));
+          }
         }
+        r_.values[i] = HEDLEY_STATIC_CAST(uint8_t, (result & (0xFF)));
       }
-      r_.values[i] = HEDLEY_STATIC_CAST(uint8_t, (result & (0xFF)));
-    }
+    #endif
 
     return simde_vreinterpret_p8_u8(simde_uint8x8_from_private(r_));
   #endif
@@ -748,17 +787,55 @@ simde_vmulq_p8(simde_poly8x16_t a, simde_poly8x16_t b) {
       a_ = simde_uint8x16_to_private(simde_vreinterpretq_u8_p8(a)),
       b_ = simde_uint8x16_to_private(simde_vreinterpretq_u8_p8(b));
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      uint16_t extend_op2 = HEDLEY_STATIC_CAST(uint16_t, b_.values[i]);
-      uint16_t result = 0;
-      for(uint16_t j = 0; j < 8; ++j) {
-        if (a_.values[i] & (1 << j)) {
-          result = HEDLEY_STATIC_CAST(uint16_t, result ^ (extend_op2 << j));
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      /*
+      vuint16m2_t a_temp16 = __riscv_vwcvtu_x_x_v_u16m2(a_.sv128, 16), b_temp16 = __riscv_vwcvtu_x_x_v_u16m2(b_.sv128, 16);
+      vuint32m4_t a_temp32 = __riscv_vwcvtu_x_x_v_u32m4(a_temp16, 16), b_temp32 = __riscv_vwcvtu_x_x_v_u32m4(b_temp16, 16);
+      vuint64m8_t a_temp64 = __riscv_vwcvtu_x_x_v_u64m8(a_temp32, 16), b_temp64 = __riscv_vwcvtu_x_x_v_u64m8(b_temp32, 16);
+  
+      vuint64m8_t temp64 = __riscv_vclmul_vv_u64m8(a_temp64, b_temp64, 16);
+      vuint32m4_t temp32 = __riscv_vncvt_x_x_w_u32m4(temp64, 16);
+      vuint16m2_t temp16 = __riscv_vncvt_x_x_w_u16m2(temp32, 16);
+      r_.sv128 =  __riscv_vncvt_x_x_w_u8m1(temp16, 16);
+      */
+      uint8_t p1 = UINT8_C(0x11), p2 = UINT8_C(0x22), p4 = UINT8_C(0x44), p8 = UINT8_C(0x88);
+      vuint8m1_t
+        x0 = __riscv_vand_vx_u8m1(a_.sv128, p1, 16), x1 = __riscv_vand_vx_u8m1(a_.sv128, p2, 16),
+        x2 = __riscv_vand_vx_u8m1(a_.sv128, p4, 16), x3 = __riscv_vand_vx_u8m1(a_.sv128, p8, 16),
+        y0 = __riscv_vand_vx_u8m1(b_.sv128, p1, 16), y1 = __riscv_vand_vx_u8m1(b_.sv128, p2, 16),
+        y2 = __riscv_vand_vx_u8m1(b_.sv128, p4, 16), y3 = __riscv_vand_vx_u8m1(b_.sv128, p8, 16);
+      vuint8m1_t
+        a0 = __riscv_vmul_vv_u8m1(x0, y0, 16), a1 = __riscv_vmul_vv_u8m1(x0, y1, 16),
+        a2 = __riscv_vmul_vv_u8m1(x0, y2, 16), a3 = __riscv_vmul_vv_u8m1(x0, y3, 16),
+        b0 = __riscv_vmul_vv_u8m1(x1, y3, 16), b1 = __riscv_vmul_vv_u8m1(x1, y0, 16),
+        b2 = __riscv_vmul_vv_u8m1(x1, y1, 16), b3 = __riscv_vmul_vv_u8m1(x1, y2, 16),
+        c0 = __riscv_vmul_vv_u8m1(x2, y2, 16), c1 = __riscv_vmul_vv_u8m1(x2, y3, 16),
+        c2 = __riscv_vmul_vv_u8m1(x2, y0, 16), c3 = __riscv_vmul_vv_u8m1(x2, y1, 16),
+        d0 = __riscv_vmul_vv_u8m1(x3, y1, 16), d1 = __riscv_vmul_vv_u8m1(x3, y2, 16),
+        d2 = __riscv_vmul_vv_u8m1(x3, y3, 16), d3 = __riscv_vmul_vv_u8m1(x3, y0, 16);
+      vuint8m1_t
+        z0 = __riscv_vxor_vv_u8m1(__riscv_vxor_vv_u8m1(a0, b0, 16), __riscv_vxor_vv_u8m1(c0, d0, 16), 16),
+        z1 = __riscv_vxor_vv_u8m1(__riscv_vxor_vv_u8m1(a1, b1, 16), __riscv_vxor_vv_u8m1(c1, d1, 16), 16),
+        z2 = __riscv_vxor_vv_u8m1(__riscv_vxor_vv_u8m1(a2, b2, 16), __riscv_vxor_vv_u8m1(c2, d2, 16), 16),
+        z3 = __riscv_vxor_vv_u8m1(__riscv_vxor_vv_u8m1(a3, b3, 16), __riscv_vxor_vv_u8m1(c3, d3, 16), 16);
+
+        z0 = __riscv_vand_vx_u8m1(z0, p1, 16), z1 = __riscv_vand_vx_u8m1(z1, p2, 16),
+        z2 = __riscv_vand_vx_u8m1(z2, p4, 16), z3 = __riscv_vand_vx_u8m1(z3, p8, 16);
+    
+      r_.sv128 = __riscv_vor_vv_u8m1(__riscv_vor_vv_u8m1(z0, z1, 16), __riscv_vor_vv_u8m1(z2, z3, 16), 16);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        uint16_t extend_op2 = HEDLEY_STATIC_CAST(uint16_t, b_.values[i]);
+        uint16_t result = 0;
+        for(uint16_t j = 0; j < 8; ++j) {
+          if (a_.values[i] & (1 << j)) {
+            result = HEDLEY_STATIC_CAST(uint16_t, result ^ (extend_op2 << j));
+          }
         }
+        r_.values[i] = HEDLEY_STATIC_CAST(uint8_t, (result & (0xFF)));
       }
-      r_.values[i] = HEDLEY_STATIC_CAST(uint8_t, (result & (0xFF)));
-    }
+    #endif
 
     return simde_vreinterpretq_p8_u8(simde_uint8x16_from_private(r_));
   #endif

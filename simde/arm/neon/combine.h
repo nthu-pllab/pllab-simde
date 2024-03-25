@@ -398,12 +398,16 @@ simde_vcombine_p8(simde_poly8x8_t low, simde_poly8x8_t high) {
       low_ = simde_poly8x8_to_private(low),
       high_ = simde_poly8x8_to_private(high);
 
-    size_t halfway = (sizeof(r_.values) / sizeof(r_.values[0])) / 2;
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < halfway ; i++) {
-      r_.values[i] = low_.values[i];
-      r_.values[i + halfway] = high_.values[i];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv128 = __riscv_vslideup_vx_u8m1(low_.sv64, high_.sv64, 8, 16);
+    #else
+      size_t halfway = (sizeof(r_.values) / sizeof(r_.values[0])) / 2;
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < halfway ; i++) {
+        r_.values[i] = low_.values[i];
+        r_.values[i + halfway] = high_.values[i];
+      }
+    #endif
 
     return simde_poly8x16_from_private(r_);
   #endif
@@ -424,12 +428,16 @@ simde_vcombine_p16(simde_poly16x4_t low, simde_poly16x4_t high) {
       low_ = simde_poly16x4_to_private(low),
       high_ = simde_poly16x4_to_private(high);
 
-    size_t halfway = (sizeof(r_.values) / sizeof(r_.values[0])) / 2;
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < halfway ; i++) {
-      r_.values[i] = low_.values[i];
-      r_.values[i + halfway] = high_.values[i];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv128 = __riscv_vslideup_vx_u16m1(low_.sv64, high_.sv64, 4, 8);
+    #else
+      size_t halfway = (sizeof(r_.values) / sizeof(r_.values[0])) / 2;
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < halfway ; i++) {
+        r_.values[i] = low_.values[i];
+        r_.values[i + halfway] = high_.values[i];
+      }
+    #endif
 
     return simde_poly16x8_from_private(r_);
   #endif
@@ -450,12 +458,16 @@ simde_vcombine_p64(simde_poly64x1_t low, simde_poly64x1_t high) {
       low_ = simde_poly64x1_to_private(low),
       high_ = simde_poly64x1_to_private(high);
 
-    size_t halfway = (sizeof(r_.values) / sizeof(r_.values[0])) / 2;
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < halfway ; i++) {
-      r_.values[i] = low_.values[i];
-      r_.values[i + halfway] = high_.values[i];
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      r_.sv128 = __riscv_vslideup_vx_u64m1(low_.sv64, high_.sv64, 1, 2);
+    #else
+      size_t halfway = (sizeof(r_.values) / sizeof(r_.values[0])) / 2;
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < halfway ; i++) {
+        r_.values[i] = low_.values[i];
+        r_.values[i + halfway] = high_.values[i];
+      }
+    #endif
 
     return simde_poly64x2_from_private(r_);
   #endif

@@ -901,10 +901,18 @@ simde_vbsl_p8(simde_uint8x8_t a, simde_poly8x8_t b, simde_poly8x8_t c) {
       c_ = simde_poly8x8_to_private(c);
     simde_uint8x8_private a_ = simde_uint8x8_to_private(a);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      r_.values[i] = (b_.values[i] & a_.values[i]) | (c_.values[i] & ~a_.values[i]);
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint8m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u8m1(a_.sv64, 8);
+      a_and_b = __riscv_vand_vv_u8m1(a_.sv64, b_.sv64, 8);
+      not_a_and_c = __riscv_vand_vv_u8m1(not_a, c_.sv64, 8);
+      r_.sv64 = __riscv_vor_vv_u8m1(a_and_b, not_a_and_c, 8);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        r_.values[i] = (b_.values[i] & a_.values[i]) | (c_.values[i] & ~a_.values[i]);
+      }
+    #endif
 
     return simde_poly8x8_from_private(r_);
   #endif
@@ -926,10 +934,18 @@ simde_vbsl_p16(simde_uint16x4_t a, simde_poly16x4_t b, simde_poly16x4_t c) {
       c_ = simde_poly16x4_to_private(c);
     simde_uint16x4_private a_ = simde_uint16x4_to_private(a);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      r_.values[i] = (b_.values[i] & a_.values[i]) | (c_.values[i] & ~a_.values[i]);
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint16m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u16m1(a_.sv64, 4);
+      a_and_b = __riscv_vand_vv_u16m1(a_.sv64, b_.sv64, 4);
+      not_a_and_c = __riscv_vand_vv_u16m1(not_a, c_.sv64, 4);
+      r_.sv64 = __riscv_vor_vv_u16m1(a_and_b, not_a_and_c, 4);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        r_.values[i] = (b_.values[i] & a_.values[i]) | (c_.values[i] & ~a_.values[i]);
+      }
+    #endif
 
     return simde_poly16x4_from_private(r_);
   #endif
@@ -951,10 +967,18 @@ simde_vbsl_p64(simde_uint64x1_t a, simde_poly64x1_t b, simde_poly64x1_t c) {
       c_ = simde_poly64x1_to_private(c);
     simde_uint64x1_private a_ = simde_uint64x1_to_private(a);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      r_.values[i] = (b_.values[i] & a_.values[i]) | (c_.values[i] & ~a_.values[i]);
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint64m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u64m1(a_.sv64, 1);
+      a_and_b = __riscv_vand_vv_u64m1(a_.sv64, b_.sv64, 1);
+      not_a_and_c = __riscv_vand_vv_u64m1(not_a, c_.sv64, 1);
+      r_.sv64 = __riscv_vor_vv_u64m1(a_and_b, not_a_and_c, 1);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        r_.values[i] = (b_.values[i] & a_.values[i]) | (c_.values[i] & ~a_.values[i]);
+      }
+    #endif
 
     return simde_poly64x1_from_private(r_);
   #endif
@@ -976,10 +1000,18 @@ simde_vbslq_p8(simde_uint8x16_t a, simde_poly8x16_t b, simde_poly8x16_t c) {
       c_ = simde_poly8x16_to_private(c);
     simde_uint8x16_private a_ = simde_uint8x16_to_private(a);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      r_.values[i] = (b_.values[i] & a_.values[i]) | (c_.values[i] & ~a_.values[i]);
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint8m1_t not_a, a_and_b, not_a_and_c;
+      not_a = __riscv_vnot_v_u8m1(a_.sv128, 16);
+      a_and_b = __riscv_vand_vv_u8m1(a_.sv128, b_.sv128, 16);
+      not_a_and_c = __riscv_vand_vv_u8m1(not_a, c_.sv128, 16);
+      r_.sv128 = __riscv_vor_vv_u8m1(a_and_b, not_a_and_c, 16);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        r_.values[i] = (b_.values[i] & a_.values[i]) | (c_.values[i] & ~a_.values[i]);
+      }
+    #endif
 
     return simde_poly8x16_from_private(r_);
   #endif
@@ -1001,10 +1033,18 @@ simde_vbslq_p16(simde_uint16x8_t a, simde_poly16x8_t b, simde_poly16x8_t c) {
       c_ = simde_poly16x8_to_private(c);
     simde_uint16x8_private a_ = simde_uint16x8_to_private(a);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      r_.values[i] = (b_.values[i] & a_.values[i]) | (c_.values[i] & ~a_.values[i]);
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint16m1_t not_a, a_and_b, not_a_and_c; 
+      not_a = __riscv_vnot_v_u16m1(a_.sv128, 8);
+      a_and_b = __riscv_vand_vv_u16m1(a_.sv128, b_.sv128, 8);
+      not_a_and_c = __riscv_vand_vv_u16m1(not_a, c_.sv128, 8);
+      r_.sv128 = __riscv_vor_vv_u16m1(a_and_b, not_a_and_c, 8);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        r_.values[i] = (b_.values[i] & a_.values[i]) | (c_.values[i] & ~a_.values[i]);
+      }
+    #endif
 
     return simde_poly16x8_from_private(r_);
   #endif
@@ -1026,10 +1066,18 @@ simde_vbslq_p64(simde_uint64x2_t a, simde_poly64x2_t b, simde_poly64x2_t c) {
       c_ = simde_poly64x2_to_private(c);
     simde_uint64x2_private a_ = simde_uint64x2_to_private(a);
 
-    SIMDE_VECTORIZE
-    for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
-      r_.values[i] = (b_.values[i] & a_.values[i]) | (c_.values[i] & ~a_.values[i]);
-    }
+    #if defined(SIMDE_RISCV_V_NATIVE)
+      vuint64m1_t not_a, a_and_b, not_a_and_c; 
+      not_a = __riscv_vnot_v_u64m1(a_.sv128, 2);
+      a_and_b = __riscv_vand_vv_u64m1(a_.sv128, b_.sv128, 2);
+      not_a_and_c = __riscv_vand_vv_u64m1(not_a, c_.sv128, 2);
+      r_.sv128 = __riscv_vor_vv_u64m1(a_and_b, not_a_and_c, 2);
+    #else
+      SIMDE_VECTORIZE
+      for (size_t i = 0 ; i < (sizeof(r_.values) / sizeof(r_.values[0])) ; i++) {
+        r_.values[i] = (b_.values[i] & a_.values[i]) | (c_.values[i] & ~a_.values[i]);
+      }
+    #endif
 
     return simde_poly64x2_from_private(r_);
   #endif
